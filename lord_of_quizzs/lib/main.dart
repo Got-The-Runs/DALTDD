@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
           body: Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage("images/background.jpg"),
+                  image: AssetImage("images/images1.jpg"),
                   fit: BoxFit.cover),
             ),
             child: const DangNhap(),

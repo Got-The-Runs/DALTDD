@@ -19,7 +19,7 @@ class DangNhapState extends State<DangNhap> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(95, 240, 98, 42),
+      backgroundColor: Colors.transparent,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -108,7 +108,9 @@ class DangNhapState extends State<DangNhap> {
               child: const Text(
                 'Quên mật khẩu',
                 style: TextStyle(
-                    decoration: TextDecoration.underline, fontSize: 20),
+                    decoration: TextDecoration.underline,
+                    fontSize: 20,
+                    color: Colors.white),
               ),
             ),
           ),
@@ -126,7 +128,9 @@ class DangNhapState extends State<DangNhap> {
               child: const Text(
                 'Đăng ký',
                 style: TextStyle(
-                    decoration: TextDecoration.underline, fontSize: 20),
+                    decoration: TextDecoration.underline,
+                    fontSize: 20,
+                    color: Colors.white),
               ),
             ),
           ),

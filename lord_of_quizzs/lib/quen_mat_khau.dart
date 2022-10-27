@@ -17,8 +17,13 @@ class QuenMatKhauState extends State<QuenMatKhau> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(95, 240, 98, 42),
-      body: Column(
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage("images/images1.jpg"),
+              fit: BoxFit.cover),
+        ),
+        child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
@@ -106,7 +111,8 @@ class QuenMatKhauState extends State<QuenMatKhau> {
               ),
             ),
           ],    
-        )
-      );
+        ),
+      ),
+    );
   }
 }
