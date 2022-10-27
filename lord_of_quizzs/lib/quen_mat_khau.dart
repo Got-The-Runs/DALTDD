@@ -20,7 +20,7 @@ class QuenMatKhauState extends State<QuenMatKhau> {
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-              image: AssetImage("images/images1.jpg"),
+              image: AssetImage("images/background.jpg"),
               fit: BoxFit.cover),
         ),
         child: Column(

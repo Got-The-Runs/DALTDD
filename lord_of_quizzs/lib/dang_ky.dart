@@ -21,7 +21,7 @@ class DangKiState extends State<DangKi> {
       body: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-                image: AssetImage("images/images1.jpg"), fit: BoxFit.cover),
+                image: AssetImage("images/background.jpg"), fit: BoxFit.cover),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
