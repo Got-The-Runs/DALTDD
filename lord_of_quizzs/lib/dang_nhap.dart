@@ -2,10 +2,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lord_of_quizzs/dang_ky.dart';
+import 'package:lord_of_quizzs/quen_mat_khau.dart';
 
-class DangNhap extends StatelessWidget {
+class DangNhap extends StatefulWidget{
   const DangNhap({super.key});
 
+  @override
+  State<StatefulWidget> createState() {
+    // ignore: todo
+    // TODO: implement createState
+    return DangNhapState();
+  }
+}
+
+class DangNhapState extends State<DangNhap> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,7 +84,14 @@ class DangNhap extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => QuenMatKhau(),
+                      ),
+                    );
+                  },
                   child: const Text(
                     'Quên mật khẩu',
                     style: TextStyle(decoration: TextDecoration.underline),
