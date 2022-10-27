@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:lord_of_quizzs/dang_ky.dart';
 import 'package:lord_of_quizzs/quen_mat_khau.dart';
 
-class DangNhap extends StatefulWidget{
+class DangNhap extends StatefulWidget {
   const DangNhap({super.key});
 
   @override
@@ -34,84 +34,100 @@ class DangNhapState extends State<DangNhap> {
             ),
           ),
           Container(
-            padding: const EdgeInsets.all(15),
-            child: const TextField(
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.white,
-                labelText: 'Usename',
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.person),
-              ),
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.all(15),
-            child: const TextField(
-              obscureText: true,
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.white,
-                labelText: 'Password',
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.password),
-              ),
-            ),
-          ),
+              padding: const EdgeInsets.all(15),
+              child: TextField(
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  labelText: 'Tên đăng nhập',
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  prefixIcon: const Icon(Icons.person, color: Colors.black),
+                ),
+              )),
           Container(
               padding: const EdgeInsets.all(15),
-              child: ElevatedButton(
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: const Text('Đăng nhập'),
-                            content: const Text(
-                                'Chúc mừng bạn đã đăng nhập thành công'),
-                            actions: [
-                              TextButton(
-                                  onPressed: () => Navigator.pop(context),
-                                  child: const Text('OK'))
-                            ],
-                          );
-                        });
-                  },
-                  child: const Text('Đăng nhập'))),
+              child: TextField(
+                obscureText: true,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  labelText: 'Mật khẩu',
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  prefixIcon: const Icon(Icons.password, color: Colors.black),
+                ),
+              )),
           Container(
             padding: const EdgeInsets.all(15),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => QuenMatKhau(),
-                      ),
-                    );
-                  },
-                  child: const Text(
-                    'Quên mật khẩu',
-                    style: TextStyle(decoration: TextDecoration.underline),
+            width: 200,
+            height: 80,
+            child: ElevatedButton(
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Text('Đăng nhập'),
+                        content:
+                            const Text('Chúc mừng bạn đã đăng nhập thành công'),
+                        actions: [
+                          TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: const Text('OK'))
+                        ],
+                      );
+                    });
+              },
+              // ignore: sort_child_properties_last
+              child: const Text(
+                'Đăng nhập',
+                style: TextStyle(fontSize: 20),
+              ),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(
+                    const Color.fromARGB(188, 51, 129, 247)),
+              ),
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(10),
+            child: TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => QuenMatKhau(),
                   ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const DangKi(),
-                      ),
-                    );
-                  },
-                  child: const Text(
-                    'Đăng ký',
-                    style: TextStyle(decoration: TextDecoration.underline),
+                );
+              },
+              child: const Text(
+                'Quên mật khẩu',
+                style: TextStyle(
+                    decoration: TextDecoration.underline, fontSize: 20),
+              ),
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(5),
+            child: TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const DangKi(),
                   ),
-                ),
-              ],
+                );
+              },
+              child: const Text(
+                'Đăng ký',
+                style: TextStyle(
+                    decoration: TextDecoration.underline, fontSize: 20),
+              ),
             ),
           ),
         ],
