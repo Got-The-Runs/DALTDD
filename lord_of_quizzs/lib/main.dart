@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lord_of_quizzs/dang_ki.dart';
+import 'package:lord_of_quizzs/dang_ky.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
           body: Container(
             decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("images/background.jpg"),
+              image: AssetImage("images/nen_1.jpg"),
               fit: BoxFit.cover
             ),  
           ),
