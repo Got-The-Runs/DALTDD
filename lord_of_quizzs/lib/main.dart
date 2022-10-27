@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lord_of_quizzs/dang_ky.dart';
+import 'package:lord_of_quizzs/quen_mat_khau.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
               fit: BoxFit.cover
             ),  
           ),
-          child: DangKi(),
+          child: QuenMatKhau(),
         ),
       )
     );   
