@@ -101,7 +101,7 @@ class DangNhapState extends State<DangNhap> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => QuenMatKhau(),
+                    builder: (context) => const QuenMatKhau(),
                   ),
                 );
               },

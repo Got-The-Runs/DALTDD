@@ -1,13 +1,18 @@
 // ignore: unused_import
 import 'dart:ffi';
+// ignore: unnecessary_import
 import 'dart:ui';
 
+// ignore: unnecessary_import
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class QuenMatKhau extends StatefulWidget{
+  const QuenMatKhau({super.key});
+
   @override
   State<StatefulWidget> createState() {
+    // ignore: todo
     // TODO: implement createState
     return QuenMatKhauState();
   }
@@ -102,11 +107,12 @@ class QuenMatKhauState extends State<QuenMatKhau> {
             height: 80,
             child: ElevatedButton(
                 onPressed: (){},
+                // ignore: sort_child_properties_last
                 child: const Text('Xác nhận', 
                 style: TextStyle(fontSize: 20),
                 ), 
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Color.fromARGB(188, 51, 129, 247)), 
+                  backgroundColor: MaterialStateProperty.all(const Color.fromARGB(188, 51, 129, 247)), 
                 ),  
               ),
             ),
