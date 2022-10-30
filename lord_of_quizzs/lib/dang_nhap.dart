@@ -1,0 +1,181 @@
+// ignore: unnecessary_import
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:lord_of_quizzs/dang_ky.dart';
+import 'package:lord_of_quizzs/quen_mat_khau.dart';
+
+class DangNhap extends StatefulWidget {
+  const DangNhap({super.key});
+
+  @override
+  State<StatefulWidget> createState() {
+    // ignore: todo
+    // TODO: implement createState
+    return DangNhapState();
+  }
+}
+
+class DangNhapState extends State<DangNhap> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+            Color(0xFF701ebd),
+            Color(0xFF873bcc),
+            Color(0xFFfe4a97),
+            Color(0xFFe17763),
+            Color(0xFF68998c),
+          ],
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+          ),
+        ),  
+        child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [         
+            Container(
+              padding: const EdgeInsets.all(30),
+            ),
+            Container(
+              padding: const EdgeInsets.all(10),
+              child: Image.asset(
+                'images/Untitled-3.png',
+              ),
+            ),  
+            Container(
+              padding: const EdgeInsets.all(15),
+              child: const Text(
+                'ĐĂNG NHẬP',
+                style: TextStyle(
+                  fontSize: 30,
+                  color: Color.fromARGB(195, 252, 251, 250),
+                  fontWeight: FontWeight.bold),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(15),
+              child: TextField(
+                style:const TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  labelText: 'Tên đăng nhập',
+                  labelStyle: const TextStyle(color: Colors.white),
+                  enabledBorder:  OutlineInputBorder(
+                    borderSide:const BorderSide(
+                      color: Colors.white
+                    ),                   
+                    borderRadius: BorderRadius.circular(25),
+                  ),       
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25),
+                  ), 
+                  prefixIcon: const Icon(Icons.person, color: Colors.white),
+                ),
+              )
+            ),
+            Container(
+              padding: const EdgeInsets.all(15),
+              child: TextField(
+                obscureText: true,
+                style:const TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  labelText: 'Mật khẩu',
+                  labelStyle: const TextStyle(color: Colors.white),
+                    enabledBorder:  OutlineInputBorder(
+                      borderSide:const BorderSide(
+                        color: Colors.white
+                      ),                   
+                      borderRadius: BorderRadius.circular(25),
+                    ),       
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ), 
+                  prefixIcon: const Icon(Icons.person, color: Colors.white),
+                ),
+              )
+            ),
+            Container(
+              padding: const EdgeInsets.all(15),
+              width: 200,
+              height: 80,
+              child: ElevatedButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Text('Đăng nhập'),
+                        content: const Text('Chúc mừng bạn đã đăng nhập thành công'),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('OK'))
+                        ],
+                      );
+                    }
+                  );
+                },
+              // ignore: sort_child_properties_last
+              child: const Text(
+                'Đăng nhập',
+                style: TextStyle(fontSize: 20),
+              ),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(
+                  Color.fromARGB(110, 52, 243, 218)),
+              ),
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(10),
+            child: TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const QuenMatKhau(),
+                  ),
+                );
+              },
+              child: const Text(
+                'Quên mật khẩu',
+                style: TextStyle(
+                    decoration: TextDecoration.underline,
+                    fontSize: 20,
+                    color: Colors.white),
+              ),
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(5),
+            child: TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const DangKi(),
+                  ),
+                );
+              },
+              child: const Text(
+                'Đăng ký',
+                style: TextStyle(
+                    decoration: TextDecoration.underline,
+                    fontSize: 20,
+                    color: Colors.white),
+                  ),
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.all(30),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
