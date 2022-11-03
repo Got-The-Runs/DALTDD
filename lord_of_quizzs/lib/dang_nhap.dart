@@ -106,7 +106,7 @@ class DangNhapState extends State<DangNhap> {
               child: OutlinedButton(
                 onPressed: () {
                   Navigator.push(
-                    context,
+                  context,
                     MaterialPageRoute(
                       builder: (context) => const ManHinhChinh(),
                     ),
