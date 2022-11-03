@@ -23,11 +23,8 @@ class DangNhapState extends State<DangNhap> {
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
-            Color(0xFF701ebd),
-            Color(0xFF873bcc),
-            Color(0xFFfe4a97),
-            Color(0xFFe17763),
-            Color(0xFF68998c),
+              Color(0xFF701ebd),
+              Color.fromARGB(255, 57, 86, 250),
           ],
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
@@ -38,21 +35,25 @@ class DangNhapState extends State<DangNhap> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [         
             Container(
-              padding: const EdgeInsets.all(30),
+              padding: const EdgeInsets.all(20),
             ),
             Container(
               padding: const EdgeInsets.all(10),
               child: Image.asset(
-                'images/Untitled-3.png',
+                'images/Logo.png',
+                fit: BoxFit.cover,
+                height: 120,
+                width: 120
+
               ),
             ),  
             Container(
-              padding: const EdgeInsets.all(15),
+              padding: const EdgeInsets.all(10),
               child: const Text(
                 'ĐĂNG NHẬP',
                 style: TextStyle(
                   fontSize: 30,
-                  color: Color.fromARGB(195, 252, 251, 250),
+                  color: Colors.white,
                   fontWeight: FontWeight.bold),
               ),
             ),
@@ -93,7 +94,7 @@ class DangNhapState extends State<DangNhap> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25),
                     ), 
-                  prefixIcon: const Icon(Icons.person, color: Colors.white),
+                  prefixIcon: const Icon(Icons.lock, color: Colors.white),
                 ),
               )
             ),
@@ -101,7 +102,7 @@ class DangNhapState extends State<DangNhap> {
               padding: const EdgeInsets.all(15),
               width: 200,
               height: 80,
-              child: ElevatedButton(
+              child: OutlinedButton(
                 onPressed: () {
                   showDialog(
                     context: context,
@@ -121,14 +122,22 @@ class DangNhapState extends State<DangNhap> {
               // ignore: sort_child_properties_last
               child: const Text(
                 'Đăng nhập',
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(fontSize: 20,
+                color: Colors.white 
+                ),
               ),
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(
-                  Color.fromARGB(110, 52, 243, 218)),
+                backgroundColor: MaterialStateProperty.all(Colors.transparent),  
+                side: MaterialStateProperty.all(                 
+                  const BorderSide(
+                    color: Colors.white,
+                    width: 2.0,
+                    style: BorderStyle.solid
+                    )
+                  )
+                )
               ),
             ),
-          ),
           Container(
             padding: const EdgeInsets.all(10),
             child: TextButton(
@@ -170,7 +179,7 @@ class DangNhapState extends State<DangNhap> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.all(30),
+                padding: const EdgeInsets.all(10.5),
               ),
             ],
           ),

@@ -35,10 +35,12 @@ class DangKiState extends State<DangKi> {
           decoration: const BoxDecoration(
             gradient: LinearGradient(colors: [
               Color(0xFF701ebd),
-              Color(0xFF873bcc),
-              Color(0xFFfe4a97),
-              Color(0xFFe17763),
-              Color(0xFF68998c),
+              Color.fromARGB(255, 57, 86, 250),
+              // Color(0xFF701ebd),
+              // Color(0xFF873bcc),
+              // Color(0xFFfe4a97),
+              // Color(0xFFe17763),
+              // Color(0xFF68998c),
             ],
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
@@ -50,16 +52,19 @@ class DangKiState extends State<DangKi> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [       
               Container(
-                padding: const EdgeInsets.all(35),
+                padding: const EdgeInsets.all(30),
               ),
               Container(
                 padding: const EdgeInsets.all(10),
                 child: Image.asset(
-                  'images/Untitled-3.png',
+                  'images/Logo.png',
+                  fit: BoxFit.cover,
+                  height: 120,
+                  width: 120
                 ),
               ),  
               Container(
-                padding: const EdgeInsets.all(5),
+                padding: const EdgeInsets.only(bottom: 15),
                 child: const Text(
                   'Bạn chưa có tài khoản?',
                   style: TextStyle(
@@ -69,7 +74,7 @@ class DangKiState extends State<DangKi> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.all(15),
+                padding: const EdgeInsets.all(10),
                 child: TextField(
                   style:const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
@@ -89,7 +94,7 @@ class DangKiState extends State<DangKi> {
                 )
                ),
               Container(
-                padding: const EdgeInsets.all(15),
+                padding: const EdgeInsets.all(10),
                 child: TextField(
                   style:const TextStyle(color: Colors.white),
                   keyboardType: TextInputType.emailAddress,
@@ -105,12 +110,12 @@ class DangKiState extends State<DangKi> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25),
                     ), 
-                    prefixIcon: const Icon(Icons.person, color: Colors.white),
+                    prefixIcon: const Icon(Icons.email, color: Colors.white),
                   ),
                 ),
               ),
               Container(
-                padding: const EdgeInsets.all(15),
+                padding: const EdgeInsets.all(10),
                 child: TextField(
                   obscureText: true,
                   style:const TextStyle(color: Colors.white),
@@ -126,12 +131,12 @@ class DangKiState extends State<DangKi> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25),
                     ), 
-                    prefixIcon: const Icon(Icons.person, color: Colors.white),
+                    prefixIcon: const Icon(Icons.lock, color: Colors.white),
                   ),
                 )
               ),
               Container(
-                padding: const EdgeInsets.all(15),
+                padding: const EdgeInsets.all(10),
                 child: TextField(
                   obscureText: true,
                   style:const TextStyle(color: Colors.white),
@@ -147,7 +152,7 @@ class DangKiState extends State<DangKi> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25),
                       ), 
-                    prefixIcon: const Icon(Icons.person, color: Colors.white),
+                    prefixIcon: const Icon(Icons.lock, color: Colors.white),
                   ),
                 ),
               ),
@@ -155,21 +160,28 @@ class DangKiState extends State<DangKi> {
                 padding: const EdgeInsets.all(15),
                 width: 200,
                 height: 80,
-                child: ElevatedButton(
+                child: OutlinedButton(
                   onPressed: () {},
                   // ignore: sort_child_properties_last
                   child: const Text(
                     'Đăng ký',
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 20, 
+                    color: Colors.white),
                   ),
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                      Color.fromARGB(110, 52, 243, 218)),
+                     backgroundColor: MaterialStateProperty.all(Colors.transparent),  
+                     side: MaterialStateProperty.all(                 
+                      const BorderSide(
+                        color: Colors.white,
+                        width: 2.0,
+                        style: BorderStyle.solid
+                    )
+                  )
                   ),
                 ),
               ),
               Container(
-                padding: const EdgeInsets.all(18),
+                padding: const EdgeInsets.all(5.5),
               )
             ],
           )

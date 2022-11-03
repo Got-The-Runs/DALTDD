@@ -38,10 +38,7 @@ class QuenMatKhauState extends State<QuenMatKhau> {
         decoration: const BoxDecoration(
           gradient: LinearGradient(colors: [
             Color(0xFF701ebd),
-            Color(0xFF873bcc),
-            Color(0xFFfe4a97),
-            Color(0xFFe17763),
-            Color(0xFF68998c),
+            Color.fromARGB(255, 57, 86, 250),
           ],
           begin: Alignment.topRight,
           end: Alignment.bottomLeft,
@@ -53,16 +50,19 @@ class QuenMatKhauState extends State<QuenMatKhau> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                padding: const EdgeInsets.all(35),
+                padding: const EdgeInsets.all(30),
               ),
               Container(
-                padding: const EdgeInsets.all(15),
+                padding: const EdgeInsets.all(10),
                 child: Image.asset(
-                  'images/Untitled-3.png',
+                  'images/Logo.png',
+                  fit: BoxFit.cover,
+                  height: 120,
+                  width: 120
                 ),
               ),     
               Container(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.only(bottom: 15),
                 child: const Text('Bạn quên mật khẩu?',
                   style: TextStyle(fontSize: 15, 
                   color: Colors.white,
@@ -70,7 +70,7 @@ class QuenMatKhauState extends State<QuenMatKhau> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.all(15),
+                padding: const EdgeInsets.all(10),
                 child: TextField(
                   style:const TextStyle(color: Colors.white),
                   decoration: InputDecoration(                    
@@ -90,7 +90,7 @@ class QuenMatKhauState extends State<QuenMatKhau> {
                 )
               ),
               Container(
-                padding: const EdgeInsets.all(15),
+                padding: const EdgeInsets.all(10),
                 child:  TextField(
                   style:const TextStyle(color: Colors.white),
                   keyboardType: TextInputType.emailAddress,
@@ -106,12 +106,12 @@ class QuenMatKhauState extends State<QuenMatKhau> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25),
                       ), 
-                    prefixIcon: const Icon(Icons.person, color: Colors.white),
+                    prefixIcon: const Icon(Icons.email, color: Colors.white),
                   ),
                 ),
               ),
               Container(
-                padding: const EdgeInsets.all(15),
+                padding: const EdgeInsets.all(10),
                 child: TextField(
                 obscureText: true,
                 style:const TextStyle(color: Colors.white),
@@ -127,12 +127,12 @@ class QuenMatKhauState extends State<QuenMatKhau> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25),
                     ), 
-                  prefixIcon: const Icon(Icons.person, color: Colors.white),
+                  prefixIcon: const Icon(Icons.lock, color: Colors.white),
                 ),
               )
             ),
             Container(
-              padding: const EdgeInsets.all(15),
+              padding: const EdgeInsets.all(10),
               child:  TextField(
               obscureText: true,
               style:const TextStyle(color: Colors.white),
@@ -148,7 +148,7 @@ class QuenMatKhauState extends State<QuenMatKhau> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(25),
                 ), 
-                prefixIcon: const Icon(Icons.person, color: Colors.white),
+                prefixIcon: const Icon(Icons.lock, color: Colors.white),
               ),
             ),
           ),
@@ -156,20 +156,28 @@ class QuenMatKhauState extends State<QuenMatKhau> {
               padding: const EdgeInsets.all(15),
               width: 200,
               height: 80,
-              child: ElevatedButton(       
+              child: OutlinedButton(       
                 onPressed: (){},
                 // ignore: sort_child_properties_last
                 child: const Text('Xác nhận', 
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 20,
+                  color: Colors.white),
                 ), 
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(  Color.fromARGB(110, 52, 243, 218)),                
+                   backgroundColor: MaterialStateProperty.all(Colors.transparent),  
+                   side: MaterialStateProperty.all(                 
+                    const BorderSide(
+                      color: Colors.white,
+                      width: 2.0,
+                      style: BorderStyle.solid
+                    )
+                  )              
                 ),  
                ),
               ),
               Container(
-                  padding: const EdgeInsets.all(8),
-              ),
+                padding: EdgeInsets.all(5.5),
+              )
             ],    
           ),
         ),

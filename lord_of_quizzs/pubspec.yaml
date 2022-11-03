@@ -64,6 +64,7 @@ flutter:
     - images/background.jpg
     - images/images1.jpg
     - images/Untitled-3.png
+    - images/Logo.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
