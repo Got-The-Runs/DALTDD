@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lord_of_quizzs/dang_ky.dart';
+import 'package:lord_of_quizzs/man_hinh_chinh.dart';
 import 'package:lord_of_quizzs/quen_mat_khau.dart';
 
 class DangNhap extends StatefulWidget {
@@ -104,19 +105,11 @@ class DangNhapState extends State<DangNhap> {
               height: 80,
               child: OutlinedButton(
                 onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: const Text('Đăng nhập'),
-                        content: const Text('Chúc mừng bạn đã đăng nhập thành công'),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.pop(context),
-                            child: const Text('OK'))
-                        ],
-                      );
-                    }
+                  Navigator.push(
+                  context,
+                    MaterialPageRoute(
+                      builder: (context) => const ManHinhChinh(),
+                    ),
                   );
                 },
               // ignore: sort_child_properties_last
