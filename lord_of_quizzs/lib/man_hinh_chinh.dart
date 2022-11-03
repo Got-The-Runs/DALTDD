@@ -24,21 +24,23 @@ class ManHinhChinhState extends State<ManHinhChinh> {
         leading: IconButton(
           icon: const Icon(Icons.settings_outlined),
           onPressed: () {},
-          iconSize: 35,
+          iconSize: 30,
         ),
         actions: <Widget> [
-          const Icon(Icons.diamond_outlined, size: 35),
-          const Text(
+          const Icon(Icons.diamond_outlined, size: 30),
+           const Center(
+            child: Text(
             '9999',
-            style: TextStyle(
-              fontSize: 35,
+              style: TextStyle(
+              fontSize: 25,
               color: Colors.white,
+              ),
             ),
           ),
           IconButton(
             icon: const Icon(Icons.add_circle_outline),
             onPressed: () {},
-            iconSize: 35,
+            iconSize: 30,
           ),
         ],
       ),
