@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lord_of_quizzs/bang_xep_hang.dart';
 // ignore: unused_import
 import 'package:lord_of_quizzs/dang_ky.dart';
 import 'package:lord_of_quizzs/dang_nhap.dart';
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: DangNhap()
+        home: BangXepHang()
         );
   }
 }

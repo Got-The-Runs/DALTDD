@@ -22,11 +22,11 @@ class DangKiState extends State<DangKi> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
           centerTitle: true,
-          title: Text('Đăng ký'),
+          title:const Text('Đăng ký'),
           backgroundColor: Colors.transparent, 
           elevation: 0, 
           leading: IconButton(
-           icon: Icon(Icons.chevron_left),
+           icon:const Icon(Icons.chevron_left),
            onPressed: () => Navigator.pop(context),
            iconSize: 30,  
         ),
