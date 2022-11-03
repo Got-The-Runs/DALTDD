@@ -38,12 +38,14 @@ class ManHinhChinhState extends State<ManHinhChinh> {
           iconSize: 30,
         ),
         actions: <Widget> [
-          const Icon(Icons.diamond_outlined, size: 35),
-          const Text(
-            '9999',
-              style: TextStyle(
-              fontSize: 25,
-              color: Colors.white,
+          const Icon(Icons.diamond_outlined, size: 30),
+          const Center(
+            child: Text(
+              '9999',
+                style: TextStyle(
+                fontSize: 25,
+                color: Colors.white,
+                ),
               ),
             ),
           IconButton(
@@ -64,18 +66,16 @@ class ManHinhChinhState extends State<ManHinhChinh> {
             end: Alignment.bottomLeft,
           ),
         ),
-        child: SingleChildScrollView(
-          // physics:const NeverScrollableScrollPhysics(),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                padding: const EdgeInsets.all(40),
+                padding: const EdgeInsets.all(20),
               ),
               Container(
                 padding: const EdgeInsets.all(10),
                 child: Image.asset('images/Logo.png',
-                    fit: BoxFit.cover, height: 145, width: 145),
+                    fit: BoxFit.cover, height: 120, width: 120),
               ),
               Container(
                 padding: const EdgeInsets.only(bottom: 15),
@@ -88,7 +88,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.all(15),
+                padding: EdgeInsets.symmetric(horizontal: 75, vertical: 15),
                 width: 350,
                 height: 85,
                 child: OutlinedButton(
@@ -103,7 +103,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                   // ignore: sort_child_properties_last
                   child: const Text(
                     'Chơi Mới',
-                    style: TextStyle(fontSize: 25, color: Colors.white),
+                    style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
                   style: ButtonStyle(
                       backgroundColor:
@@ -115,7 +115,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.all(15),
+                padding: EdgeInsets.symmetric(horizontal: 75, vertical: 15),
                 width: 350,
                 height: 85,
                 child: OutlinedButton(
@@ -123,7 +123,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                   // ignore: sort_child_properties_last
                   child: const Text(
                     'Lịch Sử Chơi',
-                    style: TextStyle(fontSize: 25, color: Colors.white),
+                    style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
                   style: ButtonStyle(
                       backgroundColor:
@@ -135,7 +135,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.all(15),
+                padding: EdgeInsets.symmetric(horizontal: 75, vertical: 15),
                 width: 350,
                 height: 85,
                 child: OutlinedButton(
@@ -150,7 +150,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                   // ignore: sort_child_properties_last
                   child: const Text(
                     'Bảng Xếp Hạng',
-                    style: TextStyle(fontSize: 25, color: Colors.white),
+                    style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
                   style: ButtonStyle(
                       backgroundColor:
@@ -162,7 +162,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.all(15),
+                padding: EdgeInsets.symmetric(horizontal: 75, vertical: 15),
                 width: 350,
                 height: 85,
                 child: OutlinedButton(
@@ -170,7 +170,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                   // ignore: sort_child_properties_last
                   child: const Text(
                     'Hướng Dẫn',
-                    style: TextStyle(fontSize: 25, color: Colors.white),
+                    style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
                   style: ButtonStyle(
                       backgroundColor:
@@ -187,7 +187,6 @@ class ManHinhChinhState extends State<ManHinhChinh> {
             ],
           ),
         ),
-      ),
     );
   }
 }

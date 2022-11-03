@@ -36,7 +36,7 @@ class DangNhapState extends State<DangNhap> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [         
             Container(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(17),
             ),
             Container(
               padding: const EdgeInsets.all(10),

@@ -181,7 +181,7 @@ class DangKiState extends State<DangKi> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.all(5.5),
+                padding: const EdgeInsets.all(0.5),
               )
             ],
           )

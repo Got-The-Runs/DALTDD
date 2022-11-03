@@ -176,7 +176,7 @@ class QuenMatKhauState extends State<QuenMatKhau> {
                ),
               ),
               Container(
-                padding: EdgeInsets.all(5.5),
+                padding: EdgeInsets.all(0.5),
               )
             ],    
           ),

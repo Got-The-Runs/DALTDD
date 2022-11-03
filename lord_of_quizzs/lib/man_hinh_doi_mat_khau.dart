@@ -43,14 +43,14 @@ class DoiMatKhauState extends State<DoiMatKhau> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        
         centerTitle: true,
+        title: const Text('Đổi mật khẩu'),
         elevation: 0,   
         backgroundColor: Colors.transparent,     
         leading: IconButton(
           icon:const Icon(Icons.chevron_left),
           onPressed: () => Navigator.pop(context),
-          iconSize: 30,
+          iconSize: 35,
         ),
       ),
       body: Container(
@@ -69,7 +69,7 @@ class DoiMatKhauState extends State<DoiMatKhau> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                padding: const EdgeInsets.all(30),
+                padding: const EdgeInsets.all(35),
               ),
               Container(
                 padding: const EdgeInsets.all(10),
@@ -80,16 +80,16 @@ class DoiMatKhauState extends State<DoiMatKhau> {
                   width: 120
                 ),
               ),     
-              Container(
+               Container(
                 padding: const EdgeInsets.only(bottom: 15),
-                child: const Text('Đổi mật khẩu',
-                  style: TextStyle(fontSize: 30, 
+                child: const Text('Bạn muốn đổi mật khẩu?',
+                  style: TextStyle(fontSize: 15, 
                   color: Colors.white,
                   fontWeight: FontWeight.bold ),
                 ),
-              ),    
+              ),
               Container(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.all(15),
                 child: TextField(
                 obscureText: _obscureText_old,
                 style:const TextStyle(color: Colors.white),
@@ -105,18 +105,12 @@ class DoiMatKhauState extends State<DoiMatKhau> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25),
                     ), 
-                    prefixIcon:Icon(Icons.password_outlined),
-                 suffixIcon: IconButton(
-          icon: Icon(
-            _obscureText_old ? Icons.visibility : Icons.visibility_off,
-          ),
-          onPressed: _toggle_old,
-        ),
+                    prefixIcon:Icon(Icons.password_outlined, color: Colors.white),                
                 ),
               )
             ),
               Container(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.all(15),
                 child: TextField(
                 obscureText: _obscureText_new,
                 style:const TextStyle(color: Colors.white),
@@ -132,10 +126,10 @@ class DoiMatKhauState extends State<DoiMatKhau> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25),
                     ), 
-                    prefixIcon:Icon(Icons.password_outlined),
+                    prefixIcon:Icon(Icons.password_outlined, color: Colors.white),
                   suffixIcon: IconButton(
           icon: Icon(
-            _obscureText_new ? Icons.visibility : Icons.visibility_off,
+            _obscureText_new ? Icons.visibility : Icons.visibility_off,color: Colors.white
           ),
           onPressed: _toggle_new,
         ),
@@ -143,7 +137,7 @@ class DoiMatKhauState extends State<DoiMatKhau> {
               )
             ),
             Container(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(15),
               child:  TextField(
               obscureText: _obscureText_accuracy,
               
@@ -160,10 +154,10 @@ class DoiMatKhauState extends State<DoiMatKhau> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(25),
                 ), 
-                prefixIcon:Icon(Icons.password_outlined),
+                prefixIcon:Icon(Icons.password_outlined, color: Colors.white),
                 suffixIcon: IconButton(
           icon: Icon(
-            _obscureText_accuracy ? Icons.visibility : Icons.visibility_off,
+            _obscureText_accuracy ? Icons.visibility : Icons.visibility_off,color: Colors.white,
           ),
           onPressed: _toggle_accuracy,
         ),
@@ -171,7 +165,7 @@ class DoiMatKhauState extends State<DoiMatKhau> {
             ),
           ),
             Container(
-              padding: const EdgeInsets.all(15),
+              padding: const EdgeInsets.only(top: 25),
               width: 200,
               height: 80,
               child: OutlinedButton(       
@@ -194,7 +188,7 @@ class DoiMatKhauState extends State<DoiMatKhau> {
                ),
               ),
               Container(
-                padding: EdgeInsets.all(5.5),
+                padding: EdgeInsets.all(25),
               )
             ],    
           ),

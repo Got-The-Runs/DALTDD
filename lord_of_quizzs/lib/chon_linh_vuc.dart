@@ -26,21 +26,23 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
         leading: IconButton(
           icon: const Icon(Icons.chevron_left),
           onPressed: () => Navigator.pop(context),
-          iconSize: 35,
+          iconSize: 30,
         ),
         actions: <Widget>[
-          const Icon(Icons.diamond_outlined, size: 35),
-          const Text(
-            '9999',
-            style: TextStyle(
-              fontSize: 35,
-              color: Colors.white,
+          const Icon(Icons.diamond_outlined, size: 30),
+          const Center(
+            child: Text(
+              '9999',
+                style: TextStyle(
+                fontSize: 25,
+                color: Colors.white,
+                ),
+              ),
             ),
-          ),
           IconButton(
             icon: const Icon(Icons.add_circle_outline),
             onPressed: () {},
-            iconSize: 35,
+            iconSize: 30,
           ),
         ],
       ),
@@ -55,16 +57,16 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
             end: Alignment.bottomLeft,
           ),
         ),
-        child: SingleChildScrollView(
+        // child: SingleChildScrollView(
           // physics:const NeverScrollableScrollPhysics(),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                padding: const EdgeInsets.all(50),
+                padding: const EdgeInsets.all(20),
               ),
               Container(
-                padding: const EdgeInsets.only(bottom: 50),
+                padding: const EdgeInsets.only(bottom: 40),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
@@ -73,7 +75,7 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
                         Text(
                           'Tên Người Chơi',
                           style: TextStyle(
-                              fontSize: 25,
+                              fontSize: 20,
                               color: Colors.white,
                               fontWeight: FontWeight.bold),
                         ),
@@ -84,27 +86,27 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
                       children: const <Widget>[
                         Icon(
                           CupertinoIcons.heart_fill,
-                          size: 26,
+                          size: 20,
                           color: Colors.white,
                         ),
                         Icon(
                           CupertinoIcons.heart_fill,
-                          size: 26,
+                          size: 20,
                           color: Colors.white,
                         ),
                         Icon(
                           CupertinoIcons.heart_fill,
-                          size: 26,
+                          size: 20,
                           color: Colors.white,
                         ),
                         Icon(
                           CupertinoIcons.heart_fill,
-                          size: 26,
+                          size: 20,
                           color: Colors.white,
                         ),
                         Icon(
                           CupertinoIcons.heart_fill,
-                          size: 26,
+                          size: 20,
                           color: Colors.white,
                         ),
                       ],
@@ -117,22 +119,22 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
                 child: const Text(
                   'Chọn Lĩnh Vực ',
                   style: TextStyle(
-                    fontSize: 40,
+                    fontSize: 35,
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
               Container(
-                padding: const EdgeInsets.all(15),
+                padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
                 width: 350,
                 height: 85,
                 child: OutlinedButton(
                   onPressed: () {},
                   // ignore: sort_child_properties_last
                   child: const Text(
-                    'Chơi Mới',
-                    style: TextStyle(fontSize: 25, color: Colors.white),
+                    'Khoa Học Kỹ Thuật',
+                    style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
                   style: ButtonStyle(
                       backgroundColor:
@@ -144,15 +146,15 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.all(15),
+                padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
                 width: 350,
                 height: 85,
                 child: OutlinedButton(
                   onPressed: () {},
                   // ignore: sort_child_properties_last
                   child: const Text(
-                    'Lịch Sử Chơi',
-                    style: TextStyle(fontSize: 25, color: Colors.white),
+                    'Văn Hóa-Xã Hội-Nghệ Thuật',
+                    style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
                   style: ButtonStyle(
                       backgroundColor:
@@ -164,15 +166,15 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.all(15),
+                padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
                 width: 350,
                 height: 85,
                 child: OutlinedButton(
                   onPressed: () {},
                   // ignore: sort_child_properties_last
                   child: const Text(
-                    'Bảng Xếp Hạng',
-                    style: TextStyle(fontSize: 25, color: Colors.white),
+                    'Lịch Sử-Địa Lý',
+                    style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
                   style: ButtonStyle(
                       backgroundColor:
@@ -184,15 +186,15 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.all(15),
+                padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
                 width: 350,
                 height: 85,
                 child: OutlinedButton(
                   onPressed: () {},
                   // ignore: sort_child_properties_last
                   child: const Text(
-                    'Hướng Dẫn',
-                    style: TextStyle(fontSize: 25, color: Colors.white),
+                    'Thể Thao',
+                    style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
                   style: ButtonStyle(
                       backgroundColor:
@@ -209,7 +211,6 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 }
