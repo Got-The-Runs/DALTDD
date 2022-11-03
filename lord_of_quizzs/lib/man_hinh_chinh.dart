@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lord_of_quizzs/bang_xep_hang.dart';
 import 'package:lord_of_quizzs/chon_linh_vuc.dart';
+import 'package:lord_of_quizzs/man_hinh_doi_mat_khau.dart';
 
 class ManHinhChinh extends StatefulWidget {
   const ManHinhChinh({super.key});
@@ -15,6 +17,7 @@ class ManHinhChinh extends StatefulWidget {
 
 class ManHinhChinhState extends State<ManHinhChinh> {
   @override
+  // ignore: dead_code
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -24,7 +27,14 @@ class ManHinhChinhState extends State<ManHinhChinh> {
         backgroundColor: Colors.transparent,
         leading: IconButton(
           icon: const Icon(Icons.settings_outlined),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const DoiMatKhau(),
+              ),
+            );
+          },
           iconSize: 30,
         ),
         actions: <Widget> [
@@ -36,13 +46,12 @@ class ManHinhChinhState extends State<ManHinhChinh> {
               color: Colors.white,
               ),
             ),
-          ),
           IconButton(
             icon: const Icon(Icons.add_circle_outline),
-            onPressed: () {},
+            onPressed: (() {}),
             iconSize: 30,
           ),
-        ],
+        ]
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -130,7 +139,14 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                 width: 350,
                 height: 85,
                 child: OutlinedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const BangXepHang(),
+                      ),
+                    );
+                  },
                   // ignore: sort_child_properties_last
                   child: const Text(
                     'Bảng Xếp Hạng',
@@ -166,7 +182,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(5.5),
+                padding: const EdgeInsets.all(5.5),
               )
             ],
           ),
