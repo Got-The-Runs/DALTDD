@@ -28,7 +28,7 @@ class DangKiState extends State<DangKi> {
           leading: IconButton(
            icon: Icon(Icons.chevron_left),
            onPressed: () => Navigator.pop(context),
-           iconSize: 30,  
+           iconSize: 35,  
         ),
       ),
       body: Container(
@@ -52,7 +52,7 @@ class DangKiState extends State<DangKi> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [       
               Container(
-                padding: const EdgeInsets.all(30),
+                padding: const EdgeInsets.all(35),
               ),
               Container(
                 padding: const EdgeInsets.all(10),

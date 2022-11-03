@@ -53,7 +53,7 @@ class DangNhapState extends State<DangNhap> {
               child: const Text(
                 'ĐĂNG NHẬP',
                 style: TextStyle(
-                  fontSize: 30,
+                  fontSize: 35,
                   color: Colors.white,
                   fontWeight: FontWeight.bold),
               ),

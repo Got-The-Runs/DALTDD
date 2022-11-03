@@ -31,7 +31,7 @@ class QuenMatKhauState extends State<QuenMatKhau> {
         leading: IconButton(
           icon:const Icon(Icons.chevron_left),
           onPressed: () => Navigator.pop(context),
-          iconSize: 30,
+          iconSize: 35,
         ),
       ),
       body: Container(
@@ -50,7 +50,7 @@ class QuenMatKhauState extends State<QuenMatKhau> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                padding: const EdgeInsets.all(30),
+                padding: const EdgeInsets.all(35),
               ),
               Container(
                 padding: const EdgeInsets.all(10),

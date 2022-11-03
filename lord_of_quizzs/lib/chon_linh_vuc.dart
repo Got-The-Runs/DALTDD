@@ -1,19 +1,20 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lord_of_quizzs/chon_linh_vuc.dart';
 
-class ManHinhChinh extends StatefulWidget {
-  const ManHinhChinh({super.key});
+class ChonLinhVuc extends StatefulWidget {
+  const ChonLinhVuc({super.key});
 
   @override
   State<StatefulWidget> createState() {
     // ignore: todo
     // TODO: implement createState
-    return ManHinhChinhState();
+    return ChonLinhVucState();
   }
 }
 
-class ManHinhChinhState extends State<ManHinhChinh> {
+class ChonLinhVucState extends State<ChonLinhVuc> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,8 +24,8 @@ class ManHinhChinhState extends State<ManHinhChinh> {
         elevation: 0,
         backgroundColor: Colors.transparent,
         leading: IconButton(
-          icon: const Icon(Icons.settings_outlined),
-          onPressed: () {},
+          icon: const Icon(Icons.chevron_left),
+          onPressed: () => Navigator.pop(context),
           iconSize: 35,
         ),
         actions: <Widget>[
@@ -60,21 +61,66 @@ class ManHinhChinhState extends State<ManHinhChinh> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                padding: const EdgeInsets.all(40),
+                padding: const EdgeInsets.all(50),
               ),
               Container(
-                padding: const EdgeInsets.all(10),
-                child: Image.asset('images/Logo.png',
-                    fit: BoxFit.cover, height: 145, width: 145),
+                padding: const EdgeInsets.only(bottom: 50),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Column(
+                      children: const <Widget>[
+                        Text(
+                          'Tên Người Chơi',
+                          style: TextStyle(
+                              fontSize: 25,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const <Widget>[
+                        Icon(
+                          CupertinoIcons.heart_fill,
+                          size: 26,
+                          color: Colors.white,
+                        ),
+                        Icon(
+                          CupertinoIcons.heart_fill,
+                          size: 26,
+                          color: Colors.white,
+                        ),
+                        Icon(
+                          CupertinoIcons.heart_fill,
+                          size: 26,
+                          color: Colors.white,
+                        ),
+                        Icon(
+                          CupertinoIcons.heart_fill,
+                          size: 26,
+                          color: Colors.white,
+                        ),
+                        Icon(
+                          CupertinoIcons.heart_fill,
+                          size: 26,
+                          color: Colors.white,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
               Container(
-                padding: const EdgeInsets.only(bottom: 15),
+                padding: const EdgeInsets.only(bottom: 30),
                 child: const Text(
-                  'Tên Người Chơi',
+                  'Chọn Lĩnh Vực ',
                   style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold),
+                    fontSize: 40,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               Container(
@@ -82,14 +128,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                 width: 350,
                 height: 85,
                 child: OutlinedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const ChonLinhVuc(),
-                      ),
-                    );
-                  },
+                  onPressed: () {},
                   // ignore: sort_child_properties_last
                   child: const Text(
                     'Chơi Mới',
@@ -165,7 +204,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(5.5),
+                padding: const EdgeInsets.all(5.5),
               )
             ],
           ),
