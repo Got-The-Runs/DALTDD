@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:lord_of_quizzs/dang_nhap.dart';
 import 'package:lord_of_quizzs/man_hinh_chinh.dart';
 import 'package:lord_of_quizzs/man_hinh_doi_mat_khau.dart';
+import 'package:lord_of_quizzs/tai_khoan.dart';
 
 import 'bang_xep_hang.dart';
 import 'chon_linh_vuc.dart';
@@ -72,7 +73,14 @@ class CaiDatState extends State<CaiDat> {
               width: 300,
               height: 80,
               child: OutlinedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ManHinhTaiKhoan(),
+                    ),
+                  );
+                },
                 // ignore: sort_child_properties_last
                 child: const Text(
                   'Tài Khoản',
