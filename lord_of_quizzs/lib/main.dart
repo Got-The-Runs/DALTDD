@@ -18,12 +18,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-        debugShowCheckedModeBanner: false,
-<<<<<<< HEAD
-        home: DangNhap(),
-=======
-        home: ManHinhTaiKhoan(),
->>>>>>> e57f2a2891dbe4ced2d0008054d4c2f9d280191a
-        );
+      debugShowCheckedModeBanner: false,
+      home: DangNhap(),
+    );
   }
 }
