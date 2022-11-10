@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'man_hinh_chinh.dart';
+
 class ChoiTroChoi extends StatefulWidget{
   const ChoiTroChoi({super.key});
   
@@ -38,8 +40,15 @@ class ChoiTroChoiState extends State<ChoiTroChoi>{
         elevation: 0,
         backgroundColor: Colors.transparent,
         leading: IconButton(
-          icon: const Icon(Icons.chevron_left),
-          onPressed: () => Navigator.pop(context),
+          icon: const Icon(Icons.settings_outlined),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ManHinhChinh(),
+              ),
+            );
+          },
           iconSize: 30,
         ),
         actions: <Widget>[
@@ -341,9 +350,9 @@ class ChoiTroChoiState extends State<ChoiTroChoi>{
       children: [
         CircularProgressIndicator(
           value: seconds / maxSeconds,
-          valueColor: AlwaysStoppedAnimation(Colors.white),
+          valueColor: AlwaysStoppedAnimation(Colors.greenAccent),
           strokeWidth: 10,
-          backgroundColor: Colors.greenAccent,
+          backgroundColor: Colors.red,
         ),
       Center(child: buildTime())
       ],
