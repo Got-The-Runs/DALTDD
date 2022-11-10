@@ -1,24 +1,37 @@
-import 'dart:ui';
+import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lord_of_quizzs/choi_tro_choi.dart';
 
-class ChonLinhVuc extends StatefulWidget {
-  const ChonLinhVuc({super.key});
-
+class ChoiTroChoi extends StatefulWidget{
+  const ChoiTroChoi({super.key});
+  
   @override
   State<StatefulWidget> createState() {
-    // ignore: todo
-    // TODO: implement createState
-    return ChonLinhVucState();
+    return ChoiTroChoiState();
   }
 }
 
-class ChonLinhVucState extends State<ChonLinhVuc> {
+class ChoiTroChoiState extends State<ChoiTroChoi>{
+  static const maxSeconds = 30;
+  int seconds = maxSeconds;
+  Timer? timer;
+  void startTimer(){
+    timer = Timer.periodic(Duration(seconds: 1), (_){
+      setState(() =>seconds--);
+    });
+  }
+  @override
+    void initState() {
+    super.initState();
+    startTimer();
+  } 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+     if(seconds == 0){
+      timer?.cancel();      
+     }
+     return Scaffold(                       
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         centerTitle: true,
@@ -61,13 +74,13 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
         // child: SingleChildScrollView(
           // physics:const NeverScrollableScrollPhysics(),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.only(top: 87),
               ),
               Container(
-                padding: const EdgeInsets.only(bottom: 40),
+                padding: const EdgeInsets.only(bottom: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
@@ -78,7 +91,8 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
                           style: TextStyle(
                               fontSize: 20,
                               color: Colors.white,
-                              fontWeight: FontWeight.bold),
+                              fontWeight: FontWeight.bold
+                          ),
                         ),
                       ],
                     ),
@@ -111,114 +125,216 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
                           color: Colors.white,
                         ),
                       ],
-                    ),
+                    ),                  
                   ],
-                ),
+                ),            
               ),
               Container(
-                padding: const EdgeInsets.only(bottom: 30),
-                child: const Text(
-                  'Chọn Lĩnh Vực ',
+                padding:  EdgeInsets.all(5),
+              ),
+              Row(
+                children: [
+                  Container(
+                    padding:const EdgeInsets.only(left: 30),
+                    child:const Text("Điểm: 0",
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold
+                      ),
+                    ),
+                  ),       
+                  Container(
+                    padding:const EdgeInsets.only(left: 150),
+                    child: buildTimer(),                           
+                  ),
+                ],
+              ), 
+              Container(
+                padding:  EdgeInsets.all(5),
+              ),
+              Container(
+                padding:const EdgeInsets.all(12),
+                child:const Text("Câu 1: Đại Ngu là quốc hiệu của triều đại nào ?", 
+                  textAlign: TextAlign.center, 
                   style: TextStyle(
-                    fontSize: 35,
+                    fontSize: 20,
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
+                )
+              ),
+              Container(
+                padding:const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                width: 350,
+                height: 75,
+                child: OutlinedButton(
+                  onPressed: () {},
+                  // ignore: sort_child_properties_last
+                  child: const Text(
+                    'A. Triều Ngô',
+                    style: TextStyle(fontSize: 20, color: Colors.white),
+                  ),
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.transparent),
+                      side: MaterialStateProperty.all(const BorderSide(
+                          color: Colors.white,
+                          width: 2.0,
+                          style: BorderStyle.solid))),
                 ),
               ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
                 width: 350,
-                height: 85,
+                height: 75,
                 child: OutlinedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const ChoiTroChoi(),
+                  onPressed: () {},
+                  // ignore: sort_child_properties_last
+                  child: const Text(
+                    'B. Triều Hồ',
+                    style: TextStyle(fontSize: 20, color: Colors.white),
+                  ),
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.transparent),
+                      side: MaterialStateProperty.all(const BorderSide(
+                          color: Colors.white,
+                          width: 2.0,
+                          style: BorderStyle.solid))),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                width: 350,
+                height: 75,
+                child: OutlinedButton(
+                  onPressed: () {},
+                  // ignore: sort_child_properties_last
+                  child: const Text(
+                    'C. Các chúa Nguyễn',
+                    style: TextStyle(fontSize: 20, color: Colors.white),
+                  ),
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.transparent),
+                      side: MaterialStateProperty.all(const BorderSide(
+                          color: Colors.white,
+                          width: 2.0,
+                          style: BorderStyle.solid))),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                width: 350,
+                height: 75,
+                child: OutlinedButton(
+                  onPressed: () {},
+                  // ignore: sort_child_properties_last
+                  child: const Text(
+                    'D. Nhà Tây Sơn',
+                    style: TextStyle(fontSize: 20, color: Colors.white),
+                  ),
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.transparent),
+                      side: MaterialStateProperty.all(const BorderSide(
+                          color: Colors.white,
+                          width: 2.0,
+                          style: BorderStyle.solid))),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  OutlinedButton(
+                    onPressed: () {  }, 
+                    child: Text('50:50', style: TextStyle(fontSize: 17, color: Colors.white),),
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.transparent),
+                      side: MaterialStateProperty.all(const BorderSide(
+                          color: Colors.white,
+                          width: 2.0,
+                          style: BorderStyle.solid,
+                        )
                       )
-                    );
-                  },
-                  // ignore: sort_child_properties_last
-                  child: const Text(
-                    'Khoa Học Kỹ Thuật',
-                    style: TextStyle(fontSize: 20, color: Colors.white),
+                    ),
                   ),
-                  style: ButtonStyle(
+                  OutlinedButton(
+                    onPressed: () {  }, 
+                    child: Icon(Icons.people, color: Colors.white,),
+                    style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all(Colors.transparent),
                       side: MaterialStateProperty.all(const BorderSide(
                           color: Colors.white,
                           width: 2.0,
-                          style: BorderStyle.solid))),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-                width: 350,
-                height: 85,
-                child: OutlinedButton(
-                  onPressed: () {},
-                  // ignore: sort_child_properties_last
-                  child: const Text(
-                    'Văn Hóa-Xã Hội-Nghệ Thuật',
-                    style: TextStyle(fontSize: 20, color: Colors.white),
+                          style: BorderStyle.solid,
+                        )
+                      )
+                    ),
                   ),
-                  style: ButtonStyle(
+                  OutlinedButton(
+                    onPressed: () {  }, 
+                    child: Icon(Icons.phone, color: Colors.white),
+                    style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all(Colors.transparent),
                       side: MaterialStateProperty.all(const BorderSide(
                           color: Colors.white,
                           width: 2.0,
-                          style: BorderStyle.solid))),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-                width: 350,
-                height: 85,
-                child: OutlinedButton(
-                  onPressed: () {},
-                  // ignore: sort_child_properties_last
-                  child: const Text(
-                    'Lịch Sử-Địa Lý',
-                    style: TextStyle(fontSize: 20, color: Colors.white),
+                          style: BorderStyle.solid,
+                        )
+                      )
+                    ),
                   ),
-                  style: ButtonStyle(
+                   OutlinedButton(
+                    onPressed: () {  }, 
+                    child: Icon(Icons.diamond_rounded, color: Colors.white),
+                    style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all(Colors.transparent),
                       side: MaterialStateProperty.all(const BorderSide(
                           color: Colors.white,
                           width: 2.0,
-                          style: BorderStyle.solid))),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-                width: 350,
-                height: 85,
-                child: OutlinedButton(
-                  onPressed: () {},
-                  // ignore: sort_child_properties_last
-                  child: const Text(
-                    'Thể Thao',
-                    style: TextStyle(fontSize: 20, color: Colors.white),
+                          style: BorderStyle.solid,
+                        )
+                      )
+                    ),
                   ),
-                  style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(Colors.transparent),
-                      side: MaterialStateProperty.all(const BorderSide(
-                          color: Colors.white,
-                          width: 2.0,
-                          style: BorderStyle.solid))),
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.all(5.5),
+                ],
               )
             ],
           ),
         ),
-      );
+        
+     );
   }
+  Widget buildTime(){
+    return Text('$seconds',
+     style: TextStyle(
+       fontSize: 20,
+       color: Colors.white,
+       fontWeight: FontWeight.bold
+      ),
+    );
+  }
+
+  Widget buildTimer() =>SizedBox(
+    width: 50,
+    height: 50,
+    child: Stack(
+      fit: StackFit.expand,
+      children: [
+        CircularProgressIndicator(
+          value: seconds / maxSeconds,
+          valueColor: AlwaysStoppedAnimation(Colors.white),
+          strokeWidth: 10,
+          backgroundColor: Colors.greenAccent,
+        ),
+      Center(child: buildTime())
+      ],
+    ),
+  );
 }
