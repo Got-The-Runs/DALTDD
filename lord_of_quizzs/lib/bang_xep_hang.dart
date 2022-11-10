@@ -26,7 +26,7 @@ class BangXepHangState extends State<BangXepHang>{
            iconSize: 30,  
         ),
         actions: <Widget> [
-          const Icon(Icons.diamond_outlined, size: 30),
+          const Icon(Icons.diamond_rounded, size: 30),
          const Center(
           child: Text(
             '9999',

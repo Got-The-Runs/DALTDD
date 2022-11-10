@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lord_of_quizzs/choi_tro_choi.dart';
 
 class ChonLinhVuc extends StatefulWidget {
   const ChonLinhVuc({super.key});
@@ -29,7 +30,7 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
           iconSize: 30,
         ),
         actions: <Widget>[
-          const Icon(Icons.diamond_outlined, size: 30),
+          const Icon(Icons.diamond_rounded, size: 30),
           const Center(
             child: Text(
               '9999',
@@ -130,7 +131,14 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
                 width: 350,
                 height: 85,
                 child: OutlinedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ChoiTroChoi(),
+                      )
+                    );
+                  },
                   // ignore: sort_child_properties_last
                   child: const Text(
                     'Khoa Học Kỹ Thuật',
