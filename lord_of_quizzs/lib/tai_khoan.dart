@@ -64,7 +64,6 @@ class ManHinhTaiKhoanState extends State<ManHinhTaiKhoan> {
            Container(
               padding: const EdgeInsets.all(15),
               child: TextField(
-                obscureText: true,
                 style:const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   labelText: 'Tên người chơi',
@@ -85,8 +84,8 @@ class ManHinhTaiKhoanState extends State<ManHinhTaiKhoan> {
               Container(
               padding: const EdgeInsets.all(15),
               child: TextField(
-                obscureText: true,
                 style:const TextStyle(color: Colors.white),
+                enabled: false,
                 decoration: InputDecoration(
                   labelText: 'Tên đăng nhập',
                   labelStyle: const TextStyle(color: Colors.white),
@@ -106,7 +105,6 @@ class ManHinhTaiKhoanState extends State<ManHinhTaiKhoan> {
               Container(
               padding: const EdgeInsets.all(15),
               child: TextField(
-                obscureText: true,
                 style:const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   labelText: 'Email',
