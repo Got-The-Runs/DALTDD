@@ -129,9 +129,6 @@ class ChoiTroChoiState extends State<ChoiTroChoi>{
                   ],
                 ),            
               ),
-              Container(
-                padding:  EdgeInsets.all(5),
-              ),
               Row(
                 children: [
                   Container(
@@ -171,10 +168,13 @@ class ChoiTroChoiState extends State<ChoiTroChoi>{
                 child: OutlinedButton(
                   onPressed: () {},
                   // ignore: sort_child_properties_last
-                  child: const Text(
-                    'A. Triều Ngô',
-                    style: TextStyle(fontSize: 20, color: Colors.white),
-                  ),
+                  child:const Align(
+                    alignment: Alignment.centerLeft,
+                    child:  Text(
+                      'A. Triều Ngô',
+                      style: TextStyle(fontSize: 20, color: Colors.white,),
+                    ),
+                  ),           
                   style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all(Colors.transparent),
@@ -191,10 +191,13 @@ class ChoiTroChoiState extends State<ChoiTroChoi>{
                 child: OutlinedButton(
                   onPressed: () {},
                   // ignore: sort_child_properties_last
-                  child: const Text(
-                    'B. Triều Hồ',
-                    style: TextStyle(fontSize: 20, color: Colors.white),
-                  ),
+                  child:const Align(
+                    alignment: Alignment.centerLeft,
+                    child:  Text(
+                        'B. Triều Hồ',
+                      style: TextStyle(fontSize: 20, color: Colors.white,),
+                    ),
+                  ),     
                   style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all(Colors.transparent),
@@ -211,10 +214,13 @@ class ChoiTroChoiState extends State<ChoiTroChoi>{
                 child: OutlinedButton(
                   onPressed: () {},
                   // ignore: sort_child_properties_last
-                  child: const Text(
-                    'C. Các chúa Nguyễn',
-                    style: TextStyle(fontSize: 20, color: Colors.white),
-                  ),
+                  child:const Align(
+                    alignment: Alignment.centerLeft,
+                    child:  Text(
+                      'C. Các chúa Nguyễn',
+                      style: TextStyle(fontSize: 20, color: Colors.white,),
+                    ),
+                  ),     
                   style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all(Colors.transparent),
@@ -231,10 +237,13 @@ class ChoiTroChoiState extends State<ChoiTroChoi>{
                 child: OutlinedButton(
                   onPressed: () {},
                   // ignore: sort_child_properties_last
-                  child: const Text(
-                    'D. Nhà Tây Sơn',
-                    style: TextStyle(fontSize: 20, color: Colors.white),
-                  ),
+                  child:const Align(
+                    alignment: Alignment.centerLeft,
+                    child:  Text(
+                      'D. Nhà Tây Sơn',
+                      style: TextStyle(fontSize: 20, color: Colors.white,),
+                    ),
+                  ),     
                   style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all(Colors.transparent),
@@ -243,6 +252,9 @@ class ChoiTroChoiState extends State<ChoiTroChoi>{
                           width: 2.0,
                           style: BorderStyle.solid))),
                 ),
+              ),
+              Container(
+                padding: EdgeInsets.all(10),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -313,7 +325,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi>{
   }
   Widget buildTime(){
     return Text('$seconds',
-     style: TextStyle(
+     style:const TextStyle(
        fontSize: 20,
        color: Colors.white,
        fontWeight: FontWeight.bold
