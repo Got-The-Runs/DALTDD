@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'mua_credit.dart';
+
 class BangXepHang extends StatefulWidget{
   const BangXepHang({super.key});
   @override
@@ -38,7 +40,14 @@ class BangXepHangState extends State<BangXepHang>{
           ),
           IconButton(
             icon: const Icon(Icons.add_circle_outline),
-            onPressed: () {},
+            onPressed: () {
+                Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MuaCredit(),  
+                )
+               );
+            },
             iconSize: 30,
           ),
         ],

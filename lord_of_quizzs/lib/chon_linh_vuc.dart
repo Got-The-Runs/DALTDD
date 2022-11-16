@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lord_of_quizzs/choi_tro_choi.dart';
 
+import 'mua_credit.dart';
+
 class ChonLinhVuc extends StatefulWidget {
   const ChonLinhVuc({super.key});
 
@@ -42,7 +44,14 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
             ),
           IconButton(
             icon: const Icon(Icons.add_circle_outline),
-            onPressed: () {},
+            onPressed: () {
+                Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MuaCredit(),  
+                )
+               );
+            },
             iconSize: 30,
           ),
         ],
