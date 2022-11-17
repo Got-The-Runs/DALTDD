@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lord_of_quizzs/bang_xep_hang.dart';
 import 'package:lord_of_quizzs/cai_dat.dart';
 import 'package:lord_of_quizzs/chon_linh_vuc.dart';
+import 'package:lord_of_quizzs/lich_su.dart';
 import 'package:lord_of_quizzs/man_hinh_doi_mat_khau.dart';
 import 'package:lord_of_quizzs/mua_credit.dart';
 
@@ -128,7 +129,14 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                 width: 350,
                 height: 85,
                 child: OutlinedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                     Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => LichSu(),  
+                )
+               );
+                  },
                   // ignore: sort_child_properties_last
                   child: const Text(
                     'Lịch Sử Chơi',
