@@ -161,7 +161,7 @@ class DoiMatKhauState extends State<DoiMatKhau> {
             ),
           ),
             Container(
-              padding: const EdgeInsets.only(top: 25),
+              padding: const EdgeInsets.all(15),
               width: 200,
               height: 80,
               child: OutlinedButton(       
