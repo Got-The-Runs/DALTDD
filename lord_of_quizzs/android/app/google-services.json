@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "109042182833",
+    "project_id": "lord-of-quizzs",
+    "storage_bucket": "lord-of-quizzs.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:109042182833:android:8028fc9235380082f3d090",
+        "android_client_info": {
+          "package_name": "com.example.lord_of_quizzs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "109042182833-h9qcsbpaoseslj642rtephehpbk9f186.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA26oe0m7tYgib4MpkSx1dzvia5qCcHWeU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "109042182833-h9qcsbpaoseslj642rtephehpbk9f186.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
