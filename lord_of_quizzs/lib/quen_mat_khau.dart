@@ -24,8 +24,6 @@ class QuenMatKhauState extends State<QuenMatKhau> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        centerTitle: true,
-        title: const Text('Quên mật khẩu'),
         elevation: 0,   
         backgroundColor: Colors.transparent,     
         leading: IconButton(
@@ -35,6 +33,7 @@ class QuenMatKhauState extends State<QuenMatKhau> {
         ),
       ),
       body: Container(
+        height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
           gradient: LinearGradient(colors: [
             Color(0xFF701ebd),
@@ -50,10 +49,7 @@ class QuenMatKhauState extends State<QuenMatKhau> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                padding: const EdgeInsets.all(35),
-              ),
-              Container(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.only(top: 60),
                 child: Image.asset(
                   'images/Logo.png',
                   fit: BoxFit.cover,
@@ -175,9 +171,6 @@ class QuenMatKhauState extends State<QuenMatKhau> {
                 ),  
                ),
               ),
-              Container(
-                padding: EdgeInsets.all(0.5),
-              )
             ],    
           ),
         ),

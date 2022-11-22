@@ -20,32 +20,31 @@ class DangNhapState extends State<DangNhap> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color(0xFF701ebd),
-              Color.fromARGB(255, 57, 86, 250),
-          ],
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-          ),
-        ),  
-        child: SingleChildScrollView(
+        extendBodyBehindAppBar: true,
+      body:   
+           Container(
+          height: MediaQuery.of(context).size.height,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color(0xFF701ebd),
+                Color.fromARGB(255, 57, 86, 250),
+            ],
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+            ),
+          ),  
+        child:SingleChildScrollView( 
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [         
             Container(
-              padding: const EdgeInsets.all(17),
-            ),
-            Container(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.only(top: 40),
               child: Image.asset(
                 'images/Logo.png',
                 fit: BoxFit.cover,
                 height: 120,
                 width: 120
-
               ),
             ),  
             Container(
@@ -171,13 +170,10 @@ class DangNhapState extends State<DangNhap> {
                   ),
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.all(10.5),
-              ),
             ],
           ),
         ),
       ),
-    );
+      );
   }
 }

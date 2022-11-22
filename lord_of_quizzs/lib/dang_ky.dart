@@ -21,8 +21,6 @@ class DangKiState extends State<DangKi> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-          centerTitle: true,
-          title:const Text('Đăng ký'),
           backgroundColor: Colors.transparent, 
           elevation: 0, 
           leading: IconButton(
@@ -32,6 +30,7 @@ class DangKiState extends State<DangKi> {
         ),
       ),
       body: Container(
+          height: MediaQuery.of(context).size.height,
           decoration: const BoxDecoration(
             gradient: LinearGradient(colors: [
               Color(0xFF701ebd),
@@ -52,10 +51,7 @@ class DangKiState extends State<DangKi> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [       
               Container(
-                padding: const EdgeInsets.all(35),
-              ),
-              Container(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.only(top: 60),
                 child: Image.asset(
                   'images/Logo.png',
                   fit: BoxFit.cover,
@@ -180,9 +176,6 @@ class DangKiState extends State<DangKi> {
                   ),
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.all(0.5),
-              )
             ],
           )
         ),
