@@ -180,7 +180,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                               ),
                             ),
                             Container(
-                              padding: const EdgeInsets.all(5.5),
+                              padding: const EdgeInsets.only(bottom: 33),
                             ),
                           ],
                         ),
