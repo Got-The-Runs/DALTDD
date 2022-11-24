@@ -115,7 +115,7 @@ class DangNhapState extends State<DangNhap> {
                                 builder: (context) => ManHinhChinh(),
                               ),
                             );
-                          } else {
+                          }  else {
                             final snackBar = SnackBar(
                                 content:
                                     Text('Email hoặc mật khẩu không đúng'));
@@ -172,7 +172,7 @@ class DangNhapState extends State<DangNhap> {
                         builder: (context) => const DangKi(),
                       ),
                     ).then((value) {
-                      if(value !=null){
+                      if (value != null) {
                         final snackBar = SnackBar(content: Text(value));
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       }
