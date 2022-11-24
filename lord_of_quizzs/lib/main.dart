@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:lord_of_quizzs/bang_xep_hang.dart';
 import 'package:lord_of_quizzs/cai_dat.dart';
@@ -10,8 +11,10 @@ import 'package:lord_of_quizzs/man_hinh_chinh.dart';
 import 'package:lord_of_quizzs/man_hinh_doi_mat_khau.dart';
 import 'package:lord_of_quizzs/tai_khoan.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main(List<String> args) async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
