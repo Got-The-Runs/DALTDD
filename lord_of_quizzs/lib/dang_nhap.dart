@@ -171,7 +171,12 @@ class DangNhapState extends State<DangNhap> {
                       MaterialPageRoute(
                         builder: (context) => const DangKi(),
                       ),
-                    );
+                    ).then((value) {
+                      if(value !=null){
+                        final snackBar = SnackBar(content: Text(value));
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      }
+                    });
                   },
                   child: const Text(
                     'Đăng ký',
