@@ -23,6 +23,7 @@ class DangNhapState extends State<DangNhap> {
   TextEditingController txtEmail = TextEditingController();
   TextEditingController txtPass = TextEditingController();
   final _auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,30 +104,20 @@ class DangNhapState extends State<DangNhap> {
                 child: OutlinedButton(
                     onPressed: () async {
                       try {
-                        final _user = _auth.signInWithEmailAndPassword(
+                        final _user = await _auth.signInWithEmailAndPassword(
                             email: txtEmail.text, password: txtPass.text);
-                        _auth.authStateChanges().listen((event) {
+                        await _auth.authStateChanges().listen((event) {
                           if (event != null) {
                             txtEmail.clear();
                             txtPass.clear();
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ManHinhChinh(),
-                              ),
-                            );
-                          }  else {
-                            final snackBar = SnackBar(
-                                content:
-                                    Text('Email hoặc mật khẩu không đúng'));
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
+                            Navigator.pushNamedAndRemoveUntil(
+                                context, 'home', (route) => false);
                           }
                         });
-                      } catch (e) {
-                        final snackBar =
-                            SnackBar(content: Text('Lỗi Kết nối đến Server'));
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      } catch (e) {                       
+                          final snackBar = SnackBar(
+                              content: Text('Email hoặc mật khẩu không đúng'));
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       }
                     },
                     // ignore: sort_child_properties_last

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lord_of_quizzs/bang_xep_hang.dart';
@@ -133,12 +134,9 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                               height: 80,
                               child: OutlinedButton(
                                 onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const DangNhap(),
-                                    ),
-                                  );
+                                  FirebaseAuth.instance.signOut();
+                                  Navigator.pushNamedAndRemoveUntil(
+                                      context, 'welcome', (route) => false);
                                 },
                                 // ignore: sort_child_properties_last
                                 child: const Text(

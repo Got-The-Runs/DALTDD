@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:lord_of_quizzs/bang_xep_hang.dart';
@@ -18,13 +19,16 @@ Future<void> main(List<String> args) async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: DangNhap(),
+      initialRoute:
+          FirebaseAuth.instance.currentUser == null ? 'welcome' : 'home',
+      routes: {
+        'welcome': (context) => DangNhap(),
+        'home': (context) => ManHinhChinh(),
+      },
     );
   }
 }
