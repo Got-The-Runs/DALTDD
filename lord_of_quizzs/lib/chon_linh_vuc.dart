@@ -1,8 +1,11 @@
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lord_of_quizzs/choi_tro_choi.dart';
+import 'package:lord_of_quizzs/linh_vuc_object.dart';
+import 'package:lord_of_quizzs/linh_vuc_provider.dart';
 
 import 'mua_credit.dart';
 
@@ -18,6 +21,18 @@ class ChonLinhVuc extends StatefulWidget {
 }
 
 class ChonLinhVucState extends State<ChonLinhVuc> {
+  List<LinhVucObject> linhVuc = [];
+  void _LoadLinhVuc() async {
+    final data = await LinhVucProvider.getData();
+    setState(() {});
+    linhVuc = data;
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _LoadLinhVuc();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,6 +72,7 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
         ],
       ),
       body: Container(
+        height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
@@ -66,17 +82,14 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
           ),
-        ),
-        // child: SingleChildScrollView(
+        ),   
           // physics:const NeverScrollableScrollPhysics(),
-          child: Column(
+           child: SingleChildScrollView(
+            child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                padding: const EdgeInsets.all(20),
-              ),
-              Container(
-                padding: const EdgeInsets.only(bottom: 40),
+                padding: const EdgeInsets.only(top: 80),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
@@ -125,7 +138,7 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.only(bottom: 30),
+                padding: const EdgeInsets.only(top: 20),
                 child: const Text(
                   'Chọn Lĩnh Vực ',
                   style: TextStyle(
@@ -134,8 +147,14 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-              ),
-              Container(
+              ), 
+              ListView.builder(
+                padding: EdgeInsets.only(bottom: 20, top: 20),
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: linhVuc.length, 
+                itemBuilder: (BuildContext context, int index) { 
+                  return Container(
                 padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
                 width: 350,
                 height: 85,
@@ -149,8 +168,8 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
                     );
                   },
                   // ignore: sort_child_properties_last
-                  child: const Text(
-                    'Khoa Học Kỹ Thuật',
+                  child:  Text(
+                    linhVuc[index].tenLinhVuc,
                     style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
                   style: ButtonStyle(
@@ -160,74 +179,14 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
                           color: Colors.white,
                           width: 2.0,
                           style: BorderStyle.solid))),
-                ),
+                    ),
+                  );
+                },
               ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-                width: 350,
-                height: 85,
-                child: OutlinedButton(
-                  onPressed: () {},
-                  // ignore: sort_child_properties_last
-                  child: const Text(
-                    'Văn Hóa-Xã Hội-Nghệ Thuật',
-                    style: TextStyle(fontSize: 20, color: Colors.white),
-                  ),
-                  style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(Colors.transparent),
-                      side: MaterialStateProperty.all(const BorderSide(
-                          color: Colors.white,
-                          width: 2.0,
-                          style: BorderStyle.solid))),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-                width: 350,
-                height: 85,
-                child: OutlinedButton(
-                  onPressed: () {},
-                  // ignore: sort_child_properties_last
-                  child: const Text(
-                    'Lịch Sử-Địa Lý',
-                    style: TextStyle(fontSize: 20, color: Colors.white),
-                  ),
-                  style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(Colors.transparent),
-                      side: MaterialStateProperty.all(const BorderSide(
-                          color: Colors.white,
-                          width: 2.0,
-                          style: BorderStyle.solid))),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-                width: 350,
-                height: 85,
-                child: OutlinedButton(
-                  onPressed: () {},
-                  // ignore: sort_child_properties_last
-                  child: const Text(
-                    'Thể Thao',
-                    style: TextStyle(fontSize: 20, color: Colors.white),
-                  ),
-                  style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(Colors.transparent),
-                      side: MaterialStateProperty.all(const BorderSide(
-                          color: Colors.white,
-                          width: 2.0,
-                          style: BorderStyle.solid))),
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.all(5.5),
-              )
-            ],
+            ],      
           ),
         ),
-      );
+      ),
+    );
   }
 }

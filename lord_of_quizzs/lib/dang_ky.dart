@@ -10,7 +10,7 @@ import 'package:lord_of_quizzs/dang_nhap.dart';
 
 class DangKi extends StatefulWidget {
   const DangKi({super.key});
-
+  
   @override
   State<StatefulWidget> createState() {
     // ignore: todo
@@ -22,7 +22,7 @@ class DangKi extends StatefulWidget {
 class DangKiState extends State<DangKi> {
   final _formKey = GlobalKey<FormState>();
   CollectionReference thongTin = FirebaseFirestore.instance.collection('thong_tin');
-  TextEditingController txtTenTaiKhoan = TextEditingController();
+  TextEditingController txtTenNguoiChoi = TextEditingController();
   int tienAo =0;
   int trangThai = 1;
   TextEditingController txtEmail = TextEditingController();
@@ -30,7 +30,7 @@ class DangKiState extends State<DangKi> {
   TextEditingController txtNhapLaiMatKhau = TextEditingController();
   final _auth = FirebaseAuth.instance;
   final CollectionReference<Map<String, dynamic>> listThongTin = FirebaseFirestore.instance.collection('thong_tin');
-
+  DateTime now = DateTime.now();
   @override
   Widget build(BuildContext context) {
     // Future<int> countUsers() async {
@@ -38,15 +38,15 @@ class DangKiState extends State<DangKi> {
     //   int id = query.count;
     //   return id ;
     // }
+   
      Future<void> addUser() {
       // Call the user's CollectionReference to add a new user
       return thongTin 
           .add({
-            'id': 3 ,
+            'id': 4,
             'email': txtEmail.text, 
             'mat_khau': txtMatKhau.text, 
-            'ten_nguoi_choi': txtTenTaiKhoan.text,
-            'ten_tai_khoan': txtTenTaiKhoan.text,
+            'ten_nguoi_choi': txtTenNguoiChoi.text,
             'tien_ao': tienAo,
             'trang_thai': trangThai
           })
@@ -110,16 +110,16 @@ class DangKiState extends State<DangKi> {
               Container(
                 padding: const EdgeInsets.all(10),
                 child: TextFormField(
-                  controller: txtTenTaiKhoan,
+                  controller: txtTenNguoiChoi,
                   style:const TextStyle(color: Colors.white),
                   validator: (text) {
                     if (text == null || text.isEmpty) {
-                      return 'Tên tài khoản trống';
+                      return 'Tên người chơi trống';
                     }
                     return null;
                   },
                   decoration: InputDecoration(
-                    labelText: 'Tên đăng nhập',
+                    labelText: 'Tên Người chơi',
                     labelStyle: const TextStyle(color: Colors.white),
                     enabledBorder:  OutlineInputBorder(
                       borderSide:const BorderSide(
@@ -200,6 +200,9 @@ class DangKiState extends State<DangKi> {
                     if (text == null || text.isEmpty) {
                       return 'Nhập lại mật khẩu trống';
                     }
+                    if(txtNhapLaiMatKhau.text!=txtMatKhau.text){
+                      return 'Nhập lại mật khẩu không trùng với mật khẩu';
+                    }                  
                     return null;
                   },
                   decoration: InputDecoration(

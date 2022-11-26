@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lord_of_quizzs/bang_xep_hang.dart';
@@ -16,6 +17,7 @@ class ManHinhTaiKhoan extends StatefulWidget {
 }
 
 class ManHinhTaiKhoanState extends State<ManHinhTaiKhoan> {
+  var auth=FirebaseAuth.instance.currentUser!;
   @override
   // ignore: dead_code
   Widget build(BuildContext context) {
@@ -85,30 +87,11 @@ class ManHinhTaiKhoanState extends State<ManHinhTaiKhoan> {
                     )
                   ),
                   Container(
-                    padding: const EdgeInsets.all(15),
-                    child: TextField(
-                      style:const TextStyle(color: Colors.white),
-                      enabled: false,
-                      decoration: InputDecoration(
-                        labelText: 'Tên đăng nhập',
-                        labelStyle: const TextStyle(color: Colors.white),
-                          enabledBorder:  OutlineInputBorder(
-                            borderSide:const BorderSide(
-                              color: Colors.white
-                            ),                   
-                            borderRadius: BorderRadius.circular(25),
-                          ),       
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25),
-                          ), 
-                        prefixIcon: const Icon(Icons.person, color: Colors.white),
-                      ),
-                    )
-                  ),  
-                  Container(
                   padding: const EdgeInsets.all(15),
                   child: TextField(
                     style:const TextStyle(color: Colors.white),
+                    // UserAccountsDrawerHeader(accountEmail: Text(auth.email!),
+                    // accountName:Text('')),
                     decoration: InputDecoration(
                       labelText: 'Email',
                       labelStyle: const TextStyle(color: Colors.white),
