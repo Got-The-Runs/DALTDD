@@ -1,10 +1,8 @@
-// ignore: unused_import
-import 'dart:ffi';
 // ignore: unnecessary_import
-import 'dart:ui';
-
 // ignore: unnecessary_import
-import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class QuenMatKhau extends StatefulWidget{
@@ -19,6 +17,26 @@ class QuenMatKhau extends StatefulWidget{
 }
 
 class QuenMatKhauState extends State<QuenMatKhau> {
+
+  final _formKey = GlobalKey<FormState>();
+  var txtEmail = TextEditingController();
+  var txtMatKhau = TextEditingController();
+  var txtMatKhauXT = TextEditingController();
+
+  var querySnapshots;
+  var documentID;
+  final _auth = FirebaseAuth.instance;
+
+  CollectionReference user = FirebaseFirestore.instance.collection("thong_tin");
+  Future<void> updateUser(var docID){
+    return user
+    .doc(docID)
+    .update({'mat_khau' : txtMatKhau.text})
+    .then((value) => Navigator.pop(context, 'Quên mật khẩu thành công'))
+    .catchError((error) => Navigator.pop(context, 'Quên mật khẩu thất bại $error'));   
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,29 +83,11 @@ class QuenMatKhauState extends State<QuenMatKhau> {
                   fontWeight: FontWeight.bold ),
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.all(10),
-                child: TextField(
-                  style:const TextStyle(color: Colors.white),
-                  decoration: InputDecoration(                    
-                    labelText: 'Tên đăng nhập',
-                    labelStyle: const TextStyle(color: Colors.white),
-                    enabledBorder:  OutlineInputBorder(
-                      borderSide:const BorderSide(
-                        color: Colors.white
-                      ),                   
-                      borderRadius: BorderRadius.circular(25),
-                    ),       
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25),
-                    ), 
-                    prefixIcon: const Icon(Icons.person, color: Colors.white),
-                  ),
-                )
-              ),
+
               Container(
                 padding: const EdgeInsets.all(10),
                 child:  TextField(
+                  controller: txtEmail,
                   style:const TextStyle(color: Colors.white),
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
@@ -109,6 +109,7 @@ class QuenMatKhauState extends State<QuenMatKhau> {
               Container(
                 padding: const EdgeInsets.all(10),
                 child: TextField(
+                  controller: txtMatKhau,
                 obscureText: true,
                 style:const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
@@ -130,6 +131,7 @@ class QuenMatKhauState extends State<QuenMatKhau> {
             Container(
               padding: const EdgeInsets.all(10),
               child:  TextField(
+              controller: txtMatKhauXT,
               obscureText: true,
               style:const TextStyle(color: Colors.white),
               decoration: InputDecoration(
@@ -153,7 +155,30 @@ class QuenMatKhauState extends State<QuenMatKhau> {
               width: 200,
               height: 80,
               child: OutlinedButton(       
-                onPressed: (){},
+                onPressed: () async {
+                      try{
+                          querySnapshots = await user.get();
+                          for (var snapshot in querySnapshots.docs) {
+                          if(txtEmail.text == snapshot['email']){
+                            documentID = snapshot.id;
+                          }
+  }
+                        if(txtMatKhau.text == txtMatKhauXT.text){  
+                          final user = _auth.sendPasswordResetEmail(email: txtEmail.text);
+                            updateUser(documentID);            
+                            Navigator.pop(context, 'Quên mật khẩu thành công');
+                            
+                          }else {
+                            final snackBar = SnackBar(content: Text('Mật khẩu xác nhận không trùng khớp'));
+                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          }
+                      }
+                      catch(e){
+                        final snackBar = SnackBar(content: Text('Có lỗi xảy ra !'));
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      }                       
+                                                         
+                  },
                 // ignore: sort_child_properties_last
                 child: const Text('Xác nhận', 
                   style: TextStyle(fontSize: 20,
