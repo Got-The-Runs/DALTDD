@@ -3,9 +3,9 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lord_of_quizzs/model/linh_vuc_object.dart';
+import 'package:lord_of_quizzs/model/linh_vuc_provider.dart';
 import 'package:lord_of_quizzs/choi_tro_choi.dart';
-import 'package:lord_of_quizzs/linh_vuc_object.dart';
-import 'package:lord_of_quizzs/linh_vuc_provider.dart';
 
 import 'mua_credit.dart';
 
@@ -163,7 +163,7 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const ChoiTroChoi(),
+                        builder: (context) =>  ChoiTroChoi(idLinhVuc: linhVuc[index].idLinhVuc,),
                       )
                     );
                   },

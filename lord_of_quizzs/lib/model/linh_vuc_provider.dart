@@ -8,7 +8,7 @@ class LinhVucProvider {
   //ignore: non_constant_identifier_names
     static Future<List<LinhVucObject>> getData() async {
       List<LinhVucObject> linhVuc =[];
-    QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('linh-vuc').get(); 
+    QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('linh-vuc').get();
     // ignore: no_leading_underscores_for_local_identifiers
      linhVuc = snapshot.docs.map((json) => LinhVucObject.fromJson(json.data()as Map<String, dynamic>)).toList();
     return linhVuc;

@@ -1,9 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lord_of_quizzs/bang_xep_hang.dart';
-import 'package:lord_of_quizzs/chon_linh_vuc.dart';
-import 'package:lord_of_quizzs/man_hinh_doi_mat_khau.dart';
 
 class ManHinhTaiKhoan extends StatefulWidget {
   const ManHinhTaiKhoan({super.key});
@@ -17,7 +12,7 @@ class ManHinhTaiKhoan extends StatefulWidget {
 }
 
 class ManHinhTaiKhoanState extends State<ManHinhTaiKhoan> {
-  var auth=FirebaseAuth.instance.currentUser!;
+  // var auth=FirebaseAuth.instance.currentUser!;
   @override
   // ignore: dead_code
   Widget build(BuildContext context) {
