@@ -106,50 +106,6 @@ class QuenMatKhauState extends State<QuenMatKhau> {
                   ),
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.all(10),
-                child: TextField(
-                  controller: txtMatKhau,
-                obscureText: true,
-                style:const TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  labelText: 'Mật khẩu mới',
-                  labelStyle: const TextStyle(color: Colors.white),
-                  enabledBorder:  OutlineInputBorder(
-                      borderSide:const BorderSide(
-                        color: Colors.white
-                      ),                   
-                      borderRadius: BorderRadius.circular(25),
-                    ),       
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25),
-                    ), 
-                  prefixIcon: const Icon(Icons.lock, color: Colors.white),
-                ),
-              )
-            ),
-            Container(
-              padding: const EdgeInsets.all(10),
-              child:  TextField(
-              controller: txtMatKhauXT,
-              obscureText: true,
-              style:const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                labelText: 'Nhập lại mật khẩu',
-                labelStyle: const TextStyle(color: Colors.white),
-                enabledBorder:  OutlineInputBorder(
-                  borderSide:const BorderSide(
-                  color: Colors.white
-                  ),                   
-                  borderRadius: BorderRadius.circular(25),
-                ),       
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(25),
-                ), 
-                prefixIcon: const Icon(Icons.lock, color: Colors.white),
-              ),
-            ),
-          ),
             Container(
               padding: const EdgeInsets.all(15),
               width: 200,
@@ -164,8 +120,7 @@ class QuenMatKhauState extends State<QuenMatKhau> {
                           }
   }
                         if(txtMatKhau.text == txtMatKhauXT.text){  
-                          final user = _auth.sendPasswordResetEmail(email: txtEmail.text);
-                            updateUser(documentID);            
+                          final user = _auth.sendPasswordResetEmail(email: txtEmail.text);   
                             Navigator.pop(context, 'Quên mật khẩu thành công');
                             
                           }else {
