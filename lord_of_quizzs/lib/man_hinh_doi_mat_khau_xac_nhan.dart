@@ -1,4 +1,5 @@
 // ignore: unnecessary_import
+import 'dart:html';
 import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -27,12 +28,29 @@ class DangNhapXNState extends State<DangNhapXN> {
   DangNhapXNState({Key? key, required this.email});
   TextEditingController txtEmail = TextEditingController();
   TextEditingController txtPass = TextEditingController();
-
+  var showEmail ="";
+  bool check = true;
   bool _obscureText_password=true;
 
   void _toggle_pass(){
     setState(() {
       _obscureText_password = !_obscureText_password;
+    });
+  }
+   _show_email(){
+    setState(() {
+      if(check == true){
+        for(int i = 0;i < email.length-11 ; i++){
+        if(i==0){
+          showEmail += email.substring(0,1);
+        }
+        else{
+          showEmail +="*";
+        }
+      }
+      showEmail += email.substring((email.length-11),email.length);  
+      }
+      check = false;
     });
   }
   
@@ -73,13 +91,16 @@ class DangNhapXNState extends State<DangNhapXN> {
                 ),
               ),
               Container(
+        
                   padding: const EdgeInsets.all(15),
-                  child: TextField(                 
+                  child: TextField(
+                    onTap: _show_email,
                     readOnly: true,
                     keyboardType: TextInputType.emailAddress,
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
-                      hintText: email,
+                      labelText: 'Email',
+                      hintText: showEmail,
                       hintStyle:TextStyle(color: Colors.white),
                       labelStyle: const TextStyle(color: Colors.white),
                       enabledBorder: OutlineInputBorder(
