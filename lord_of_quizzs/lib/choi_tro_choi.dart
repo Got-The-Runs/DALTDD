@@ -1,23 +1,28 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lord_of_quizzs/model/bo_cau_hoi_object.dart';
 import 'package:lord_of_quizzs/model/bo_cau_hoi_provider.dart';
+import 'package:lord_of_quizzs/model/cau_hoi_object.dart';
+import 'package:lord_of_quizzs/model/cau_hoi_provider.dart';
 import 'package:lord_of_quizzs/model/ct_bo_cau_hoi_object.dart';
 import 'package:lord_of_quizzs/model/ct_bo_cau_hoi_provider.dart';
 import 'man_hinh_chinh.dart';
 
+// ignore: must_be_immutable
 class ChoiTroChoi extends StatefulWidget {
   int idLinhVuc;
   String email;
   ChoiTroChoi({Key? key, required this.idLinhVuc, required this.email}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
-    return ChoiTroChoiState(idLinhVucState: idLinhVuc,  email: email);
+    return ChoiTroChoiState(idLinhVucState: idLinhVuc, email: email);
+    }
   }
-}
 
 class ChoiTroChoiState extends State<ChoiTroChoi> {
   int idLinhVucState;
@@ -27,52 +32,64 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
   int seconds = maxSeconds;
   Timer? timer;
   late int idBoCauHoi;
+  int mang = 5;
+  int i = 0;
+  var min = 0;
+  var max = 1;
+  Random random =Random.secure();
   late int idCauHoi;
   void startTimer() {
-    timer = Timer.periodic(Duration(seconds: 1), (_) {
+    timer = Timer.periodic(const Duration(seconds: 1), (_) {
       setState(() => seconds--);
     });
   }
-
   @override
   void initState() {
     super.initState();
     startTimer();
   }
-
   @override
   Widget build(BuildContext context) {
     if (seconds == 0) {
       timer?.cancel();
-    }
+    }   
+       //Lấy id bộ câu hỏi dựa trên lĩnh vực
     return FutureBuilder<List<BoCauHoiObject>>(
-        future: BoCauHoiProvider.getDataByID(idLinhVucState),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            List<BoCauHoiObject> linhVuc = snapshot.data!;
-            idBoCauHoi = linhVuc[0].idBoCauHoi;
-            return FutureBuilder<List<CTBoCauHoiObject>>(
-                future: CTBoCauHoiProvider.getDataByID(idBoCauHoi),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    List<CTBoCauHoiObject> cauHoi = snapshot.data!;
-                    return Scaffold(
-                      extendBodyBehindAppBar: true,
-                      appBar: AppBar(
-                        centerTitle: true,
-                        elevation: 0,
-                        backgroundColor: Colors.transparent,
-                        leading: IconButton(
-                          icon: const Icon(Icons.settings_outlined),
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  backgroundColor: const Color(0xFF701ebd),
-                                  content: SingleChildScrollView(
-                                    child: ListBody(
-                                      children: [
+      future: BoCauHoiProvider.getDataByID(idLinhVucState),
+      builder: (context, snapshot) {
+        if(snapshot.hasData){
+          List<BoCauHoiObject> linhVuc = snapshot.data!;
+          idBoCauHoi = linhVuc[0].idBoCauHoi;       
+          //Lấy id của câu hỏi dựa trên id bộ câu hỏi
+        return FutureBuilder<List<CTBoCauHoiObject>>(
+          future: CTBoCauHoiProvider.getDataByID(idBoCauHoi),
+          builder: (context, snapshot) {
+            if(snapshot.hasData){
+              List<CTBoCauHoiObject> cauHoi = snapshot.data!;      
+                 idCauHoi = cauHoi[i].idCauHoi;
+              //Lấy id câu hỏi bằng id câu hỏi của ct bộ câu hỏi
+         return FutureBuilder<List<CauHoiObject>>(
+            future: CauHoiProvider.getDataById(idCauHoi),
+            builder: (context, snapshot) {
+              if(snapshot.hasData){
+                List<CauHoiObject> chiTietCauHoi = snapshot.data!;              
+              return  Scaffold(
+              extendBodyBehindAppBar: true,
+              appBar: AppBar(
+                centerTitle: true,
+                elevation: 0,
+                backgroundColor: Colors.transparent,
+                leading: IconButton(
+                  icon: const Icon(Icons.settings_outlined),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          backgroundColor: const Color(0xFF701ebd),
+                          content: SingleChildScrollView(
+                            child: ListBody(
+                               children: [
                                         Container(
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 40, vertical: 10),
@@ -203,187 +220,169 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                       ),
                                     ],
                                   ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const <Widget>[
-                                      Icon(
-                                        CupertinoIcons.heart_fill,
-                                        size: 20,
-                                        color: Colors.white,
-                                      ),
-                                      Icon(
-                                        CupertinoIcons.heart_fill,
-                                        size: 20,
-                                        color: Colors.white,
-                                      ),
-                                      Icon(
-                                        CupertinoIcons.heart_fill,
-                                        size: 20,
-                                        color: Colors.white,
-                                      ),
-                                      Icon(
-                                        CupertinoIcons.heart_fill,
-                                        size: 20,
-                                        color: Colors.white,
-                                      ),
-                                      Icon(
-                                        CupertinoIcons.heart_fill,
-                                        size: 20,
-                                        color: Colors.white,
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                              Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(
+                                CupertinoIcons.heart_fill,
+                                size: 20,
+                                color: Colors.white,
                               ),
+                              Text('${mang}', style: TextStyle(fontSize: 20, color: Colors.white),
+                              ),                            
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.only(left: 30),
+                          child: Text(
+                            'Điểm :${chiTietCauHoi.length}',
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.only(left: 150),
+                          child: buildTimer(),
+                        ),
+                      ],
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(5),
+                    ),
+                     Container(
+                        padding: const EdgeInsets.all(12),
+                        child: Text(
+                          chiTietCauHoi[0].cauHoi
+                          ,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                      width: 350,
+                      height: 75,
+                      child: OutlinedButton(
+                        onPressed: () {
+                          setState(() {
+                            i++;
+                            });                                                                      
+                        },
+                        // ignore: sort_child_properties_last
+                        child:  Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            chiTietCauHoi[0].cauTraLoi1
+                            ,
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
                             ),
-                            Row(
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.only(left: 30),
-                                  child: Text(
-                                    'Điểm : ${cauHoi[0].idCauHoi}',
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.only(left: 150),
-                                  child: buildTimer(),
-                                ),
-                              ],
+                          ),
+                        ),
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.transparent),
+                            side: MaterialStateProperty.all(const BorderSide(
+                                color: Colors.white,
+                                width: 2.0,
+                                style: BorderStyle.solid))),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                      width: 350,
+                      height: 75,
+                      child: OutlinedButton(
+                        onPressed: () {
+                           setState(() {
+                            i++;
+                            });  
+                        },
+                        // ignore: sort_child_properties_last
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                           chiTietCauHoi[0].cauTraLoi2,
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
                             ),
-                            Container(
-                              padding: EdgeInsets.all(5),
+                          ),
+                        ),
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.transparent),
+                            side: MaterialStateProperty.all(const BorderSide(
+                                color: Colors.white,
+                                width: 2.0,
+                                style: BorderStyle.solid))),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                      width: 350,
+                      height: 75,
+                      child: OutlinedButton(
+                        onPressed: () {
+                          setState(() {
+                              i++;
+                            });  
+                        },
+                        // ignore: sort_child_properties_last
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            chiTietCauHoi[0].cauTraLoi3,
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
                             ),
-                            Container(
-                                padding: const EdgeInsets.all(12),
-                                child: const Text(
-                                  "Câu 1: Đại Ngu là quốc hiệu của triều đại nào ?",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                )),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 25, vertical: 15),
-                              width: 350,
-                              height: 75,
-                              child: OutlinedButton(
-                                onPressed: () {},
-                                // ignore: sort_child_properties_last
-                                child: const Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    'A. Triều Ngô',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                                style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        Colors.transparent),
-                                    side: MaterialStateProperty.all(
-                                        const BorderSide(
-                                            color: Colors.white,
-                                            width: 2.0,
-                                            style: BorderStyle.solid))),
+                          ),
+                        ),
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.transparent),
+                            side: MaterialStateProperty.all(const BorderSide(
+                                color: Colors.white,
+                                width: 2.0,
+                                style: BorderStyle.solid))),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                      width: 350,
+                      height: 75,
+                      child: OutlinedButton(
+                        onPressed: () {
+                          setState(() {
+                              i++;
+                            });  
+                        },
+                        // ignore: sort_child_properties_last
+                        child:  Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                             chiTietCauHoi[0].cauTraLoi4,
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
                               ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 25, vertical: 15),
-                              width: 350,
-                              height: 75,
-                              child: OutlinedButton(
-                                onPressed: () {},
-                                // ignore: sort_child_properties_last
-                                child: const Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    'B. Triều Hồ',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                                style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        Colors.transparent),
-                                    side: MaterialStateProperty.all(
-                                        const BorderSide(
-                                            color: Colors.white,
-                                            width: 2.0,
-                                            style: BorderStyle.solid))),
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 25, vertical: 15),
-                              width: 350,
-                              height: 75,
-                              child: OutlinedButton(
-                                onPressed: () {},
-                                // ignore: sort_child_properties_last
-                                child: const Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    'C. Các chúa Nguyễn',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                                style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        Colors.transparent),
-                                    side: MaterialStateProperty.all(
-                                        const BorderSide(
-                                            color: Colors.white,
-                                            width: 2.0,
-                                            style: BorderStyle.solid))),
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 25, vertical: 15),
-                              width: 350,
-                              height: 75,
-                              child: OutlinedButton(
-                                onPressed: () {},
-                                // ignore: sort_child_properties_last
-                                child: const Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    'D. Nhà Tây Sơn',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                                style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        Colors.transparent),
-                                    side: MaterialStateProperty.all(
-                                        const BorderSide(
-                                            color: Colors.white,
-                                            width: 2.0,
-                                            style: BorderStyle.solid))),
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.all(10),
-                            ),
-                            Row(
+                          ),
+                        )
+                      )
+                    ),
+                        Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 OutlinedButton(
@@ -448,22 +447,27 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                         color: Colors.white,
                                         width: 2.0,
                                         style: BorderStyle.solid,
-                                      ))),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                    );
-                  }
-                  return Text('');
-                });
-          }
+                           ))),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              );
+              }
+              return Text('');
+            }
+              );
+            }
+            return Text('');
+            }
+          );
+        }
           return Text('');
-        });
-  }
-
+        }
+      );   
+    }
   Widget buildTime() {
     return Text(
       '$seconds',

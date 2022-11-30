@@ -10,23 +10,37 @@ import 'package:lord_of_quizzs/man_hinh_doi_mat_khau.dart';
 import 'package:lord_of_quizzs/quen_mat_khau.dart';
 
 class DangNhapXN extends StatefulWidget {
+<<<<<<< HEAD
   const DangNhapXN({super.key, required String email});
+=======
+  String email;
+  DangNhapXN({Key? key, required this.email}) : super(key: key);
+  
+>>>>>>> 13044b9ab5c7cbff6efc8e01161de199e3ddef38
 
   @override
   State<StatefulWidget> createState() {
     // ignore: todo
     // TODO: implement createState
-    return DangNhapXNState();
+    return DangNhapXNState(email: email);
   }
 }
 
 class DangNhapXNState extends State<DangNhapXN> {
+  String email;
+  DangNhapXNState({Key? key, required this.email});
   TextEditingController txtEmail = TextEditingController();
   TextEditingController txtPass = TextEditingController();
-  final _auth = FirebaseAuth.instance;
-  final _xt = FirebaseAuth.instance.currentUser;
-  
 
+  bool _obscureText_password=true;
+
+  void _toggle_pass(){
+    setState(() {
+      _obscureText_password = !_obscureText_password;
+    });
+  }
+  
+  final _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,12 +78,13 @@ class DangNhapXNState extends State<DangNhapXN> {
               ),
               Container(
                   padding: const EdgeInsets.all(15),
-                  child: TextField(
-                    controller: txtEmail,
+                  child: TextField(                 
+                    readOnly: true,
                     keyboardType: TextInputType.emailAddress,
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
-                      labelText: 'Tên đăng nhập',
+                      hintText: email,
+                      hintStyle:TextStyle(color: Colors.white),
                       labelStyle: const TextStyle(color: Colors.white),
                       enabledBorder: OutlineInputBorder(
                         borderSide: const BorderSide(color: Colors.white),
@@ -79,13 +94,13 @@ class DangNhapXNState extends State<DangNhapXN> {
                         borderRadius: BorderRadius.circular(25),
                       ),
                       prefixIcon: const Icon(Icons.person, color: Colors.white),
-                    ),
+                    )
                   )),
               Container(
                   padding: const EdgeInsets.all(15),
                   child: TextField(
                     controller: txtPass,
-                    obscureText: true,
+                    obscureText: _obscureText_password,
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       labelText: 'Mật khẩu',
@@ -98,6 +113,12 @@ class DangNhapXNState extends State<DangNhapXN> {
                         borderRadius: BorderRadius.circular(25),
                       ),
                       prefixIcon: const Icon(Icons.lock, color: Colors.white),
+                      suffixIcon: IconButton(
+          icon: Icon(
+            _obscureText_password ? Icons.visibility : Icons.visibility_off,color: Colors.white
+          ),
+          onPressed: _toggle_pass,
+        ),
                     ),
                   )),
               Container(
@@ -106,19 +127,17 @@ class DangNhapXNState extends State<DangNhapXN> {
                 height: 80,
                 child: OutlinedButton(
                     onPressed: () async {
-                      try {
-                        if(_xt?.email == txtEmail.text)
-                        {
-                          final _user = await _auth.signInWithEmailAndPassword(
-                            email: txtEmail.text, password: txtPass.text);
-                        }
+                       try {
+                        final _user = await _auth.signInWithEmailAndPassword(
+                            email: email, password: txtPass.text);
                         await _auth.authStateChanges().listen((event) {
                           if (event != null) {
-                            txtEmail.clear();
-                            txtPass.clear();
-                            MaterialPageRoute(
-                            builder: (context) => const DoiMatKhau(),
-                           );
+                            Navigator.push(
+                                context, 
+                                MaterialPageRoute(builder: 
+                                (context) =>DoiMatKhau(email: email,),
+                                ),
+                              );
                           }
                         });
                       } catch (e) {                       

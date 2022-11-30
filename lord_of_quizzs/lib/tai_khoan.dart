@@ -20,6 +20,7 @@ class ManHinhTaiKhoan extends StatefulWidget {
 class ManHinhTaiKhoanState extends State<ManHinhTaiKhoan> {
   String email;
   ManHinhTaiKhoanState({Key? key, required this.email});
+<<<<<<< HEAD
   TextEditingController txtName = TextEditingController();
   TextEditingController txtEmail = TextEditingController();
   int temp1 = 0;
@@ -36,6 +37,10 @@ class ManHinhTaiKhoanState extends State<ManHinhTaiKhoan> {
             (error) => Navigator.pop(context, 'Cập nhật thất bại $error'));
   }
 
+=======
+  var txtEmail = TextEditingController();
+  var txtName = TextEditingController();
+>>>>>>> 13044b9ab5c7cbff6efc8e01161de199e3ddef38
   @override
   void initState() {
     // TODO: implement initState

@@ -134,7 +134,11 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
+<<<<<<< HEAD
                                                   DangNhapXN(email: email),
+=======
+                                                   DangNhapXN(email: email,),
+>>>>>>> 13044b9ab5c7cbff6efc8e01161de199e3ddef38
                                             ),
                                           );
                                         },
@@ -226,7 +230,11 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                   ),
                   actions: <Widget>[
                     const Icon(Icons.diamond_rounded, size: 30),
+<<<<<<< HEAD
                     Center(
+=======
+                     Center(
+>>>>>>> 13044b9ab5c7cbff6efc8e01161de199e3ddef38
                       child: Text(
                         '${thongTin[0].money}',
                         style: TextStyle(
@@ -271,7 +279,11 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                     ),
                     Container(
                       padding: const EdgeInsets.only(bottom: 15),
+<<<<<<< HEAD
                       child: Text(
+=======
+                      child:  Text(
+>>>>>>> 13044b9ab5c7cbff6efc8e01161de199e3ddef38
                         thongTin[0].name,
                         style: TextStyle(
                             fontSize: 25,
@@ -394,6 +406,10 @@ class ManHinhChinhState extends State<ManHinhChinh> {
               ),
             );
           }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 13044b9ab5c7cbff6efc8e01161de199e3ddef38
           return Text('');
         });
   }
