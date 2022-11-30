@@ -10,7 +10,7 @@ import 'package:lord_of_quizzs/man_hinh_doi_mat_khau.dart';
 import 'package:lord_of_quizzs/quen_mat_khau.dart';
 
 class DangNhapXN extends StatefulWidget {
-  const DangNhapXN({super.key});
+  const DangNhapXN({super.key, required String email});
 
   @override
   State<StatefulWidget> createState() {
