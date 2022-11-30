@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:lord_of_quizzs/dang_nhap.dart';
 import 'package:lord_of_quizzs/man_hinh_chinh.dart';
 import 'package:lord_of_quizzs/man_hinh_doi_mat_khau.dart';
+import 'package:lord_of_quizzs/man_hinh_doi_mat_khau_xac_nhan.dart';
 import 'package:lord_of_quizzs/tai_khoan.dart';
 
 import 'bang_xep_hang.dart';

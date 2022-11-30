@@ -7,7 +7,6 @@ import 'package:lord_of_quizzs/model/bo_cau_hoi_object.dart';
 import 'package:lord_of_quizzs/model/bo_cau_hoi_provider.dart';
 import 'package:lord_of_quizzs/model/ct_bo_cau_hoi_object.dart';
 import 'package:lord_of_quizzs/model/ct_bo_cau_hoi_provider.dart';
-
 import 'man_hinh_chinh.dart';
 
 class ChoiTroChoi extends StatefulWidget {

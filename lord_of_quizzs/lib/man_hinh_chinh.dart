@@ -8,6 +8,7 @@ import 'package:lord_of_quizzs/cai_dat.dart';
 import 'package:lord_of_quizzs/chon_linh_vuc.dart';
 import 'package:lord_of_quizzs/lich_su.dart';
 import 'package:lord_of_quizzs/man_hinh_doi_mat_khau.dart';
+import 'package:lord_of_quizzs/man_hinh_doi_mat_khau_xac_nhan.dart';
 import 'package:lord_of_quizzs/mua_credit.dart';
 import 'package:lord_of_quizzs/tai_khoan.dart';
 
@@ -107,7 +108,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => const DoiMatKhau(),
+                                      builder: (context) => const DangNhapXN(),
                                     ),
                                   );
                                 },

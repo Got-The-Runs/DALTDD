@@ -25,13 +25,14 @@ class QuenMatKhauState extends State<QuenMatKhau> {
 
   var querySnapshots;
   var documentID;
+  var passNow;
   final _auth = FirebaseAuth.instance;
 
   CollectionReference user = FirebaseFirestore.instance.collection("thong_tin");
   Future<void> updateUser(var docID){
     return user
     .doc(docID)
-    .update({'mat_khau' : txtMatKhau.text})
+    .update({'mat_khau' : passNow})
     .then((value) => Navigator.pop(context, 'Quên mật khẩu thành công'))
     .catchError((error) => Navigator.pop(context, 'Quên mật khẩu thất bại $error'));   
   }
@@ -120,7 +121,15 @@ class QuenMatKhauState extends State<QuenMatKhau> {
                           }
   }
                         if(txtMatKhau.text == txtMatKhauXT.text){  
-                          final user = _auth.sendPasswordResetEmail(email: txtEmail.text);   
+                          final user = _auth.sendPasswordResetEmail(email: txtEmail.text);
+
+                          // for (var snapshot in querySnapshots.docs) {
+                          //   if(txtEmail.text == snapshot['email']){
+                          //     documentID = snapshot.id;
+                          //     passNow = snapshot['mat_khau'];
+                          //   }   
+                          // }
+                          // updateUser(documentID);
                             Navigator.pop(context, 'Quên mật khẩu thành công');
                             
                           }else {
