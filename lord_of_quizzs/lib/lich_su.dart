@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lord_of_quizzs/bang_xep_hang.dart';
-import 'package:lord_of_quizzs/cai_dat.dart';
 import 'package:lord_of_quizzs/chon_linh_vuc.dart';
 import 'package:lord_of_quizzs/man_hinh_doi_mat_khau.dart';
 import 'package:lord_of_quizzs/mua_credit.dart';
