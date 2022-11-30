@@ -26,7 +26,9 @@ class ManHinhChinh extends StatefulWidget {
 }
 
 class ManHinhChinhState extends State<ManHinhChinh> {
+  final _auth = FirebaseAuth.instance.currentUser;
   @override
+  
   // ignore: dead_code
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,12 +107,12 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                               height: 80,
                               child: OutlinedButton(
                                 onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const DangNhapXN(),
-                                    ),
-                                  );
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //     builder: (context) => DangNhapXN(),
+                                  //   ),
+                                  // );
                                 },
                                 // ignore: sort_child_properties_last
                                 child: const Text(

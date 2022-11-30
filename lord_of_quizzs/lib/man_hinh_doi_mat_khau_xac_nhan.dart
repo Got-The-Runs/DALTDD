@@ -10,21 +10,25 @@ import 'package:lord_of_quizzs/man_hinh_doi_mat_khau.dart';
 import 'package:lord_of_quizzs/quen_mat_khau.dart';
 
 class DangNhapXN extends StatefulWidget {
-  const DangNhapXN({super.key});
+  String email;
+  DangNhapXN({Key? key, required this.email}) : super(key: key);
+  
 
   @override
   State<StatefulWidget> createState() {
     // ignore: todo
     // TODO: implement createState
-    return DangNhapXNState();
+    return DangNhapXNState(email: email);
   }
 }
 
 class DangNhapXNState extends State<DangNhapXN> {
+  String email;
+  DangNhapXNState({Key? key, required this.email});
   TextEditingController txtEmail = TextEditingController();
   TextEditingController txtPass = TextEditingController();
+  
   final _auth = FirebaseAuth.instance;
-  final _xt = FirebaseAuth.instance.currentUser;
   
 
   @override
@@ -69,7 +73,7 @@ class DangNhapXNState extends State<DangNhapXN> {
                     keyboardType: TextInputType.emailAddress,
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
-                      labelText: 'Tên đăng nhập',
+                      labelText: 'Email',
                       labelStyle: const TextStyle(color: Colors.white),
                       enabledBorder: OutlineInputBorder(
                         borderSide: const BorderSide(color: Colors.white),
@@ -106,26 +110,26 @@ class DangNhapXNState extends State<DangNhapXN> {
                 height: 80,
                 child: OutlinedButton(
                     onPressed: () async {
-                      try {
-                        if(_xt?.email == txtEmail.text)
-                        {
-                          final _user = await _auth.signInWithEmailAndPassword(
-                            email: txtEmail.text, password: txtPass.text);
-                        }
-                        await _auth.authStateChanges().listen((event) {
-                          if (event != null) {
-                            txtEmail.clear();
-                            txtPass.clear();
-                            MaterialPageRoute(
-                            builder: (context) => const DoiMatKhau(),
-                           );
-                          }
-                        });
-                      } catch (e) {                       
-                          final snackBar = SnackBar(
-                              content: Text('Email hoặc mật khẩu không đúng'));
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      }
+                      // try {
+                      //   if(_xt?.email == txtEmail.text)
+                      //   {
+                      //     final _user = await _auth.signInWithEmailAndPassword(
+                      //       email: txtEmail.text, password: txtPass.text);
+                      //   }
+                      //   await _auth.authStateChanges().listen((event) {
+                      //     if (event != null) {
+                      //       txtEmail.clear();
+                      //       txtPass.clear();
+                      //       MaterialPageRoute(
+                      //       builder: (context) => const DoiMatKhau(),
+                      //      );
+                      //     }
+                      //   });
+                      // } catch (e) {                       
+                      //     final snackBar = SnackBar(
+                      //         content: Text('Email hoặc mật khẩu không đúng'));
+                      //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      // }
                     },
                     // ignore: sort_child_properties_last
                     child: const Text(
