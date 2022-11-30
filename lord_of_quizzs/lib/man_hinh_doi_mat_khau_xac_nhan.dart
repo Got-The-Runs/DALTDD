@@ -27,10 +27,16 @@ class DangNhapXNState extends State<DangNhapXN> {
   DangNhapXNState({Key? key, required this.email});
   TextEditingController txtEmail = TextEditingController();
   TextEditingController txtPass = TextEditingController();
+
+  bool _obscureText_password=true;
+
+  void _toggle_pass(){
+    setState(() {
+      _obscureText_password = !_obscureText_password;
+    });
+  }
   
   final _auth = FirebaseAuth.instance;
-  
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,12 +74,13 @@ class DangNhapXNState extends State<DangNhapXN> {
               ),
               Container(
                   padding: const EdgeInsets.all(15),
-                  child: TextField(
-                    controller: txtEmail,
+                  child: TextField(                 
+                    readOnly: true,
                     keyboardType: TextInputType.emailAddress,
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
-                      labelText: 'Email',
+                      hintText: email,
+                      hintStyle:TextStyle(color: Colors.white),
                       labelStyle: const TextStyle(color: Colors.white),
                       enabledBorder: OutlineInputBorder(
                         borderSide: const BorderSide(color: Colors.white),
@@ -83,13 +90,13 @@ class DangNhapXNState extends State<DangNhapXN> {
                         borderRadius: BorderRadius.circular(25),
                       ),
                       prefixIcon: const Icon(Icons.person, color: Colors.white),
-                    ),
+                    )
                   )),
               Container(
                   padding: const EdgeInsets.all(15),
                   child: TextField(
                     controller: txtPass,
-                    obscureText: true,
+                    obscureText: _obscureText_password,
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       labelText: 'Mật khẩu',
@@ -102,6 +109,12 @@ class DangNhapXNState extends State<DangNhapXN> {
                         borderRadius: BorderRadius.circular(25),
                       ),
                       prefixIcon: const Icon(Icons.lock, color: Colors.white),
+                      suffixIcon: IconButton(
+          icon: Icon(
+            _obscureText_password ? Icons.visibility : Icons.visibility_off,color: Colors.white
+          ),
+          onPressed: _toggle_pass,
+        ),
                     ),
                   )),
               Container(
@@ -110,26 +123,24 @@ class DangNhapXNState extends State<DangNhapXN> {
                 height: 80,
                 child: OutlinedButton(
                     onPressed: () async {
-                      // try {
-                      //   if(_xt?.email == txtEmail.text)
-                      //   {
-                      //     final _user = await _auth.signInWithEmailAndPassword(
-                      //       email: txtEmail.text, password: txtPass.text);
-                      //   }
-                      //   await _auth.authStateChanges().listen((event) {
-                      //     if (event != null) {
-                      //       txtEmail.clear();
-                      //       txtPass.clear();
-                      //       MaterialPageRoute(
-                      //       builder: (context) => const DoiMatKhau(),
-                      //      );
-                      //     }
-                      //   });
-                      // } catch (e) {                       
-                      //     final snackBar = SnackBar(
-                      //         content: Text('Email hoặc mật khẩu không đúng'));
-                      //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      // }
+                       try {
+                        final _user = await _auth.signInWithEmailAndPassword(
+                            email: email, password: txtPass.text);
+                        await _auth.authStateChanges().listen((event) {
+                          if (event != null) {
+                            Navigator.push(
+                                context, 
+                                MaterialPageRoute(builder: 
+                                (context) =>DoiMatKhau(email: email,),
+                                ),
+                              );
+                          }
+                        });
+                      } catch (e) {                       
+                          final snackBar = SnackBar(
+                              content: Text('Email hoặc mật khẩu không đúng'));
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      }
                     },
                     // ignore: sort_child_properties_last
                     child: const Text(

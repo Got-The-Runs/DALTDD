@@ -9,19 +9,23 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:lord_of_quizzs/man_hinh_chinh.dart';
 
 class DoiMatKhau extends StatefulWidget{
-  const DoiMatKhau({super.key});
+  String email;
+  DoiMatKhau({Key? key, required this.email}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
     // ignore: todo
     // TODO: implement createState
-    return DoiMatKhauState();
+    return DoiMatKhauState(email: email);
   }
 }
 
 class DoiMatKhauState extends State<DoiMatKhau> {
+  String email;
+  DoiMatKhauState({Key? key, required this.email});
   var txtMatKhauCu =TextEditingController();
   var txtMatKhauMoi = TextEditingController();
   var txtMatKhauXT = TextEditingController();
@@ -158,16 +162,18 @@ class DoiMatKhauState extends State<DoiMatKhau> {
 
                     final snackBar = SnackBar(content: Text("Mật khẩu xác thực không trùng khớp với mật khẩu mới"));
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
                   }
                   else{
 
                     final user = _auth?.updatePassword(txtMatKhauMoi.text); 
-                    Navigator.pop(context, 'Đổi mật khẩu thành công');
+                    Navigator.push(
+                                context, 
+                                MaterialPageRoute(builder: 
+                                (context) =>ManHinhChinh(email:email,),
+                                ),
+                              );
 
                   }
-                  final user = _auth?.updatePassword(txtMatKhauMoi.text); 
-                   Navigator.pop(context, 'Đổi mật khẩu thành công');
                    
                 },
                 // ignore: sort_child_properties_last

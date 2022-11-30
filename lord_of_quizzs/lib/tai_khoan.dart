@@ -14,6 +14,8 @@ class ManHinhTaiKhoan extends StatefulWidget {
 class ManHinhTaiKhoanState extends State<ManHinhTaiKhoan> {
   String email;
   ManHinhTaiKhoanState({Key? key, required this.email});
+  var txtEmail = TextEditingController();
+  var txtName = TextEditingController();
   @override
   void initState() {
     // TODO: implement initState
