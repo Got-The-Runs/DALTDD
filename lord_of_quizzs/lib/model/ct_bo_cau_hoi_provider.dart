@@ -8,7 +8,7 @@ class CTBoCauHoiProvider{
   static Future<List<CTBoCauHoiObject>> getDataByID(int idBoCauHoi) async {
     List<CTBoCauHoiObject> idCauHoi = []; 
     final snapshot = await FirebaseFirestore.instance.collection("ct_bo_cau_hoi")
-    .where('id_bo_cau_hoi', isEqualTo: idBoCauHoi).get();
+    .where('id_bo_cau_hoi', isEqualTo:idBoCauHoi).get();
     // ignore: no_leading_underscores_for_local_identifiers
      idCauHoi = snapshot.docs.map((json) => CTBoCauHoiObject.fromJson(json.data()as Map<String, dynamic>)).toList();
     return idCauHoi;

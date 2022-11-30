@@ -20,7 +20,7 @@ class DangKi extends StatefulWidget {
 }
 
 class DangKiState extends State<DangKi> {
-  final _formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   CollectionReference thongTin = FirebaseFirestore.instance.collection('thong_tin');
   TextEditingController txtTenNguoiChoi = TextEditingController();
   int tienAo =0;
@@ -30,7 +30,6 @@ class DangKiState extends State<DangKi> {
   TextEditingController txtNhapLaiMatKhau = TextEditingController();
   final _auth = FirebaseAuth.instance;
   final CollectionReference<Map<String, dynamic>> listThongTin = FirebaseFirestore.instance.collection('thong_tin');
-  DateTime now = DateTime.now();
   @override
   Widget build(BuildContext context) {
     // Future<int> countUsers() async {
@@ -43,9 +42,9 @@ class DangKiState extends State<DangKi> {
       // Call the user's CollectionReference to add a new user
       return thongTin 
           .add({
-            'id': 4,
+            // 'id': 4,
             'email': txtEmail.text, 
-            'mat_khau': txtMatKhau.text, 
+            // 'mat_khau': txtMatKhau.text, 
             'ten_nguoi_choi': txtTenNguoiChoi.text,
             'tien_ao': tienAo,
             'trang_thai': trangThai
@@ -226,12 +225,12 @@ class DangKiState extends State<DangKi> {
                 width: 200,
                 height: 80,
                 child: OutlinedButton(
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
+                  onPressed: () {
+                    // if (_formKey.currentState!.validate()) {
                       try{
                         final newUser = _auth.createUserWithEmailAndPassword(
-                          email: txtEmail.text, password: txtMatKhau.text);                          
-                          if(newUser != null){                 
+                          email: txtEmail.text, password: txtMatKhau.text);                         
+                          if(newUser != null){                
                             Navigator.pop(context, 'Đăng ký thành công');
                             addUser();
                           }else {
@@ -243,8 +242,9 @@ class DangKiState extends State<DangKi> {
                         final snackBar = SnackBar(content: Text('Có lỗi xảy ra !'));
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       }                       
-                    }                                     
+                    // }                                 
                   },
+                 
                   // ignore: sort_child_properties_last
                   child: const Text(
                     'Đăng ký',

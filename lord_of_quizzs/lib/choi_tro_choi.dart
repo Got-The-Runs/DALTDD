@@ -1,20 +1,26 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lord_of_quizzs/model/bo_cau_hoi_object.dart';
 import 'package:lord_of_quizzs/model/bo_cau_hoi_provider.dart';
+import 'package:lord_of_quizzs/model/cau_hoi_object.dart';
+import 'package:lord_of_quizzs/model/cau_hoi_provider.dart';
 import 'package:lord_of_quizzs/model/ct_bo_cau_hoi_object.dart';
 import 'package:lord_of_quizzs/model/ct_bo_cau_hoi_provider.dart';
 
 import 'man_hinh_chinh.dart';
 
+// ignore: must_be_immutable
 class ChoiTroChoi extends StatefulWidget {
   int idLinhVuc;
   ChoiTroChoi({Key ? key, required this.idLinhVuc}):super(key:key);
   @override
   State<StatefulWidget> createState() {
+    // ignore: no_logic_in_create_state
     return ChoiTroChoiState(idLinhVucState: idLinhVuc);
   }
 }
@@ -26,35 +32,50 @@ class ChoiTroChoiState extends State<ChoiTroChoi>{
   int seconds = maxSeconds;
   Timer? timer;
   late int idBoCauHoi;
+  int mang = 5;
+  int i = 0;
+  var min = 0;
+  var max = 1;
+  Random random =Random.secure();
   late int idCauHoi;
   void startTimer() {
-    timer = Timer.periodic(Duration(seconds: 1), (_) {
+    timer = Timer.periodic(const Duration(seconds: 1), (_) {
       setState(() => seconds--);
     });
   }
-
   @override
   void initState() {
     super.initState();
     startTimer();
   }
+  
   @override
   Widget build(BuildContext context) {
     if (seconds == 0) {
       timer?.cancel();
-    }
+    }   
+    //Lấy id bộ câu hỏi dựa trên lĩnh vực
     return FutureBuilder<List<BoCauHoiObject>>(
       future: BoCauHoiProvider.getDataByID(idLinhVucState),
       builder: (context, snapshot) {
         if(snapshot.hasData){
           List<BoCauHoiObject> linhVuc = snapshot.data!;
           idBoCauHoi = linhVuc[0].idBoCauHoi;       
+          //Lấy id của câu hỏi dựa trên id bộ câu hỏi
         return FutureBuilder<List<CTBoCauHoiObject>>(
           future: CTBoCauHoiProvider.getDataByID(idBoCauHoi),
           builder: (context, snapshot) {
             if(snapshot.hasData){
-              List<CTBoCauHoiObject> cauHoi = snapshot.data!;
-              return Scaffold(
+              List<CTBoCauHoiObject> cauHoi = snapshot.data!;      
+                 idCauHoi = cauHoi[i].idCauHoi;
+              //Lấy id câu hỏi bằng id câu hỏi của ct bộ câu hỏi
+         return FutureBuilder<List<CauHoiObject>>(
+            future: CauHoiProvider.getDataById(idCauHoi),
+            builder: (context, snapshot) {
+              if(snapshot.hasData){
+                List<CauHoiObject> chiTietCauHoi = snapshot.data!;              
+                ////
+              return  Scaffold(
               extendBodyBehindAppBar: true,
               appBar: AppBar(
                 centerTitle: true,
@@ -159,7 +180,8 @@ class ChoiTroChoiState extends State<ChoiTroChoi>{
                 ],
               ),
               body: Container(
-                decoration: const BoxDecoration(
+                height: MediaQuery.of(context).size.height,
+                decoration: const BoxDecoration(        
                   gradient: LinearGradient(
                     colors: [
                       Color(0xFF701ebd),
@@ -169,7 +191,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi>{
                     end: Alignment.bottomLeft,
                   ),
                 ),
-                // child: SingleChildScrollView(
+              child: SingleChildScrollView(
                 // physics:const NeverScrollableScrollPhysics(),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -195,32 +217,14 @@ class ChoiTroChoiState extends State<ChoiTroChoi>{
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const <Widget>[
+                            children: <Widget>[
                               Icon(
                                 CupertinoIcons.heart_fill,
                                 size: 20,
                                 color: Colors.white,
                               ),
-                              Icon(
-                                CupertinoIcons.heart_fill,
-                                size: 20,
-                                color: Colors.white,
-                              ),
-                              Icon(
-                                CupertinoIcons.heart_fill,
-                                size: 20,
-                                color: Colors.white,
-                              ),
-                              Icon(
-                                CupertinoIcons.heart_fill,
-                                size: 20,
-                                color: Colors.white,
-                              ),
-                              Icon(
-                                CupertinoIcons.heart_fill,
-                                size: 20,
-                                color: Colors.white,
-                              ),
+                              Text('${mang}', style: TextStyle(fontSize: 20, color: Colors.white),
+                              ),                            
                             ],
                           ),
                         ],
@@ -230,8 +234,8 @@ class ChoiTroChoiState extends State<ChoiTroChoi>{
                       children: [
                         Container(
                           padding: const EdgeInsets.only(left: 30),
-                          child:  Text(
-                            'Điểm : ${cauHoi[0].idCauHoi}',
+                          child: Text(
+                            'Điểm :${chiTietCauHoi.length}',
                             style: TextStyle(
                                 fontSize: 20,
                                 color: Colors.white,
@@ -249,8 +253,9 @@ class ChoiTroChoiState extends State<ChoiTroChoi>{
                     ),
                     Container(
                         padding: const EdgeInsets.all(12),
-                        child: const Text(
-                          "Câu 1: Đại Ngu là quốc hiệu của triều đại nào ?",
+                        child: Text(
+                          chiTietCauHoi[0].cauHoi
+                          ,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 20,
@@ -263,12 +268,17 @@ class ChoiTroChoiState extends State<ChoiTroChoi>{
                       width: 350,
                       height: 75,
                       child: OutlinedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                            i++;
+                            });                                                                      
+                        },
                         // ignore: sort_child_properties_last
-                        child: const Align(
+                        child:  Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            'A. Triều Ngô',
+                            chiTietCauHoi[0].cauTraLoi1
+                            ,
                             style: TextStyle(
                               fontSize: 20,
                               color: Colors.white,
@@ -289,12 +299,16 @@ class ChoiTroChoiState extends State<ChoiTroChoi>{
                       width: 350,
                       height: 75,
                       child: OutlinedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                           setState(() {
+                            i++;
+                            });  
+                        },
                         // ignore: sort_child_properties_last
-                        child: const Align(
+                        child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            'B. Triều Hồ',
+                           chiTietCauHoi[0].cauTraLoi2,
                             style: TextStyle(
                               fontSize: 20,
                               color: Colors.white,
@@ -315,12 +329,16 @@ class ChoiTroChoiState extends State<ChoiTroChoi>{
                       width: 350,
                       height: 75,
                       child: OutlinedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                              i++;
+                            });  
+                        },
                         // ignore: sort_child_properties_last
-                        child: const Align(
+                        child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            'C. Các chúa Nguyễn',
+                            chiTietCauHoi[0].cauTraLoi3,
                             style: TextStyle(
                               fontSize: 20,
                               color: Colors.white,
@@ -341,12 +359,16 @@ class ChoiTroChoiState extends State<ChoiTroChoi>{
                       width: 350,
                       height: 75,
                       child: OutlinedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          setState(() {
+                              i++;
+                            });  
+                        },
                         // ignore: sort_child_properties_last
-                        child: const Align(
+                        child:  Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            'D. Nhà Tây Sơn',
+                             chiTietCauHoi[0].cauTraLoi4,
                             style: TextStyle(
                               fontSize: 20,
                               color: Colors.white,
@@ -427,6 +449,11 @@ class ChoiTroChoiState extends State<ChoiTroChoi>{
                     ],
                   ),
                 ),
+              )
+              );
+              }
+              return Text('');
+            }
               );
             }
             return Text('');

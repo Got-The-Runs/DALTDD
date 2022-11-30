@@ -14,7 +14,7 @@ import 'package:lord_of_quizzs/tai_khoan.dart';
 
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(); 
   runApp(MyApp());
 }
 

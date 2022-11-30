@@ -106,7 +106,7 @@ class DangNhapState extends State<DangNhap> {
                       try {
                         final _user = await _auth.signInWithEmailAndPassword(
                             email: txtEmail.text, password: txtPass.text);
-                        await _auth.authStateChanges().listen((event) {
+                         await _auth.authStateChanges().listen((event) {
                           if (event != null) {
                             txtEmail.clear();
                             txtPass.clear();
@@ -115,7 +115,7 @@ class DangNhapState extends State<DangNhap> {
                           }
                         });
                       } catch (e) {                       
-                          final snackBar = SnackBar(
+                          final snackBar =  SnackBar(
                               content: Text('Email hoặc mật khẩu không đúng'));
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       }
