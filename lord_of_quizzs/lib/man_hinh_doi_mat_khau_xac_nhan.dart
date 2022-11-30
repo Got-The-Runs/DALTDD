@@ -10,14 +10,9 @@ import 'package:lord_of_quizzs/man_hinh_doi_mat_khau.dart';
 import 'package:lord_of_quizzs/quen_mat_khau.dart';
 
 class DangNhapXN extends StatefulWidget {
-<<<<<<< HEAD
-  const DangNhapXN({super.key, required String email});
-=======
   String email;
   DangNhapXN({Key? key, required this.email}) : super(key: key);
   
->>>>>>> 13044b9ab5c7cbff6efc8e01161de199e3ddef38
-
   @override
   State<StatefulWidget> createState() {
     // ignore: todo
