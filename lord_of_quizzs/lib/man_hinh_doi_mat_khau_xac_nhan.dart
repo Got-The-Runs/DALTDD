@@ -14,7 +14,6 @@ class DangNhapXN extends StatefulWidget {
   String email;
   DangNhapXN({Key? key, required this.email}) : super(key: key);
   
-
   @override
   State<StatefulWidget> createState() {
     // ignore: todo

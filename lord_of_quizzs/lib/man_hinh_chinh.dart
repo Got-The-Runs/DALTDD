@@ -134,7 +134,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                   DangNhapXN(email: email,),
+                                                  DangNhapXN(email: email),
                                             ),
                                           );
                                         },
@@ -225,8 +225,8 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                     iconSize: 30,
                   ),
                   actions: <Widget>[
-                    const Icon(Icons.diamond_rounded, size: 30),
-                     Center(
+                    const Icon(Icons.diamond_rounded, size: 30),                   
+                    Center(
                       child: Text(
                         '${thongTin[0].money}',
                         style: TextStyle(
@@ -394,7 +394,6 @@ class ManHinhChinhState extends State<ManHinhChinh> {
               ),
             );
           }
-
           return Text('');
         });
   }
