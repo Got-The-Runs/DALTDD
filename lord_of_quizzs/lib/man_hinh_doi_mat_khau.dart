@@ -6,6 +6,9 @@ import 'dart:ui';
 // ignore: unnecessary_import
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class DoiMatKhau extends StatefulWidget{
   const DoiMatKhau({super.key});
@@ -19,6 +22,9 @@ class DoiMatKhau extends StatefulWidget{
 }
 
 class DoiMatKhauState extends State<DoiMatKhau> {
+  var txtMatKhauCu =TextEditingController();
+  var txtMatKhauMoi = TextEditingController();
+  var txtMatKhauXT = TextEditingController();
   bool _obscureText_old=true;
   bool _obscureText_new=true;
   bool _obscureText_accuracy=true;
@@ -38,6 +44,8 @@ class DoiMatKhauState extends State<DoiMatKhau> {
       _obscureText_accuracy = !_obscureText_accuracy;
     });
   }
+
+  final _auth = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,27 +95,7 @@ class DoiMatKhauState extends State<DoiMatKhau> {
               Container(
                 padding: const EdgeInsets.all(15),
                 child: TextField(
-                obscureText: _obscureText_old,
-                style:const TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  labelText: 'Mật khẩu cũ',
-                  labelStyle: const TextStyle(color: Colors.white),
-                  enabledBorder:  OutlineInputBorder(
-                      borderSide:const BorderSide(
-                        color: Colors.white
-                      ),                   
-                      borderRadius: BorderRadius.circular(25),
-                    ),       
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25),
-                    ), 
-                    prefixIcon:Icon(Icons.password_outlined, color: Colors.white),                
-                ),
-              )
-            ),
-              Container(
-                padding: const EdgeInsets.all(15),
-                child: TextField(
+                controller: txtMatKhauMoi,
                 obscureText: _obscureText_new,
                 style:const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
@@ -135,8 +123,8 @@ class DoiMatKhauState extends State<DoiMatKhau> {
             Container(
               padding: const EdgeInsets.all(15),
               child:  TextField(
+              controller: txtMatKhauXT,
               obscureText: _obscureText_accuracy,
-              
               style:const TextStyle(color: Colors.white),
               decoration: InputDecoration(
                 labelText: 'Nhập lại mật khẩu',
@@ -165,7 +153,23 @@ class DoiMatKhauState extends State<DoiMatKhau> {
               width: 200,
               height: 80,
               child: OutlinedButton(       
-                onPressed: (){},
+                onPressed: (){
+                  if(txtMatKhauMoi.text != txtMatKhauXT.text){
+
+                    final snackBar = SnackBar(content: Text("Mật khẩu xác thực không trùng khớp với mật khẩu mới"));
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+                  }
+                  else{
+
+                    final user = _auth?.updatePassword(txtMatKhauMoi.text); 
+                    Navigator.pop(context, 'Đổi mật khẩu thành công');
+
+                  }
+                  final user = _auth?.updatePassword(txtMatKhauMoi.text); 
+                   Navigator.pop(context, 'Đổi mật khẩu thành công');
+                   
+                },
                 // ignore: sort_child_properties_last
                 child: const Text('Xác nhận', 
                   style: TextStyle(fontSize: 20,
