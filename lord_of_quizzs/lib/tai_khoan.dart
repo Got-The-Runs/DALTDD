@@ -1,18 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:lord_of_quizzs/model/thong_tin_object.dart';
 
 class ManHinhTaiKhoan extends StatefulWidget {
-  const ManHinhTaiKhoan({super.key});
+  String email;
+  ManHinhTaiKhoan({Key? key, required this.email}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    // ignore: todo
-    // TODO: implement createState
-    return ManHinhTaiKhoanState();
+    return ManHinhTaiKhoanState(email: email,); 
   }
 }
 
 class ManHinhTaiKhoanState extends State<ManHinhTaiKhoan> {
-  // var auth=FirebaseAuth.instance.currentUser!;
+  String email;
+  ManHinhTaiKhoanState({Key? key, required this.email});
+  var txtEmail = TextEditingController();
+  var txtName = TextEditingController();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   // ignore: dead_code
   Widget build(BuildContext context) {
@@ -35,98 +44,84 @@ class ManHinhTaiKhoanState extends State<ManHinhTaiKhoan> {
             end: Alignment.bottomLeft,
           ),
         ),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                 Container(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
                 padding: const EdgeInsets.only(top: 70),
-                child: Image.asset(
-                  'images/Logo.png',
-                  fit: BoxFit.cover,
-                  height: 120,
-                  width: 120
+                child: Image.asset('images/Logo.png',
+                    fit: BoxFit.cover, height: 120, width: 120),
+              ),
+              Container(
+                padding: const EdgeInsets.all(10),
+                child: TextButton(
+                  onPressed: () {},
+                  child: const Text(
+                    'Đổi ảnh đại diện',
+                    style: TextStyle(
+                        decoration: TextDecoration.underline,
+                        fontSize: 20,
+                        color: Colors.white),
+                  ),
                 ),
-              ),     
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  child: TextButton(
-                    onPressed: () {},
-                    child: const Text(
-                      'Đổi ảnh đại diện',
-                      style: TextStyle(
-                          decoration: TextDecoration.underline,
-                          fontSize: 20,
-                          color: Colors.white),
-                    ),
-                  ),
-                ), 
-                Container(
-                    padding: const EdgeInsets.all(15),
-                    child: TextField(
-                      style:const TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                        labelText: 'Tên người chơi',
-                        labelStyle: const TextStyle(color: Colors.white),
-                          enabledBorder:  OutlineInputBorder(
-                            borderSide:const BorderSide(
-                              color: Colors.white
-                            ),                   
-                            borderRadius: BorderRadius.circular(25),
-                          ),       
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25),
-                          ), 
-                        prefixIcon: const Icon(Icons.man, color: Colors.white),
-                      ),
-                    )
-                  ),
-                  Container(
+              ),
+              Container(
                   padding: const EdgeInsets.all(15),
                   child: TextField(
-                    style:const TextStyle(color: Colors.white),
-                    // UserAccountsDrawerHeader(accountEmail: Text(auth.email!),
-                    // accountName:Text('')),
+                    controller: txtName,
+                    readOnly: true,
+                    style: const TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      labelText: 'Tên người chơi',
+                      labelStyle: const TextStyle(color: Colors.white),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      prefixIcon: const Icon(Icons.person, color: Colors.white),
+                    ),
+                  )),
+              Container(
+                  padding: const EdgeInsets.all(15),
+                  child: TextField(
+                    style: const TextStyle(color: Colors.white),
+                    controller: txtEmail,
+                    readOnly: true,
                     decoration: InputDecoration(
                       labelText: 'Email',
                       labelStyle: const TextStyle(color: Colors.white),
-                        enabledBorder:  OutlineInputBorder(
-                          borderSide:const BorderSide(
-                              color: Colors.white
-                          ),                   
-                          borderRadius: BorderRadius.circular(25),
-                        ),       
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25),
-                        ), 
-                        prefixIcon: const Icon(Icons.email, color: Colors.white),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(25),
                       ),
-                    )
-                  ),             
-                Container(
-                  padding: const EdgeInsets.all(15),
-                  width: 200,
-                  height: 80,
-                  child: OutlinedButton(
-                    onPressed: () {},
-                  // ignore: sort_child_properties_last
-                  child: const Text(
-                    'Cập nhật',
-                    style: TextStyle(fontSize: 20,
-                    color: Colors.white 
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      prefixIcon: const Icon(Icons.email, color: Colors.white),
                     ),
-                  ),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.transparent),  
-                  side: MaterialStateProperty.all(                 
-                    const BorderSide(
-                      color: Colors.white,
-                      width: 2.0,
-                      style: BorderStyle.solid
-                      )
-                    )
-                  )
-                ),
+                  )),
+              Container(
+                padding: const EdgeInsets.all(15),
+                width: 200,
+                height: 80,
+                child: OutlinedButton(
+                    onPressed: () {},
+                    // ignore: sort_child_properties_last
+                    child: const Text(
+                      'Cập nhật',
+                      style: TextStyle(fontSize: 20, color: Colors.white),
+                    ),
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.transparent),
+                        side: MaterialStateProperty.all(const BorderSide(
+                            color: Colors.white,
+                            width: 2.0,
+                            style: BorderStyle.solid)))),
               ),
             ],
           ),

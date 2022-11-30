@@ -6,24 +6,37 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lord_of_quizzs/dang_ky.dart';
 import 'package:lord_of_quizzs/man_hinh_chinh.dart';
+import 'package:lord_of_quizzs/man_hinh_doi_mat_khau.dart';
 import 'package:lord_of_quizzs/quen_mat_khau.dart';
 
-class DangNhap extends StatefulWidget {
-  const DangNhap({super.key});
+class DangNhapXN extends StatefulWidget {
+  String email;
+  DangNhapXN({Key? key, required this.email}) : super(key: key);
+  
 
   @override
   State<StatefulWidget> createState() {
     // ignore: todo
     // TODO: implement createState
-    return DangNhapState();
+    return DangNhapXNState(email: email);
   }
 }
 
-class DangNhapState extends State<DangNhap> {
+class DangNhapXNState extends State<DangNhapXN> {
+  String email;
+  DangNhapXNState({Key? key, required this.email});
   TextEditingController txtEmail = TextEditingController();
   TextEditingController txtPass = TextEditingController();
-  final _auth = FirebaseAuth.instance;
 
+  bool _obscureText_password=true;
+
+  void _toggle_pass(){
+    setState(() {
+      _obscureText_password = !_obscureText_password;
+    });
+  }
+  
+  final _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +65,7 @@ class DangNhapState extends State<DangNhap> {
               Container(
                 padding: const EdgeInsets.all(10),
                 child: const Text(
-                  'ĐĂNG NHẬP',
+                  'ĐỔI MẬT KHẨU',
                   style: TextStyle(
                       fontSize: 35,
                       color: Colors.white,
@@ -61,12 +74,13 @@ class DangNhapState extends State<DangNhap> {
               ),
               Container(
                   padding: const EdgeInsets.all(15),
-                  child: TextField(
-                    controller: txtEmail,
+                  child: TextField(                 
+                    readOnly: true,
                     keyboardType: TextInputType.emailAddress,
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
-                      labelText: 'Tên đăng nhập',
+                      hintText: email,
+                      hintStyle:TextStyle(color: Colors.white),
                       labelStyle: const TextStyle(color: Colors.white),
                       enabledBorder: OutlineInputBorder(
                         borderSide: const BorderSide(color: Colors.white),
@@ -76,13 +90,13 @@ class DangNhapState extends State<DangNhap> {
                         borderRadius: BorderRadius.circular(25),
                       ),
                       prefixIcon: const Icon(Icons.person, color: Colors.white),
-                    ),
+                    )
                   )),
               Container(
                   padding: const EdgeInsets.all(15),
                   child: TextField(
                     controller: txtPass,
-                    obscureText: true,
+                    obscureText: _obscureText_password,
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       labelText: 'Mật khẩu',
@@ -95,6 +109,12 @@ class DangNhapState extends State<DangNhap> {
                         borderRadius: BorderRadius.circular(25),
                       ),
                       prefixIcon: const Icon(Icons.lock, color: Colors.white),
+                      suffixIcon: IconButton(
+          icon: Icon(
+            _obscureText_password ? Icons.visibility : Icons.visibility_off,color: Colors.white
+          ),
+          onPressed: _toggle_pass,
+        ),
                     ),
                   )),
               Container(
@@ -103,21 +123,21 @@ class DangNhapState extends State<DangNhap> {
                 height: 80,
                 child: OutlinedButton(
                     onPressed: () async {
-                      try {
+                       try {
                         final _user = await _auth.signInWithEmailAndPassword(
-                            email: txtEmail.text, password: txtPass.text);
-                         await _auth.authStateChanges().listen((event) {
+                            email: email, password: txtPass.text);
+                        await _auth.authStateChanges().listen((event) {
                           if (event != null) {
                             Navigator.push(
                                 context, 
                                 MaterialPageRoute(builder: 
-                                (context) => ManHinhChinh(email: txtEmail.text),
+                                (context) =>DoiMatKhau(email: email,),
                                 ),
                               );
                           }
                         });
                       } catch (e) {                       
-                          final snackBar =  SnackBar(
+                          final snackBar = SnackBar(
                               content: Text('Email hoặc mật khẩu không đúng'));
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       }
@@ -134,51 +154,6 @@ class DangNhapState extends State<DangNhap> {
                             color: Colors.white,
                             width: 2.0,
                             style: BorderStyle.solid)))),
-              ),
-              Container(
-                padding: const EdgeInsets.all(10),
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const QuenMatKhau(),
-                      ),
-                    );
-                  },
-                  child: const Text(
-                    'Quên mật khẩu',
-                    style: TextStyle(
-                        decoration: TextDecoration.underline,
-                        fontSize: 20,
-                        color: Colors.white),
-                  ),
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.all(5),
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const DangKi(),
-                      ),
-                    ).then((value) {
-                      if (value != null) {
-                        final snackBar = SnackBar(content: Text(value));
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      }
-                    });
-                  },
-                  child: const Text(
-                    'Đăng ký',
-                    style: TextStyle(
-                        decoration: TextDecoration.underline,
-                        fontSize: 20,
-                        color: Colors.white),
-                  ),
-                ),
               ),
             ],
           ),

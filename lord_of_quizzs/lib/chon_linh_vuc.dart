@@ -10,29 +10,36 @@ import 'package:lord_of_quizzs/choi_tro_choi.dart';
 import 'mua_credit.dart';
 
 class ChonLinhVuc extends StatefulWidget {
-  const ChonLinhVuc({super.key});
+  String name;
+  String email;
+  ChonLinhVuc({Key? key, required this.name, required this.email}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
     // ignore: todo
     // TODO: implement createState
-    return ChonLinhVucState();
+    return ChonLinhVucState(email: name,);
   }
 }
 
 class ChonLinhVucState extends State<ChonLinhVuc> {
+  String email;
+  ChonLinhVucState({Key? key, required this.email});
+
   List<LinhVucObject> linhVuc = [];
   void _LoadLinhVuc() async {
     final data = await LinhVucProvider.getData();
     setState(() {});
     linhVuc = data;
   }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _LoadLinhVuc();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,21 +58,20 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
           const Center(
             child: Text(
               '9999',
-                style: TextStyle(
+              style: TextStyle(
                 fontSize: 25,
                 color: Colors.white,
-                ),
               ),
             ),
+          ),
           IconButton(
             icon: const Icon(Icons.add_circle_outline),
             onPressed: () {
-                Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MuaCredit(),  
-                )
-               );
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MuaCredit(),
+                  ));
             },
             iconSize: 30,
           ),
@@ -82,10 +88,10 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
           ),
-        ),   
-          // physics:const NeverScrollableScrollPhysics(),
-           child: SingleChildScrollView(
-            child: Column(
+        ),
+        // physics:const NeverScrollableScrollPhysics(),
+        child: SingleChildScrollView(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
@@ -147,43 +153,44 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-              ), 
+              ),
               ListView.builder(
                 padding: EdgeInsets.only(bottom: 20, top: 20),
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: linhVuc.length, 
-                itemBuilder: (BuildContext context, int index) { 
+                itemCount: linhVuc.length,
+                itemBuilder: (BuildContext context, int index) {
                   return Container(
-                padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-                width: 350,
-                height: 85,
-                child: OutlinedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>  ChoiTroChoi(idLinhVuc: linhVuc[index].idLinhVuc,),
-                      )
-                    );
-                  },
-                  // ignore: sort_child_properties_last
-                  child:  Text(
-                    linhVuc[index].tenLinhVuc,
-                    style: TextStyle(fontSize: 20, color: Colors.white),
-                  ),
-                  style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(Colors.transparent),
-                      side: MaterialStateProperty.all(const BorderSide(
-                          color: Colors.white,
-                          width: 2.0,
-                          style: BorderStyle.solid))),
+                    padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                    width: 350,
+                    height: 85,
+                    child: OutlinedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ChoiTroChoi(
+                                idLinhVuc: linhVuc[index].idLinhVuc, email: email,
+                              ),
+                            ));
+                      },
+                      // ignore: sort_child_properties_last
+                      child: Text(
+                        linhVuc[index].tenLinhVuc,
+                        style: TextStyle(fontSize: 20, color: Colors.white),
+                      ),
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.transparent),
+                          side: MaterialStateProperty.all(const BorderSide(
+                              color: Colors.white,
+                              width: 2.0,
+                              style: BorderStyle.solid))),
                     ),
                   );
                 },
               ),
-            ],      
+            ],
           ),
         ),
       ),
