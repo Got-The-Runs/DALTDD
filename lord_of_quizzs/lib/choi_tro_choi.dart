@@ -32,11 +32,11 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
   int seconds = maxSeconds;
   Timer? timer;
   late int idBoCauHoi;
+  late int soCauHoiBoCauHoi;
+  int diem = 0;
   int mang = 5;
   int i = 0;
-  var min = 0;
-  var max = 1;
-  Random random =Random.secure();
+  int soCauHoi = 1;
   late int idCauHoi;
   void startTimer() {
     timer = Timer.periodic(const Duration(seconds: 1), (_) {
@@ -48,18 +48,53 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
     super.initState();
     startTimer();
   }
+
+  @override
+  void setState(VoidCallback fn) {
+    if(seconds == 1){
+       mang--;
+      if(mang != 0){
+        ngungChoi(soCauHoiBoCauHoi);
+      }
+      else{
+        timer?.cancel();
+        showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+               title: Text('Kết thúc trò chơi'),
+               content: Text('Số điểm của bạn: ${diem}'),
+                 actions: <Widget>[
+                   TextButton(
+                     onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                            ManHinhChinh(email: email),
+                      ),
+                    );
+                  },
+                child: Text('Màn hình chính')
+              )
+            ],
+          );
+        }
+      );
+      }
+    }
+    super.setState(fn);
+  }
   @override
   Widget build(BuildContext context) {
-    if (seconds == 0) {
-      timer?.cancel();
-    }   
        //Lấy id bộ câu hỏi dựa trên lĩnh vực
     return FutureBuilder<List<BoCauHoiObject>>(
       future: BoCauHoiProvider.getDataByID(idLinhVucState),
       builder: (context, snapshot) {
         if(snapshot.hasData){
           List<BoCauHoiObject> linhVuc = snapshot.data!;
-          idBoCauHoi = linhVuc[0].idBoCauHoi;       
+          idBoCauHoi = linhVuc[1].idBoCauHoi;     
           //Lấy id của câu hỏi dựa trên id bộ câu hỏi
         return FutureBuilder<List<CTBoCauHoiObject>>(
           future: CTBoCauHoiProvider.getDataByID(idBoCauHoi),
@@ -67,12 +102,13 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
             if(snapshot.hasData){
               List<CTBoCauHoiObject> cauHoi = snapshot.data!;      
                  idCauHoi = cauHoi[i].idCauHoi;
+                 soCauHoiBoCauHoi = cauHoi.length;
               //Lấy id câu hỏi bằng id câu hỏi của ct bộ câu hỏi
          return FutureBuilder<List<CauHoiObject>>(
             future: CauHoiProvider.getDataById(idCauHoi),
             builder: (context, snapshot) {
               if(snapshot.hasData){
-                List<CauHoiObject> chiTietCauHoi = snapshot.data!;              
+                List<CauHoiObject> chiTietCauHoi = snapshot.data!;      
               return  Scaffold(
               extendBodyBehindAppBar: true,
               appBar: AppBar(
@@ -153,8 +189,10 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                                     const BorderSide(
                                                         color: Colors.white,
                                                         width: 2.0,
-                                                        style: BorderStyle
-                                                            .solid))),
+                                                        style: BorderStyle.solid
+                                                )
+                                              )
+                                            ),
                                           ),
                                         ),
                                       ],
@@ -240,7 +278,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                         Container(
                           padding: const EdgeInsets.only(left: 30),
                           child: Text(
-                            'Điểm :${chiTietCauHoi.length}',
+                            'Điểm :${diem}',
                             style: TextStyle(
                                 fontSize: 20,
                                 color: Colors.white,
@@ -259,7 +297,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                      Container(
                         padding: const EdgeInsets.all(12),
                         child: Text(
-                          chiTietCauHoi[0].cauHoi
+                          'Câu ${soCauHoi}: ${chiTietCauHoi[0].cauHoi}'
                           ,
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -273,13 +311,24 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                       width: 350,
                       height: 75,
                       child: OutlinedButton(
-                        onPressed: () {
+                         onPressed: () {
                           setState(() {
-                            i++;
-                            });                                                                      
+                            if(chiTietCauHoi[0].dapAn == 1){
+                              diem = diem + (100*seconds);
+                              ngungChoi(soCauHoiBoCauHoi);
+                            }
+                             else{
+                              mang = mang -1;
+                              if(mang ==0){
+                                truMang();
+                              }
+                              else               
+                                ngungChoi(soCauHoiBoCauHoi);
+                            }
+                          });
                         },
                         // ignore: sort_child_properties_last
-                        child:  Align(
+                        child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
                             chiTietCauHoi[0].cauTraLoi1
@@ -304,10 +353,21 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                       width: 350,
                       height: 75,
                       child: OutlinedButton(
-                        onPressed: () {
-                           setState(() {
-                            i++;
-                            });  
+                          onPressed: () {
+                          setState(() {
+                            if(chiTietCauHoi[0].dapAn == 2){
+                              diem = diem + (100*seconds);
+                              ngungChoi(soCauHoiBoCauHoi);
+                            }
+                            else{
+                              mang = mang -1;
+                              if(mang ==0){
+                                truMang();
+                              }
+                              else               
+                                ngungChoi(soCauHoiBoCauHoi);
+                            }
+                          });
                         },
                         // ignore: sort_child_properties_last
                         child: Align(
@@ -334,10 +394,21 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                       width: 350,
                       height: 75,
                       child: OutlinedButton(
-                        onPressed: () {
+                          onPressed: () {
                           setState(() {
-                              i++;
-                            });  
+                            if(chiTietCauHoi[0].dapAn == 3){
+                              diem = diem + (100*seconds);
+                              ngungChoi(soCauHoiBoCauHoi);
+                            }
+                            else{
+                              mang = mang -1;
+                              if(mang ==0){
+                                truMang();
+                              }
+                              else               
+                                ngungChoi(soCauHoiBoCauHoi);
+                            }
+                          });
                         },
                         // ignore: sort_child_properties_last
                         child: Align(
@@ -360,14 +431,25 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                      padding: EdgeInsets.symmetric(horizontal: 25, vertical: 14),
                       width: 350,
                       height: 75,
                       child: OutlinedButton(
-                        onPressed: () {
+                         onPressed: () {
                           setState(() {
-                              i++;
-                            });  
+                            if(chiTietCauHoi[0].dapAn == 4){
+                              diem = diem + (100*seconds);
+                              ngungChoi(soCauHoiBoCauHoi);
+                            }
+                            else{
+                              mang = mang -1;
+                              if(mang ==0){
+                                truMang();
+                              }
+                              else               
+                                ngungChoi(soCauHoiBoCauHoi);
+                            }
+                          });
                         },
                         // ignore: sort_child_properties_last
                         child:  Align(
@@ -379,7 +461,15 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                               color: Colors.white,
                               ),
                           ),
-                        )
+                        ),
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.transparent),
+                            side: MaterialStateProperty.all(const BorderSide(
+                                color: Colors.white,
+                                width: 2.0,
+                                style: BorderStyle.solid))),
+ 
                       )
                     ),
                         Row(
@@ -468,6 +558,65 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
         }
       );   
     }
+    void ngungChoi(int cauHoi){
+       if(soCauHoi < cauHoi){
+          soCauHoi++;
+          i++;
+          seconds = maxSeconds;
+      }
+      else{
+        showDialog(
+           barrierDismissible: false,
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+               title: Text('Kết thúc trò chơi'),
+               content: Text('Số điểm của bạn: ${diem}'),
+                 actions: <Widget>[
+                   TextButton(
+                     onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                            ManHinhChinh(email: email),
+                      ),
+                    );
+                  },
+                child: Text('Màn hình chính')
+              )
+            ],
+          );
+        }
+      );
+    }
+  }            
+  void truMang(){
+      showDialog(
+         barrierDismissible: false,
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+               title: Text('Kết thúc trò chơi'),
+               content: Text('Số điểm của bạn: ${diem}'),
+                 actions: <Widget>[
+                   TextButton(
+                     onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                            ManHinhChinh(email: email),
+                      ),
+                    );
+                  },
+                child: Text('Màn hình chính')
+              )
+            ],
+          );
+        }
+      );
+  }                
   Widget buildTime() {
     return Text(
       '$seconds',
