@@ -4,32 +4,48 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lord_of_quizzs/bang_xep_hang.dart';
-import 'package:lord_of_quizzs/cai_dat.dart';
 import 'package:lord_of_quizzs/chon_linh_vuc.dart';
 import 'package:lord_of_quizzs/lich_su.dart';
 import 'package:lord_of_quizzs/man_hinh_doi_mat_khau.dart';
-import 'package:lord_of_quizzs/man_hinh_doi_mat_khau_xac_nhan.dart';
 import 'package:lord_of_quizzs/mua_credit.dart';
 import 'package:lord_of_quizzs/tai_khoan.dart';
 
 import 'dang_nhap.dart';
 
 class ManHinhChinh extends StatefulWidget {
-  const ManHinhChinh({super.key});
+  String email;
+
+  ManHinhChinh({
+    Key? key,
+    required this.email,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    // ignore: todo
-    // TODO: implement createState
-    return ManHinhChinhState();
+    return ManHinhChinhState(
+      email: email,
+    );
   }
 }
 
 class ManHinhChinhState extends State<ManHinhChinh> {
+<<<<<<< HEAD
   final _auth = FirebaseAuth.instance.currentUser;
   @override
   
   // ignore: dead_code
+=======
+  String email;
+  ManHinhChinhState({Key? key, required this.email});
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+>>>>>>> d32230506777d33b607b0f818dcd50cc6ad15b27
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -107,12 +123,21 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                               height: 80,
                               child: OutlinedButton(
                                 onPressed: () {
+<<<<<<< HEAD
                                   // Navigator.push(
                                   //   context,
                                   //   MaterialPageRoute(
                                   //     builder: (context) => DangNhapXN(),
                                   //   ),
                                   // );
+=======
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const DoiMatKhau(),
+                                    ),
+                                  );
+>>>>>>> d32230506777d33b607b0f818dcd50cc6ad15b27
                                 },
                                 // ignore: sort_child_properties_last
                                 child: const Text(

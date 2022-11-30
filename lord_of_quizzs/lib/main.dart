@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:lord_of_quizzs/bang_xep_hang.dart';
-import 'package:lord_of_quizzs/cai_dat.dart';
 import 'package:lord_of_quizzs/choi_tro_choi.dart';
 // ignore: unused_import
 import 'package:lord_of_quizzs/dang_ky.dart';
@@ -21,14 +20,9 @@ Future<void> main(List<String> args) async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute:
-          FirebaseAuth.instance.currentUser == null ? 'welcome' : 'home',
-      routes: {
-        'welcome': (context) => DangNhap(),
-        'home': (context) => ManHinhChinh(),
-      },
+      home: DangNhap(),
     );
   }
 }

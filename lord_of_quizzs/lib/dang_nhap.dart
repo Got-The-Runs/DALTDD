@@ -108,10 +108,12 @@ class DangNhapState extends State<DangNhap> {
                             email: txtEmail.text, password: txtPass.text);
                         await _auth.authStateChanges().listen((event) {
                           if (event != null) {
-                            txtEmail.clear();
-                            txtPass.clear();
-                            Navigator.pushNamedAndRemoveUntil(
-                                context, 'home', (route) => false);
+                            Navigator.push(
+                                context, 
+                                MaterialPageRoute(builder: 
+                                (context) => ManHinhChinh(email: txtEmail.text),
+                                ),
+                              );
                           }
                         });
                       } catch (e) {                       
