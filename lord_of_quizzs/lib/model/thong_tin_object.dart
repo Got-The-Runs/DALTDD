@@ -4,8 +4,7 @@ class ThongTinObject {
   final int money;
   final int trangthai;
 
-  ThongTinObject( this.name, this.email, this.money,
-      this.trangthai);
+  ThongTinObject(this.name, this.email, this.money, this.trangthai);
 
   ThongTinObject.fromJson(Map<String, dynamic> json)
       : name = json['ten_nguoi_choi'],
