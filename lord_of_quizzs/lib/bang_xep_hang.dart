@@ -4,14 +4,18 @@ import 'package:flutter/material.dart';
 import 'mua_credit.dart';
 
 class BangXepHang extends StatefulWidget{
-  const BangXepHang({super.key});
+  String email;
+  BangXepHang({Key? key, required this.email}) : super(key: key);
+  
   @override
   State<StatefulWidget> createState() {
-    return BangXepHangState();
+    return BangXepHangState(email: email);
   }
 }
 
 class BangXepHangState extends State<BangXepHang>{
+  String email;
+  BangXepHangState({Key? key, required this.email});
   var items = ['Khoa Học Kỹ Thuật','Văn Hóa-Xã Hội-Nghệ Thuật','Lịch Sử-Địa Lý','Thể Thao' ];
   String? selectedItem = 'Khoa Học Kỹ Thuật';
   @override
@@ -44,7 +48,7 @@ class BangXepHangState extends State<BangXepHang>{
                 Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MuaCredit(),  
+                  builder: (context) => MuaCredit(email: email,),  
                 )
                );
             },
