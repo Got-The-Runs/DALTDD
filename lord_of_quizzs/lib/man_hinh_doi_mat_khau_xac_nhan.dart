@@ -1,5 +1,4 @@
 // ignore: unnecessary_import
-import 'dart:html';
 import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';

@@ -39,6 +39,11 @@ class ManHinhChinhState extends State<ManHinhChinh> {
     // TODO: implement initState
     super.initState();
   }
+  @override
+  void setState(VoidCallback fn) {
+    
+    super.setState(fn);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -241,7 +246,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => MuaCredit(),
+                              builder: (context) => MuaCredit(email: email,),
                             ));
                       }),
                       iconSize: 30,
@@ -320,7 +325,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => LichSu(),
+                                builder: (context) => LichSu(email: email,),
                               ));
                         },
                         // ignore: sort_child_properties_last
@@ -347,7 +352,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const BangXepHang(),
+                              builder: (context) => BangXepHang(email: email,),
                             ),
                           );
                         },
@@ -395,6 +400,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
             );
           }
           return Text('');
-        });
+        }
+        );
   }
 }

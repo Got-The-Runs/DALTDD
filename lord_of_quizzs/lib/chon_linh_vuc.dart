@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -70,7 +71,7 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => MuaCredit(),
+                    builder: (context) => MuaCredit(email: email,),
                   ));
             },
             iconSize: 30,

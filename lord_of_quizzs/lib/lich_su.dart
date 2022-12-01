@@ -6,16 +6,19 @@ import 'package:lord_of_quizzs/man_hinh_doi_mat_khau.dart';
 import 'package:lord_of_quizzs/mua_credit.dart';
 
 class LichSu extends StatefulWidget {
-  const LichSu({super.key});
+  String email;
+  LichSu({Key? key, required this.email}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
     // ignore: todo
     // TODO: implement createState
-    return LichSuState();
+    return LichSuState(email: email);
   }
 }
 
 class LichSuState extends State<LichSu> {
+  String email;
+  LichSuState({Key? key, required this.email});
   @override
   // ignore: dead_code
   Widget build(BuildContext context) {
@@ -47,7 +50,7 @@ class LichSuState extends State<LichSu> {
                Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MuaCredit(),  
+                  builder: (context) => MuaCredit(email:email ,),  
                 )
                );
             }),

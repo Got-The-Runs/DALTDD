@@ -1,20 +1,55 @@
+
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:lord_of_quizzs/model/thong_tin_object.dart';
+
+import 'model/thong_tin_provider.dart';
 
 class MuaCredit extends StatefulWidget{
+  String email;
+  MuaCredit({Key? key, required this.email}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
-    return MuaCreditState();
+    return MuaCreditState(email: email);
   }
 }
 
 class MuaCreditState extends State<MuaCredit>{
+  String email;
+  MuaCreditState({Key? key, required this.email});
+
   final credit = ['100','300','700','1200','2500','5000','10.000','15.000','20.000'];
+  final credit_Pri = [100,300,700,1200,2500,5000,10.000,15.000,20.000];
   final money = ['20.000 VND','50.000 VND','100.000 VND','200.000 VND','300.000 VND','600.000 VND','1.000.000VND','1.600.000VND','2.000.000VND'];
   bool selectionIsActive = false;
+  var showCredit=0;
+  late num credit_0 ;
+  var docID;
+  var querySnapshots;
+  final _formKey = GlobalKey<FormState>();
+  CollectionReference user = FirebaseFirestore.instance.collection("thong_tin");
+  Future<void> updateUser(var docID, var cre) {
+    return user
+        .doc(docID)
+        .update({'tien_ao': cre});
+  }
+  @override
+
+
   @override
   Widget build(BuildContext context) {
-     return Scaffold(
+     return FutureBuilder<List<ThongTinObject>>(
+        future: ThongTinProvider.get(email),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            List<ThongTinObject> thongTin = snapshot.data!;
+            credit_0 = thongTin[0].money;
+            return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         centerTitle: true,
@@ -27,9 +62,9 @@ class MuaCreditState extends State<MuaCredit>{
         ),
         actions: <Widget>[
           const Icon(Icons.diamond_rounded, size: 30),
-          const Center(
+           Center(
             child: Text(
-              '9999',
+              credit_0.toString(),
                 style: TextStyle(
                 fontSize: 25,
                 color: Colors.white,
@@ -65,6 +100,7 @@ class MuaCreditState extends State<MuaCredit>{
           ),
         ), 
      child: GridView.builder(
+      
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3,
               childAspectRatio: (1/1.25), 
@@ -75,16 +111,10 @@ class MuaCreditState extends State<MuaCredit>{
             itemCount: credit.length,
             itemBuilder:(context, index) {
               final item = credit[index];
+              final item1 =credit_Pri[index];
               final item2 = money[index];
-              return buildCredit(item, item2);
-            }
-          ),
-      )
-     );
-  }
-  
-  Widget buildCredit(String item, String money) {
-    return Container(
+             return Container(
+              
       padding: EdgeInsets.only(top: 10),
       color: Color.fromARGB(255, 131, 197, 8),
       child: GridTile(
@@ -93,9 +123,29 @@ class MuaCreditState extends State<MuaCredit>{
           child: Text(item, style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),),
         ),
         footer: TextButton(
-          onPressed: () {},
+          onPressed: () async {
+                              try {
+                                querySnapshots = await user.get();
+                                for (var snapshot in querySnapshots.docs) {
+                                  if (email == snapshot['email']) {
+                                    docID = snapshot.id;
+                                    credit_0 = snapshot['tien_ao'];
+                                  }
+                                }
+                                credit_0 += item1;                               
+                                updateUser(docID,credit_0);
+                                setState(){
+
+                                };
+                              } catch (e) {
+                                final snackBar =
+                                    SnackBar(content: Text('Có lỗi xảy ra !'));
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+                              }
+                            },
           child: Text(
-            money,
+            item2,
              style: TextStyle(
                 decoration: TextDecoration.underline,
                 fontSize: 20,
@@ -106,6 +156,13 @@ class MuaCreditState extends State<MuaCredit>{
             ),
       ),
     );
+            }
+          ),
+      )
+     );
   }
+  
 
-}
+return Text('');
+});
+}}
