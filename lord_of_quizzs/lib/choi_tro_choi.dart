@@ -33,15 +33,25 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
   Timer? timer;
   late int idBoCauHoi;
   late int soCauHoiBoCauHoi;
+  late String A ;
+  late String B ;
+  late String C ;
+  late String D ;
+  Random random = new Random();
+  late int troGiup5050 ;
   int diem = 0;
   int mang = 5;
   int i = 0;
   int soCauHoi = 1;
+  
   late int idCauHoi;
   void startTimer() {
     timer = Timer.periodic(const Duration(seconds: 1), (_) {
       setState(() => seconds--);
     });
+  }
+  void tro_Giup_50_50(){
+    troGiup5050 = random.nextInt(5);
   }
   @override
   void initState() {
@@ -86,6 +96,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
     }
     super.setState(fn);
   }
+
   @override
   Widget build(BuildContext context) {
        //Lấy id bộ câu hỏi dựa trên lĩnh vực
@@ -108,7 +119,12 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
             future: CauHoiProvider.getDataById(idCauHoi),
             builder: (context, snapshot) {
               if(snapshot.hasData){
-                List<CauHoiObject> chiTietCauHoi = snapshot.data!;      
+                List<CauHoiObject> chiTietCauHoi = snapshot.data!; 
+                A = chiTietCauHoi[0].cauTraLoi1;
+                B = chiTietCauHoi[0].cauTraLoi2;
+                C = chiTietCauHoi[0].cauTraLoi3;
+                D = chiTietCauHoi[0].cauTraLoi4;
+
               return  Scaffold(
               extendBodyBehindAppBar: true,
               appBar: AppBar(
@@ -208,7 +224,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                           const Icon(Icons.diamond_rounded, size: 30),
                           const Center(
                             child: Text(
-                              '9999',
+                              "0",
                               style: TextStyle(
                                 fontSize: 25,
                                 color: Colors.white,
@@ -331,7 +347,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            chiTietCauHoi[0].cauTraLoi1
+                            A
                             ,
                             style: TextStyle(
                               fontSize: 20,
@@ -373,7 +389,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                           chiTietCauHoi[0].cauTraLoi2,
+                           B,
                             style: TextStyle(
                               fontSize: 20,
                               color: Colors.white,
@@ -414,7 +430,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            chiTietCauHoi[0].cauTraLoi3,
+                            C,
                             style: TextStyle(
                               fontSize: 20,
                               color: Colors.white,
@@ -455,7 +471,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                         child:  Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                             chiTietCauHoi[0].cauTraLoi4,
+                             D,
                             style: TextStyle(
                               fontSize: 20,
                               color: Colors.white,
@@ -476,7 +492,28 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 OutlinedButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                     { tro_Giup_50_50();
+                                    while(chiTietCauHoi[0].dapAn == troGiup5050){
+                                      troGiup5050 = random.nextInt(5);
+                                    }
+                                    if(troGiup5050 != 1 && chiTietCauHoi[0].dapAn != 1){
+                                      A = "";
+                                    }
+                                    if(troGiup5050 != 2 && chiTietCauHoi[0].dapAn != 2){
+                                      B = "";
+                                    }
+                                    if(troGiup5050 != 3 && chiTietCauHoi[0].dapAn != 3){
+                                      C = "";
+                                    }
+                                    if(troGiup5050 != 4 && chiTietCauHoi[0].dapAn != 4){
+                                      D = "";
+                                    }}
+                                    setState(() {
+                                      
+                                    });
+
+                                  },
                                   child: Text(
                                     '50:50',
                                     style: TextStyle(
