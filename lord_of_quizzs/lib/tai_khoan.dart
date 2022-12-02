@@ -1,3 +1,5 @@
+// ignore_for_file: sort_child_properties_last
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:lord_of_quizzs/model/thong_tin_object.dart';
@@ -146,27 +148,30 @@ class ManHinhTaiKhoanState extends State<ManHinhTaiKhoan> {
                         width: 200,
                         height: 80,
                         child: OutlinedButton(
-                            onPressed: () async {
-                              try {
-                                querySnapshots = await user.get();
-                                for (var snapshot in querySnapshots.docs) {
-                                  if (email == snapshot['email']) {
-                                    docID = snapshot.id;
-                                  }
+                          onPressed: () async {
+                            try {
+                              querySnapshots = await user.get();
+                              for (var snapshot in querySnapshots.docs) {
+                                if (email == snapshot['email']) {
+                                  docID = snapshot.id;
                                 }
-                                updateUser(docID);
-                              } catch (e) {
-                                final snackBar =
-                                    SnackBar(content: Text('Có lỗi xảy ra !'));
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(snackBar);
                               }
-                            },
-                            child: const Text(
-                              'Cập nhật',
-                              style:
-                                  TextStyle(fontSize: 20, color: Colors.white),
-                            )),
+                              updateUser(docID);
+                            } catch (e) {
+                              final snackBar =
+                                  SnackBar(content: Text('Có lỗi xảy ra !'));
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            }
+                          },
+                          child: const Text(
+                            'Cập nhật',
+                            style: TextStyle(fontSize: 20, color: Colors.white),
+                          ),
+                          style: OutlinedButton.styleFrom(
+                            side: BorderSide(width: 1.5, color: Colors.white),
+                          ),
+                        ),
                       )
                     ],
                   ),
