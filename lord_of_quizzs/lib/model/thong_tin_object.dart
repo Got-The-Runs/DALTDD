@@ -1,7 +1,7 @@
 class ThongTinObject {
   final String name;
   final String email;
-  final int money;
+  final num money;
   final int trangthai;
 
   ThongTinObject(this.name, this.email, this.money, this.trangthai);
