@@ -12,7 +12,7 @@ import 'package:lord_of_quizzs/quen_mat_khau.dart';
 class DangNhapXN extends StatefulWidget {
   String email;
   DangNhapXN({Key? key, required this.email}) : super(key: key);
-  
+
   @override
   State<StatefulWidget> createState() {
     // ignore: todo
@@ -26,36 +26,45 @@ class DangNhapXNState extends State<DangNhapXN> {
   DangNhapXNState({Key? key, required this.email});
   TextEditingController txtEmail = TextEditingController();
   TextEditingController txtPass = TextEditingController();
-  var showEmail ="";
+  var showEmail = "";
   bool check = true;
-  bool _obscureText_password=true;
+  bool _obscureText_password = true;
 
-  void _toggle_pass(){
+  void _toggle_pass() {
     setState(() {
       _obscureText_password = !_obscureText_password;
     });
   }
-   _show_email(){
+
+  _show_email() {
     setState(() {
-      if(check == true){
-        for(int i = 0;i < email.length-11 ; i++){
-        if(i==0){
-          showEmail += email.substring(0,1);
+      if (check == true) {
+        for (int i = 0; i < email.length - 11; i++) {
+          if (i == 0) {
+            showEmail += email.substring(0, 1);
+          } else {
+            showEmail += "*";
+          }
         }
-        else{
-          showEmail +="*";
-        }
-      }
-      showEmail += email.substring((email.length-11),email.length);  
+        showEmail += email.substring((email.length - 11), email.length);
       }
       check = false;
     });
   }
-  
+
   final _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        leading: IconButton(
+          icon: const Icon(Icons.chevron_left),
+          onPressed: () => Navigator.pop(context),
+          iconSize: 35,
+        ),
+      ),
       extendBodyBehindAppBar: true,
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -89,28 +98,27 @@ class DangNhapXNState extends State<DangNhapXN> {
                 ),
               ),
               Container(
-        
                   padding: const EdgeInsets.all(15),
                   child: TextField(
-                    onTap: _show_email,
-                    readOnly: true,
-                    keyboardType: TextInputType.emailAddress,
-                    style: const TextStyle(color: Colors.white),
-                    decoration: InputDecoration(
-                      labelText: 'Email',
-                      hintText: showEmail,
-                      hintStyle:TextStyle(color: Colors.white),
-                      labelStyle: const TextStyle(color: Colors.white),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      prefixIcon: const Icon(Icons.person, color: Colors.white),
-                    )
-                  )),
+                      onTap: _show_email,
+                      readOnly: true,
+                      keyboardType: TextInputType.emailAddress,
+                      style: const TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                        labelText: 'Email',
+                        hintText: showEmail,
+                        hintStyle: TextStyle(color: Colors.white),
+                        labelStyle: const TextStyle(color: Colors.white),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                        prefixIcon:
+                            const Icon(Icons.person, color: Colors.white),
+                      ))),
               Container(
                   padding: const EdgeInsets.all(15),
                   child: TextField(
@@ -129,11 +137,13 @@ class DangNhapXNState extends State<DangNhapXN> {
                       ),
                       prefixIcon: const Icon(Icons.lock, color: Colors.white),
                       suffixIcon: IconButton(
-          icon: Icon(
-            _obscureText_password ? Icons.visibility : Icons.visibility_off,color: Colors.white
-          ),
-          onPressed: _toggle_pass,
-        ),
+                        icon: Icon(
+                            _obscureText_password
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: Colors.white),
+                        onPressed: _toggle_pass,
+                      ),
                     ),
                   )),
               Container(
@@ -142,28 +152,30 @@ class DangNhapXNState extends State<DangNhapXN> {
                 height: 80,
                 child: OutlinedButton(
                     onPressed: () async {
-                       try {
+                      try {
                         final _user = await _auth.signInWithEmailAndPassword(
                             email: email, password: txtPass.text);
                         await _auth.authStateChanges().listen((event) {
                           if (event != null) {
                             Navigator.push(
-                                context, 
-                                MaterialPageRoute(builder: 
-                                (context) =>DoiMatKhau(email: email,),
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DoiMatKhau(
+                                  email: email,
                                 ),
-                              );
+                              ),
+                            );
                           }
                         });
-                      } catch (e) {                       
-                          final snackBar = SnackBar(
-                              content: Text('Email hoặc mật khẩu không đúng'));
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      } catch (e) {
+                        final snackBar =
+                            SnackBar(content: Text('Chưa nhập mật khẩu'));
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       }
                     },
                     // ignore: sort_child_properties_last
                     child: const Text(
-                      'Đăng nhập',
+                      'Xác thực',
                       style: TextStyle(fontSize: 20, color: Colors.white),
                     ),
                     style: ButtonStyle(

@@ -103,23 +103,30 @@ class DangNhapState extends State<DangNhap> {
                 height: 80,
                 child: OutlinedButton(
                     onPressed: () async {
-                      try {
-                        final _user = await _auth.signInWithEmailAndPassword(
-                            email: txtEmail.text, password: txtPass.text);
-                         await _auth.authStateChanges().listen((event) {
-                          if (event != null) {
-                            Navigator.push(
-                                context, 
-                                MaterialPageRoute(builder: 
-                                (context) => ManHinhChinh(email: txtEmail.text),
+                      if (txtEmail.text == "" || txtPass.text == "") {
+                        final snackBar = SnackBar(
+                            content: Text('Email hoặc mật khẩu trống'));
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      } else {
+                        try {
+                          final _user = await _auth.signInWithEmailAndPassword(
+                              email: txtEmail.text, password: txtPass.text);
+                          await _auth.authStateChanges().listen((event) {
+                            if (event != null) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      ManHinhChinh(email: txtEmail.text),
                                 ),
                               );
-                          }
-                        });
-                      } catch (e) {                       
-                          final snackBar =  SnackBar(
+                            }
+                          });
+                        } catch (e) {
+                          final snackBar = SnackBar(
                               content: Text('Email hoặc mật khẩu không đúng'));
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        }
                       }
                     },
                     // ignore: sort_child_properties_last
