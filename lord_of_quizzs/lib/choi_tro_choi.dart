@@ -11,52 +11,84 @@ import 'package:lord_of_quizzs/model/cau_hoi_object.dart';
 import 'package:lord_of_quizzs/model/cau_hoi_provider.dart';
 import 'package:lord_of_quizzs/model/ct_bo_cau_hoi_object.dart';
 import 'package:lord_of_quizzs/model/ct_bo_cau_hoi_provider.dart';
+import 'package:lord_of_quizzs/model/thong_tin_object.dart';
+import 'package:lord_of_quizzs/model/thong_tin_provider.dart';
 import 'man_hinh_chinh.dart';
 
 // ignore: must_be_immutable
 class ChoiTroChoi extends StatefulWidget {
-  int idLinhVuc;
+  int idLinhVuc, randomIdBoCauHoi;
   String email;
+<<<<<<< HEAD
   ChoiTroChoi({Key? key, required this.idLinhVuc, required this.email})
       : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return ChoiTroChoiState(idLinhVucState: idLinhVuc, email: email);
+=======
+  ChoiTroChoi({Key? key, required this.idLinhVuc, required this.email,
+   required this.randomIdBoCauHoi }) : super(key: key);
+  @override
+  State<StatefulWidget> createState() {
+    // ignore: no_logic_in_create_state
+    return ChoiTroChoiState(idLinhVucState: idLinhVuc, email: email, randomIdBoCauHoi: randomIdBoCauHoi);
+    }
+>>>>>>> cd1f5f6564ffcdaa7523f55e7f7c9d3685419dcb
   }
 }
 
 class ChoiTroChoiState extends State<ChoiTroChoi> {
-  int idLinhVucState;
+  int idLinhVucState, randomIdBoCauHoi;
   String email;
+<<<<<<< HEAD
   ChoiTroChoiState(
       {Key? key, required this.idLinhVucState, required this.email});
+=======
+  ChoiTroChoiState({Key? key, required this.idLinhVucState, required this.email, required this.randomIdBoCauHoi});
+>>>>>>> cd1f5f6564ffcdaa7523f55e7f7c9d3685419dcb
   static const maxSeconds = 30;
   int seconds = maxSeconds;
   Timer? timer;
-  late int idBoCauHoi;
-  late int soCauHoiBoCauHoi;
-  int diem = 0;
-  int mang = 5;
-  int i = 0;
-  int soCauHoi = 1;
-  late int idCauHoi;
+  late int idBoCauHoi, soCauHoiBoCauHoi, troGiup5050, idCauHoi;
+  int diem = 0, mang = 5, i = 1, soCauHoi =1;
+  late String a,b,c,d ;
+  Random random = new Random();
+  List<ThongTinObject> thongTin = [];
   void startTimer() {
     timer = Timer.periodic(const Duration(seconds: 1), (_) {
       setState(() => seconds--);
     });
   }
+<<<<<<< HEAD
 
+=======
+  void tro_Giup_50_50(){
+    troGiup5050 = random.nextInt(5);
+  }
+  void loadThongTin()async {
+    final data = await ThongTinProvider.get(email);
+    setState(() {});
+    thongTin = data;
+  }
+>>>>>>> cd1f5f6564ffcdaa7523f55e7f7c9d3685419dcb
   @override
   void initState() {
-    super.initState();
+    super.initState(); 
+    loadThongTin();
     startTimer();
   }
 
   @override
   void setState(VoidCallback fn) {
+<<<<<<< HEAD
     if (seconds == 1) {
       mang--;
       if (mang != 0) {
+=======
+    if(seconds == 1){
+       mang--;
+      if(mang > 0){
+>>>>>>> cd1f5f6564ffcdaa7523f55e7f7c9d3685419dcb
         ngungChoi(soCauHoiBoCauHoi);
       } else {
         timer?.cancel();
@@ -73,6 +105,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
+<<<<<<< HEAD
                             builder: (context) => ManHinhChinh(email: email),
                           ),
                         );
@@ -81,6 +114,19 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                 ],
               );
             });
+=======
+                            builder: (context) =>
+                            ManHinhChinh(),
+                      ),
+                    );
+                  },
+                child: Text('Màn hình chính')
+              )
+            ],
+          );
+        }
+      );
+>>>>>>> cd1f5f6564ffcdaa7523f55e7f7c9d3685419dcb
       }
     }
     super.setState(fn);
@@ -90,6 +136,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
   Widget build(BuildContext context) {
     //Lấy id bộ câu hỏi dựa trên lĩnh vực
     return FutureBuilder<List<BoCauHoiObject>>(
+<<<<<<< HEAD
         future: BoCauHoiProvider.getDataByID(idLinhVucState),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
@@ -164,6 +211,63 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                                                 style: BorderStyle
                                                                     .solid))),
                                                   ),
+=======
+      future: BoCauHoiProvider.getDataByID(idLinhVucState),
+      builder: (context, snapshot) {
+        if(snapshot.hasData){
+          List<BoCauHoiObject> linhVuc = snapshot.data!;
+          idBoCauHoi = linhVuc[randomIdBoCauHoi].idBoCauHoi;     
+          //Lấy id của câu hỏi dựa trên id bộ câu hỏi
+        return FutureBuilder<List<CTBoCauHoiObject>>(
+          future: CTBoCauHoiProvider.getDataByID(idBoCauHoi),
+          builder: (context, snapshot) {
+            if(snapshot.hasData){
+              List<CTBoCauHoiObject> cauHoi = snapshot.data!;      
+                 idCauHoi = cauHoi[i].idCauHoi;
+                 soCauHoiBoCauHoi = cauHoi.length;
+              //Lấy id câu hỏi bằng id câu hỏi của ct bộ câu hỏi
+         return FutureBuilder<List<CauHoiObject>>(
+            future: CauHoiProvider.getDataById(idCauHoi),
+            builder: (context, snapshot) {
+              if(snapshot.hasData){
+                List<CauHoiObject> chiTietCauHoi = snapshot.data!;    
+                a = chiTietCauHoi[0].cauTraLoi1;
+                b = chiTietCauHoi[0].cauTraLoi2;
+                c = chiTietCauHoi[0].cauTraLoi3;
+                d = chiTietCauHoi[0].cauTraLoi4;  
+              return  WillPopScope(
+                      onWillPop: () async => false,
+               child: Scaffold(
+              extendBodyBehindAppBar: true,
+              appBar: AppBar(
+                centerTitle: true,
+                elevation: 0,
+                backgroundColor: Colors.transparent,
+                leading: IconButton(
+                  icon: const Icon(Icons.settings_outlined),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          backgroundColor: const Color(0xFF701ebd),
+                          content: SingleChildScrollView(
+                            child: ListBody(
+                               children: [
+                                        Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 40, vertical: 10),
+                                          height: 80,
+                                          width: 30,
+                                          child: OutlinedButton(
+                                            onPressed: () {
+                                              timer?.cancel();
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ManHinhChinh(),
+>>>>>>> cd1f5f6564ffcdaa7523f55e7f7c9d3685419dcb
                                                 ),
                                                 Container(
                                                   padding: EdgeInsets.symmetric(
@@ -307,6 +411,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                         ),
                                       ],
                                     ),
+<<<<<<< HEAD
                                     Container(
                                       padding: EdgeInsets.all(5),
                                     ),
@@ -316,6 +421,63 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                           'Câu ${soCauHoi}: ${chiTietCauHoi[0].cauHoi}',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
+=======
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          iconSize: 30,
+                        ),
+                        actions: <Widget>[
+                          const Icon(Icons.diamond_rounded, size: 30),
+                          Center(
+                            child: Text(
+                              '${thongTin[0].money}',
+                              style: TextStyle(
+                                fontSize: 25,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.add_circle_outline),
+                            onPressed: () {},
+                            iconSize: 30,
+                          ),
+                        ],
+                      ),
+                      body: Container(
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Color(0xFF701ebd),
+                              Color.fromARGB(255, 57, 86, 250),
+                            ],
+                            begin: Alignment.topRight,
+                            end: Alignment.bottomLeft,
+                          ),
+                        ),
+                        // child: SingleChildScrollView(
+                        // physics:const NeverScrollableScrollPhysics(),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.only(top: 87),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.only(bottom: 20),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: <Widget>[
+                                  Column(
+                                    children:  <Widget>[
+                                      Text(
+                                        thongTin[0].name,
+                                        style: TextStyle(
+>>>>>>> cd1f5f6564ffcdaa7523f55e7f7c9d3685419dcb
                                             fontSize: 20,
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold,
@@ -575,6 +737,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                   ],
                                 ),
                               ),
+<<<<<<< HEAD
                             );
                           }
                           return Text('');
@@ -593,11 +756,364 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
       i++;
       seconds = maxSeconds;
     } else {
+=======
+                              Text('${mang}', style: TextStyle(fontSize: 20, color: Colors.white),
+                              ),                            
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.only(left: 30),
+                          child: Text(
+                            'Điểm :${diem}',
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.only(left: 150),
+                          child: buildTimer(),
+                        ),
+                      ],
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(5),
+                    ),
+                     Container(
+                        padding: const EdgeInsets.all(12),
+                        child: Text(
+                          'Câu ${soCauHoi}: ${chiTietCauHoi[0].cauHoi}'
+                          ,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                      width: 350,
+                      height: 75,
+                      child: OutlinedButton(
+                         onPressed: () {
+                          setState(() {
+                            if(chiTietCauHoi[0].dapAn == 1){
+                              diem = diem + (100*seconds);
+                              ngungChoi(soCauHoiBoCauHoi);
+                            }
+                             else{
+                              mang = mang -1;
+                              if(mang ==0){
+                                truMang();
+                              }
+                              else               
+                                ngungChoi(soCauHoiBoCauHoi);
+                            }
+                          });
+                        },
+                        // ignore: sort_child_properties_last
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            a
+                            ,
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.transparent),
+                            side: MaterialStateProperty.all(const BorderSide(
+                                color: Colors.white,
+                                width: 2.0,
+                                style: BorderStyle.solid))),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                      width: 350,
+                      height: 75,
+                      child: OutlinedButton(
+                          onPressed: () {
+                          setState(() {
+                            if(chiTietCauHoi[0].dapAn == 2){
+                              diem = diem + (100*seconds);
+                              ngungChoi(soCauHoiBoCauHoi);
+                            }
+                            else{
+                              mang = mang -1;
+                              if(mang ==0){
+                                truMang();
+                              }
+                              else               
+                                ngungChoi(soCauHoiBoCauHoi);
+                            }
+                          });
+                        },
+                        // ignore: sort_child_properties_last
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                           b,
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.transparent),
+                            side: MaterialStateProperty.all(const BorderSide(
+                                color: Colors.white,
+                                width: 2.0,
+                                style: BorderStyle.solid))),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                      width: 350,
+                      height: 75,
+                      child: OutlinedButton(
+                          onPressed: () {
+                          setState(() {
+                            if(chiTietCauHoi[0].dapAn == 3){
+                              diem = diem + (100*seconds);
+                              ngungChoi(soCauHoiBoCauHoi);
+                            }
+                            else{
+                              mang = mang -1;
+                              if(mang ==0){
+                                truMang();
+                              }
+                              else               
+                                ngungChoi(soCauHoiBoCauHoi);
+                            }
+                          });
+                        },
+                        // ignore: sort_child_properties_last
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            c,
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.transparent),
+                            side: MaterialStateProperty.all(const BorderSide(
+                                color: Colors.white,
+                                width: 2.0,
+                                style: BorderStyle.solid))),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 25, vertical: 14),
+                      width: 350,
+                      height: 75,
+                      child: OutlinedButton(
+                         onPressed: () {
+                          setState(() {
+                            if(chiTietCauHoi[0].dapAn == 4){
+                              diem = diem + (100*seconds);
+                              ngungChoi(soCauHoiBoCauHoi);
+                            }
+                            else{
+                              mang = mang -1;
+                              if(mang ==0){
+                                truMang();
+                              }
+                              else               
+                                ngungChoi(soCauHoiBoCauHoi);
+                            }
+                          });
+                        },
+                        // ignore: sort_child_properties_last
+                        child:  Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                             d,
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
+                              ),
+                          ),
+                        ),
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.transparent),
+                            side: MaterialStateProperty.all(const BorderSide(
+                                color: Colors.white,
+                                width: 2.0,
+                                style: BorderStyle.solid))),
+ 
+                      )
+                    ),
+                        Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                OutlinedButton(
+                                  onPressed: () {
+                                     { tro_Giup_50_50();
+                                    while(chiTietCauHoi[0].dapAn == troGiup5050){
+                                      troGiup5050 = random.nextInt(5);
+                                    }
+                                    if(troGiup5050 != 1 && chiTietCauHoi[0].dapAn != 1){
+                                      a = "";
+                                    }
+                                    if(troGiup5050 != 2 && chiTietCauHoi[0].dapAn != 2){
+                                      b = "";
+                                    }
+                                    if(troGiup5050 != 3 && chiTietCauHoi[0].dapAn != 3){
+                                      c = "";
+                                    }
+                                    if(troGiup5050 != 4 && chiTietCauHoi[0].dapAn != 4){
+                                      d = "";
+                                    }}
+                                    setState(() {
+                                      
+                                    });
+
+                                  },
+                                  child: Text(
+                                    '50:50',
+                                    style: TextStyle(
+                                        fontSize: 17, color: Colors.white),
+                                  ),
+                                  style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              Colors.transparent),
+                                      side: MaterialStateProperty.all(
+                                          const BorderSide(
+                                        color: Colors.white,
+                                        width: 2.0,
+                                        style: BorderStyle.solid,
+                                      ))),
+                                ),
+                                OutlinedButton(
+                                  onPressed: () {},
+                                  child: Icon(
+                                    Icons.people,
+                                    color: Colors.white,
+                                  ),
+                                  style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              Colors.transparent),
+                                      side: MaterialStateProperty.all(
+                                          const BorderSide(
+                                        color: Colors.white,
+                                        width: 2.0,
+                                        style: BorderStyle.solid,
+                                      ))),
+                                ),
+                                OutlinedButton(
+                                  onPressed: () {},
+                                  child: Icon(Icons.phone, color: Colors.white),
+                                  style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              Colors.transparent),
+                                      side: MaterialStateProperty.all(
+                                          const BorderSide(
+                                        color: Colors.white,
+                                        width: 2.0,
+                                        style: BorderStyle.solid,
+                                      ))),
+                                ),
+                                OutlinedButton(
+                                  onPressed: () {},
+                                  child: Icon(Icons.diamond_rounded,
+                                      color: Colors.white),
+                                  style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              Colors.transparent),
+                                      side: MaterialStateProperty.all(
+                                          const BorderSide(
+                                        color: Colors.white,
+                                        width: 2.0,
+                                        style: BorderStyle.solid,
+                           ))),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              );
+              }
+              return Text('');
+            }
+              );
+            }
+            return Text('');
+            }
+          );
+        }
+          return Text('');
+        }
+      );   
+    }
+    void ngungChoi(int cauHoi){
+       if(soCauHoi < cauHoi){
+          soCauHoi++;
+          i++;
+          seconds = maxSeconds;
+      }
+      else{
+        timer?.cancel();
+        showDialog(
+           barrierDismissible: false,
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+               title: Text('Kết thúc trò chơi'),
+               content: Text('Số điểm của bạn: ${diem}'),
+                 actions: <Widget>[
+                   TextButton(
+                     onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                            ManHinhChinh(),
+                      ),
+                    );
+                  },
+                child: Text('Màn hình chính')
+              )
+            ],
+          );
+        }
+      );
+    }
+  }            
+  void truMang(){
+    timer?.cancel();
+>>>>>>> cd1f5f6564ffcdaa7523f55e7f7c9d3685419dcb
       showDialog(
           barrierDismissible: false,
           context: context,
           builder: (context) {
             return AlertDialog(
+<<<<<<< HEAD
               title: Text('Kết thúc trò chơi'),
               content: Text('Số điểm của bạn: ${diem}'),
               actions: <Widget>[
@@ -632,6 +1148,18 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => ManHinhChinh(email: email),
+=======
+               title: Text('Kết thúc trò chơi'),
+               content: Text('Số điểm của bạn: ${diem}'),
+                 actions: <Widget>[
+                   TextButton(
+                     onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                            ManHinhChinh(),
+>>>>>>> cd1f5f6564ffcdaa7523f55e7f7c9d3685419dcb
                       ),
                     );
                   },

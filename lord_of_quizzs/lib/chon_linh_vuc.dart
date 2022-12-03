@@ -4,6 +4,8 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lord_of_quizzs/model/bo_cau_hoi_object.dart';
+import 'package:lord_of_quizzs/model/bo_cau_hoi_provider.dart';
 import 'package:lord_of_quizzs/model/linh_vuc_object.dart';
 import 'package:lord_of_quizzs/model/linh_vuc_provider.dart';
 import 'package:lord_of_quizzs/choi_tro_choi.dart';
@@ -15,9 +17,7 @@ import 'mua_credit.dart';
 class ChonLinhVuc extends StatefulWidget {
   String name;
   String email;
-  ChonLinhVuc({Key? key, required this.name, required this.email})
-      : super(key: key);
-
+  ChonLinhVuc({Key? key, required this.name, required this.email}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
     // ignore: todo
@@ -31,7 +31,9 @@ class ChonLinhVuc extends StatefulWidget {
 class ChonLinhVucState extends State<ChonLinhVuc> {
   String email;
   ChonLinhVucState({Key? key, required this.email});
-
+  late int randomIdBoCauHoi;
+  var querySnapshots;
+  CollectionReference boCauHoi = FirebaseFirestore.instance.collection("bo_cau_hoi");
   List<LinhVucObject> linhVuc = [];
   void _LoadLinhVuc() async {
     final data = await LinhVucProvider.getData();
@@ -41,6 +43,7 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
 
   @override
   void initState() {
+    randomIdBoCauHoi = Random().nextInt(2);
     // TODO: implement initState
     super.initState();
     _LoadLinhVuc();
@@ -127,31 +130,13 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const <Widget>[
-                                Icon(
-                                  CupertinoIcons.heart_fill,
-                                  size: 20,
-                                  color: Colors.white,
-                                ),
-                                Icon(
-                                  CupertinoIcons.heart_fill,
-                                  size: 20,
-                                  color: Colors.white,
-                                ),
-                                Icon(
-                                  CupertinoIcons.heart_fill,
-                                  size: 20,
-                                  color: Colors.white,
-                                ),
-                                Icon(
-                                  CupertinoIcons.heart_fill,
-                                  size: 20,
-                                  color: Colors.white,
-                                ),
-                                Icon(
-                                  CupertinoIcons.heart_fill,
-                                  size: 20,
-                                  color: Colors.white,
-                                ),
+                              Icon(
+                                CupertinoIcons.heart_fill,
+                                size: 20,
+                                color: Colors.white,
+                              ),
+                              Text('5', style: TextStyle(fontSize: 20, color: Colors.white),
+                              ),                            
                               ],
                             ),
                           ],
@@ -186,7 +171,7 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
                                     MaterialPageRoute(
                                       builder: (context) => ChoiTroChoi(
                                         idLinhVuc: linhVuc[index].idLinhVuc,
-                                        email: email,
+                                        email: email, randomIdBoCauHoi: randomIdBoCauHoi,
                                       ),
                                     ));
                               },

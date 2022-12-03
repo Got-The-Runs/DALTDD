@@ -196,7 +196,54 @@ class DoiMatKhauState extends State<DoiMatKhau> {
                           style: BorderStyle.solid))),
                 ),
               ),
+<<<<<<< HEAD
             ],
+=======
+            ),
+          ),
+            Container(
+              padding: const EdgeInsets.all(15),
+              width: 200,
+              height: 80,
+              child: OutlinedButton(       
+                onPressed: (){
+                  if(txtMatKhauMoi.text != txtMatKhauXT.text){
+
+                    final snackBar = SnackBar(content: Text("Mật khẩu xác thực không trùng khớp với mật khẩu mới"));
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
+                  else{
+
+                    final user = _auth?.updatePassword(txtMatKhauMoi.text); 
+                    Navigator.push(
+                                context, 
+                                MaterialPageRoute(builder: 
+                                (context) =>ManHinhChinh(),
+                                ),
+                              );
+
+                  }
+                   
+                },
+                // ignore: sort_child_properties_last
+                child: const Text('Xác nhận', 
+                  style: TextStyle(fontSize: 20,
+                  color: Colors.white),
+                ), 
+                style: ButtonStyle(
+                   backgroundColor: MaterialStateProperty.all(Colors.transparent),  
+                   side: MaterialStateProperty.all(                 
+                    const BorderSide(
+                      color: Colors.white,
+                      width: 2.0,
+                      style: BorderStyle.solid
+                    )
+                  )              
+                ),  
+               ),
+              ),
+            ],    
+>>>>>>> cd1f5f6564ffcdaa7523f55e7f7c9d3685419dcb
           ),
         ),
       ),

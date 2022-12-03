@@ -24,7 +24,7 @@ class MuaCreditState extends State<MuaCredit>{
   MuaCreditState({Key? key, required this.email});
 
   final credit = ['100','300','700','1200','2500','5000','10.000','15.000','20.000'];
-  final credit_Pri = [100,300,700,1200,2500,5000,10.000,15.000,20.000];
+  final credit_Pri = [100,300,700,1200,2500,5000,10000,15000,20000];
   final money = ['20.000 VND','50.000 VND','100.000 VND','200.000 VND','300.000 VND','600.000 VND','1.000.000VND','1.600.000VND','2.000.000VND'];
   bool selectionIsActive = false;
   var showCredit=0;
@@ -33,14 +33,11 @@ class MuaCreditState extends State<MuaCredit>{
   var querySnapshots;
   final _formKey = GlobalKey<FormState>();
   CollectionReference user = FirebaseFirestore.instance.collection("thong_tin");
-  Future<void> updateUser(var docID, var cre) {
+  Future<void> updateUser(var docID, var  cre) {
     return user
         .doc(docID)
         .update({'tien_ao': cre});
   }
-  @override
-
-
   @override
   Widget build(BuildContext context) {
      return FutureBuilder<List<ThongTinObject>>(
@@ -64,7 +61,7 @@ class MuaCreditState extends State<MuaCredit>{
           const Icon(Icons.diamond_rounded, size: 30),
            Center(
             child: Text(
-              credit_0.toString(),
+              credit_0.toString().contains(".0") == true ? credit_0.toString().substring(0,credit_0.toString().length-2):credit_0.toString(),
                 style: TextStyle(
                 fontSize: 25,
                 color: Colors.white,
@@ -133,7 +130,7 @@ class MuaCreditState extends State<MuaCredit>{
                                   }
                                 }
                                 credit_0 += item1;                               
-                                updateUser(docID,credit_0);
+                                updateUser (docID,credit_0);
                                 setState(){
 
                                 };
@@ -143,6 +140,9 @@ class MuaCreditState extends State<MuaCredit>{
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(snackBar);
                               }
+                              setState(() {
+                                
+                              });
                             },
           child: Text(
             item2,
