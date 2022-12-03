@@ -19,10 +19,15 @@ Future<void> main(List<String> args) async {
 
 class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: DangNhap(),
+  Widget build(BuildContext context)  {  
+    return  MaterialApp(
+      debugShowCheckedModeBanner: false,    
+      initialRoute:
+          FirebaseAuth.instance.currentUser == null? 'welcome' : 'home',          
+      routes: {
+        'welcome': (context) => DangNhap(),
+        'home': (context) => ManHinhChinh(), 
+      },
     );
   }
 }

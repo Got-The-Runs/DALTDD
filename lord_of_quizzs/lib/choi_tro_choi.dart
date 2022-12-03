@@ -15,29 +15,24 @@ import 'man_hinh_chinh.dart';
 
 // ignore: must_be_immutable
 class ChoiTroChoi extends StatefulWidget {
-  int idLinhVuc;
+  int idLinhVuc, randomIdBoCauHoi;
   String email;
-  ChoiTroChoi({Key? key, required this.idLinhVuc, required this.email}) : super(key: key);
+  ChoiTroChoi({Key? key, required this.idLinhVuc, required this.email, required this.randomIdBoCauHoi}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
-    return ChoiTroChoiState(idLinhVucState: idLinhVuc, email: email);
+    return ChoiTroChoiState(idLinhVucState: idLinhVuc, email: email, randomIdBoCauHoi: randomIdBoCauHoi);
     }
   }
 
 class ChoiTroChoiState extends State<ChoiTroChoi> {
-  int idLinhVucState;
+  int idLinhVucState, randomIdBoCauHoi;
   String email;
-  ChoiTroChoiState({Key? key, required this.idLinhVucState, required this.email});
+  ChoiTroChoiState({Key? key, required this.idLinhVucState, required this.email, required this.randomIdBoCauHoi});
   static const maxSeconds = 30;
   int seconds = maxSeconds;
   Timer? timer;
-  late int idBoCauHoi;
-  late int soCauHoiBoCauHoi;
-  int diem = 0;
-  int mang = 5;
-  int i = 0;
-  int soCauHoi = 1;
-  late int idCauHoi;
+  late int idBoCauHoi, soCauHoiBoCauHoi, idCauHoi;
+  int diem = 0,mang = 5, i = 0, soCauHoi = 1;
   void startTimer() {
     timer = Timer.periodic(const Duration(seconds: 1), (_) {
       setState(() => seconds--);
@@ -46,6 +41,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
   @override
   void initState() {
     super.initState();
+    
     startTimer();
   }
 
@@ -53,7 +49,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
   void setState(VoidCallback fn) {
     if(seconds == 1){
        mang--;
-      if(mang != 0){
+      if(mang > 0){
         ngungChoi(soCauHoiBoCauHoi);
       }
       else{
@@ -72,7 +68,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
-                            ManHinhChinh(email: email),
+                            ManHinhChinh(),
                       ),
                     );
                   },
@@ -94,7 +90,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
       builder: (context, snapshot) {
         if(snapshot.hasData){
           List<BoCauHoiObject> linhVuc = snapshot.data!;
-          idBoCauHoi = linhVuc[1].idBoCauHoi;     
+          idBoCauHoi = linhVuc[randomIdBoCauHoi].idBoCauHoi;     
           //Lấy id của câu hỏi dựa trên id bộ câu hỏi
         return FutureBuilder<List<CTBoCauHoiObject>>(
           future: CTBoCauHoiProvider.getDataByID(idBoCauHoi),
@@ -109,7 +105,9 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
             builder: (context, snapshot) {
               if(snapshot.hasData){
                 List<CauHoiObject> chiTietCauHoi = snapshot.data!;      
-              return  Scaffold(
+              return  WillPopScope(
+                      onWillPop: () async => false,
+               child: Scaffold(
               extendBodyBehindAppBar: true,
               appBar: AppBar(
                 centerTitle: true,
@@ -133,11 +131,12 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                           width: 30,
                                           child: OutlinedButton(
                                             onPressed: () {
+                                              timer?.cancel();
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) =>
-                                                      ManHinhChinh(email: email),
+                                                      ManHinhChinh(),
                                                 ),
                                               );
                                             },
@@ -544,6 +543,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                     ],
                   ),
                 ),
+              ),
               );
               }
               return Text('');
@@ -565,6 +565,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
           seconds = maxSeconds;
       }
       else{
+        timer?.cancel();
         showDialog(
            barrierDismissible: false,
           context: context,
@@ -579,7 +580,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
-                            ManHinhChinh(email: email),
+                            ManHinhChinh(),
                       ),
                     );
                   },
@@ -592,6 +593,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
     }
   }            
   void truMang(){
+    timer?.cancel();
       showDialog(
          barrierDismissible: false,
           context: context,
@@ -606,7 +608,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
-                            ManHinhChinh(email: email),
+                            ManHinhChinh(),
                       ),
                     );
                   },

@@ -33,12 +33,11 @@ class MuaCreditState extends State<MuaCredit>{
   var querySnapshots;
   final _formKey = GlobalKey<FormState>();
   CollectionReference user = FirebaseFirestore.instance.collection("thong_tin");
-  Future<void> updateUser(var docID, var cre) {
+  Future<void> updateUser(var docID, int cre) {
     return user
         .doc(docID)
         .update({'tien_ao': cre});
   }
-  @override
 
 
   @override
@@ -132,11 +131,12 @@ class MuaCreditState extends State<MuaCredit>{
                                     credit_0 = snapshot['tien_ao'];
                                   }
                                 }
-                                credit_0 += item1;                               
-                                updateUser(docID,credit_0);
-                                setState(){
+                                credit_0 = credit_0 +item1;  
+                                int creditd = int.parse(credit_0.toString());                 
+                                updateUser(docID,creditd);
+                                // setState(){
 
-                                };
+                                // };
                               } catch (e) {
                                 final snackBar =
                                     SnackBar(content: Text('Có lỗi xảy ra !'));

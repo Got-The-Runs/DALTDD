@@ -16,37 +16,35 @@ import 'package:lord_of_quizzs/tai_khoan.dart';
 import 'dang_nhap.dart';
 
 class ManHinhChinh extends StatefulWidget {
-  String email;
-  ManHinhChinh({
-    Key? key,
-    required this.email,
-  }) : super(key: key);
-
+  ManHinhChinh({Key? key,}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
-    return ManHinhChinhState(
-      email: email,
-    );
+    return ManHinhChinhState();
   }
 }
 
-class ManHinhChinhState extends State<ManHinhChinh> {
-  String email;
-  ManHinhChinhState({Key? key, required this.email});
-
+class ManHinhChinhState extends State<ManHinhChinh> {   
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  String email = "";
   @override
   void initState() {
+
     // TODO: implement initState
     super.initState();
   }
   @override
-  void setState(VoidCallback fn) {
-    
+  void setState(VoidCallback fn) {  
     super.setState(fn);
   }
-
+  void getEmail() async{
+      final user =  _auth.currentUser;
+      if(user != null){
+        email = user.email.toString();
+      }
+}
   @override
   Widget build(BuildContext context) {
+    getEmail();
     return FutureBuilder<List<ThongTinObject>>(
         future: ThongTinProvider.get(email),
         builder: (context, snapshot) {
@@ -80,7 +78,6 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                                               MaterialPageRoute(
                                                 builder: (context) =>
                                                     ManHinhChinh(
-                                                  email: email,
                                                 ),
                                               ),
                                             );
@@ -282,7 +279,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                             fontSize: 25,
                             color: Colors.white,
                             fontWeight: FontWeight.bold),
-                      ),
+                      ),  
                     ),
                     Container(
                       padding:

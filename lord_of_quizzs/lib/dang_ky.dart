@@ -139,12 +139,6 @@ class DangKiState extends State<DangKi> {
                   controller: txtEmail,
                   style:const TextStyle(color: Colors.white),
                   keyboardType: TextInputType.emailAddress,
-                  validator: (text) {
-                    if (text == null || text.isEmpty) {
-                      return 'Email trống';
-                    }
-                    return null;
-                  },
                   decoration: InputDecoration(               
                     labelText: 'Email',
                     labelStyle: const TextStyle(color: Colors.white),
@@ -194,16 +188,7 @@ class DangKiState extends State<DangKi> {
                 child: TextFormField(
                   controller:  txtNhapLaiMatKhau,
                   obscureText: true,
-                  style:const TextStyle(color: Colors.white),
-                  validator: (text) {
-                    if (text == null || text.isEmpty) {
-                      return 'Nhập lại mật khẩu trống';
-                    }
-                    if(txtNhapLaiMatKhau.text!=txtMatKhau.text){
-                      return 'Nhập lại mật khẩu không trùng với mật khẩu';
-                    }                  
-                    return null;
-                  },
+                  style:const TextStyle(color: Colors.white),                
                   decoration: InputDecoration(
                     labelText: 'Nhập lại mật khẩu',
                     labelStyle: const TextStyle(color: Colors.white),
@@ -225,8 +210,7 @@ class DangKiState extends State<DangKi> {
                 width: 200,
                 height: 80,
                 child: OutlinedButton(
-                  onPressed: () {
-                    // if (_formKey.currentState!.validate()) {
+                  onPressed: () {                 
                       try{
                         final newUser = _auth.createUserWithEmailAndPassword(
                           email: txtEmail.text, password: txtMatKhau.text);                         
@@ -241,8 +225,7 @@ class DangKiState extends State<DangKi> {
                       catch(e){
                         final snackBar = SnackBar(content: Text('Có lỗi xảy ra !'));
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      }                       
-                    // }                                 
+                      }                                                  
                   },
                  
                   // ignore: sort_child_properties_last

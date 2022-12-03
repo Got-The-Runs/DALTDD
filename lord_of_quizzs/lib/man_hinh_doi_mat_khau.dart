@@ -169,7 +169,7 @@ class DoiMatKhauState extends State<DoiMatKhau> {
                     Navigator.push(
                                 context, 
                                 MaterialPageRoute(builder: 
-                                (context) =>ManHinhChinh(email:email,),
+                                (context) =>ManHinhChinh(),
                                 ),
                               );
 

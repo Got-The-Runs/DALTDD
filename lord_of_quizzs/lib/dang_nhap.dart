@@ -106,18 +106,23 @@ class DangNhapState extends State<DangNhap> {
                       try {
                         final _user = await _auth.signInWithEmailAndPassword(
                             email: txtEmail.text, password: txtPass.text);
-                         await _auth.authStateChanges().listen((event) {
+                         _auth.authStateChanges().listen((event) {
                           if (event != null) {
-                            Navigator.push(
-                                context, 
-                                MaterialPageRoute(builder: 
-                                (context) => ManHinhChinh(email: txtEmail.text),
-                                ),
-                              );
+                            // Navigator.push(
+                            //     context, 
+                            //     MaterialPageRoute(builder: 
+                            //     (context) => ManHinhChinh(email: txtEmail.text),
+                            //     ),
+                            //   );
+                            if(_auth != null){
+                              Navigator.pushNamedAndRemoveUntil(context,
+                              'home', (route) => false);
+                            }
+                          
                           }
                         });
                       } catch (e) {                       
-                          final snackBar =  SnackBar(
+                          final snackBar = const SnackBar(
                               content: Text('Email hoặc mật khẩu không đúng'));
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       }
