@@ -13,4 +13,13 @@ class LinhVucProvider {
      linhVuc = snapshot.docs.map((json) => LinhVucObject.fromJson(json.data()as Map<String, dynamic>)).toList();
     return linhVuc;
   }
+
+   static Future<List<LinhVucObject>> getDataByID(int idLinhVuc) async {
+      List<LinhVucObject> linhVuc =[];
+    QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('linh-vuc')
+    .where("id_linh_vuc", isEqualTo: idLinhVuc).get();
+    // ignore: no_leading_underscores_for_local_identifiers
+     linhVuc = snapshot.docs.map((json) => LinhVucObject.fromJson(json.data()as Map<String, dynamic>)).toList();
+    return linhVuc;
+  }
 }

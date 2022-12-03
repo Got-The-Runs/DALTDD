@@ -21,8 +21,7 @@ class DangKi extends StatefulWidget {
 
 class DangKiState extends State<DangKi> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  CollectionReference thongTin =
-      FirebaseFirestore.instance.collection('thong_tin');
+  CollectionReference thongTin = FirebaseFirestore.instance.collection('thong_tin');
   TextEditingController txtTenNguoiChoi = TextEditingController();
   int tienAo = 0;
   int trangThai = 1;

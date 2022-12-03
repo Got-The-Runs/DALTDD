@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lord_of_quizzs/bang_xep_hang.dart';
+import 'package:lord_of_quizzs/bang_xep_hang_linh_vuc.dart';
 import 'package:lord_of_quizzs/chon_linh_vuc.dart';
 import 'package:lord_of_quizzs/lich_su.dart';
 import 'package:lord_of_quizzs/man_hinh_doi_mat_khau.dart';
@@ -353,7 +354,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => BangXepHang(
+                              builder: (context) => BangXepHangLinhVuc(
                                 email: email,
                               ),
                             ),

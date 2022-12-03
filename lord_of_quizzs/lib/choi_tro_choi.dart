@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:math';
-
+import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -36,10 +36,13 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
   int seconds = maxSeconds;
   Timer? timer;
   late int idBoCauHoi, soCauHoiBoCauHoi, troGiup5050, idCauHoi;
-  int diem = 0, mang = 5, i = 1, soCauHoi =1;
+  int diem = 0, mang = 5, i = 0, soCauHoi = 1, soCauDung = 0;
   late String a,b,c,d ;
   Random random = new Random();
   List<ThongTinObject> thongTin = [];
+  CollectionReference nguoiChoi =FirebaseFirestore.instance.collection('nguoi_choi');
+  DateTime ngay = DateTime.now();
+  late String ngayHienTai;
   void startTimer() {
     timer = Timer.periodic(const Duration(seconds: 1), (_) {
       setState(() => seconds--);
@@ -53,13 +56,28 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
     setState(() {});
     thongTin = data;
   }
+  void getNgay(){
+    ngayHienTai = DateFormat('dd/MM/yyyy').format(ngay); 
+  }
   @override
   void initState() {
     super.initState(); 
+    getNgay();
     loadThongTin();
     startTimer();
   }
-
+    Future<void> addNguoiChoi() {
+      // Call the user's CollectionReference to add a new user
+      return nguoiChoi 
+          .add({
+            'email': email, 
+            'ten_nguoi_choi': thongTin[0].name,
+            'id_linh_vuc': idLinhVucState,
+            'ngay_choi': ngayHienTai,
+            'so_cau_dung': soCauDung,
+            'tong_diem': diem
+          });  
+    }
   @override
   void setState(VoidCallback fn) {
     if(seconds == 1){
@@ -69,6 +87,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
       }
       else{
         timer?.cancel();
+        addNguoiChoi();
         showDialog(
           barrierDismissible: false,
           context: context,
@@ -100,20 +119,6 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
 
   @override
   Widget build(BuildContext context) {
-    //   Future<void> addNguoiChoi() {
-    //   // Call the user's CollectionReference to add a new user
-    //   return thongTin 
-    //       .add({
-    //         // 'id': 4,
-    //         'email': txtEmail.text, 
-    //         // 'mat_khau': txtMatKhau.text, 
-    //         'ten_nguoi_choi': txtTenNguoiChoi.text,
-    //         'tien_ao': tienAo,
-    //         'trang_thai': trangThai
-    //       })
-    //       .then((value) => Navigator.pop(context, 'Đăng ký thành công'))
-    //       .catchError((error) => Navigator.pop(context, 'Đăng ký thất bại $error'));        
-    // }
        //Lấy id bộ câu hỏi dựa trên lĩnh vực
     return FutureBuilder<List<BoCauHoiObject>>(
       future: BoCauHoiProvider.getDataByID(idLinhVucState),
@@ -347,6 +352,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                          onPressed: () {
                           setState(() {
                             if(chiTietCauHoi[0].dapAn == 1){
+                              soCauDung++;
                               diem = diem + (100*seconds);
                               ngungChoi(soCauHoiBoCauHoi);
                             }
@@ -389,6 +395,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                           onPressed: () {
                           setState(() {
                             if(chiTietCauHoi[0].dapAn == 2){
+                              soCauDung++;
                               diem = diem + (100*seconds);
                               ngungChoi(soCauHoiBoCauHoi);
                             }
@@ -430,6 +437,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                           onPressed: () {
                           setState(() {
                             if(chiTietCauHoi[0].dapAn == 3){
+                              soCauDung++;
                               diem = diem + (100*seconds);
                               ngungChoi(soCauHoiBoCauHoi);
                             }
@@ -471,6 +479,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                          onPressed: () {
                           setState(() {
                             if(chiTietCauHoi[0].dapAn == 4){
+                              soCauDung++;
                               diem = diem + (100*seconds);
                               ngungChoi(soCauHoiBoCauHoi);
                             }
@@ -621,6 +630,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
       }
       else{
         timer?.cancel();
+        addNguoiChoi();
         showDialog(
            barrierDismissible: false,
           context: context,
@@ -649,6 +659,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
   }            
   void truMang(){
     timer?.cancel();
+    addNguoiChoi();
       showDialog(
          barrierDismissible: false,
           context: context,

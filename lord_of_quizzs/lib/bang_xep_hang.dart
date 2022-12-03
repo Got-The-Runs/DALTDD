@@ -1,25 +1,45 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lord_of_quizzs/model/linh_vuc_object.dart';
+import 'package:lord_of_quizzs/model/linh_vuc_provider.dart';
+import 'package:lord_of_quizzs/model/nguoi_choi_object.dart';
+import 'package:lord_of_quizzs/model/nguoi_choi_provider.dart';
 
 import 'mua_credit.dart';
 
 class BangXepHang extends StatefulWidget{
-  String email;
-  BangXepHang({Key? key, required this.email}) : super(key: key);
+  int idLinhVuc;
+  BangXepHang({Key? key, required this.idLinhVuc}) : super(key: key);
   
   @override
   State<StatefulWidget> createState() {
-    return BangXepHangState(email: email);
+    return BangXepHangState(idLinhVuc: idLinhVuc);
   }
 }
 
 class BangXepHangState extends State<BangXepHang>{
-  String email;
-  BangXepHangState({Key? key, required this.email});
-  var items = ['Khoa Học Kỹ Thuật','Văn Hóa-Xã Hội-Nghệ Thuật','Lịch Sử-Địa Lý','Thể Thao' ];
-  String? selectedItem = 'Khoa Học Kỹ Thuật';
+  int idLinhVuc;
+  BangXepHangState({Key? key, required this.idLinhVuc});
+  List<NguoiChoiObject> nguoiChoi = [];
+  void _LoadNguoiChoi() async {
+    final data = await NguoiChoiProvider.getNguoiChoi(idLinhVuc);
+    setState(() {});
+    nguoiChoi = data;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _LoadNguoiChoi();
+  }
   @override
   Widget build(BuildContext context) {
+   return FutureBuilder<List<LinhVucObject>>(
+      future: LinhVucProvider.getDataByID(idLinhVuc),
+      builder: (context, snapshot) {
+        if(snapshot.hasData){
+          List<LinhVucObject> linhVuc = snapshot.data!;    
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -31,32 +51,9 @@ class BangXepHangState extends State<BangXepHang>{
            onPressed: () => Navigator.pop(context),
            iconSize: 30,  
         ),
-        actions: <Widget> [
-          const Icon(Icons.diamond_rounded, size: 30),
-         const Center(
-          child: Text(
-            '9999',
-              style: TextStyle(
-              fontSize: 25,
-              color: Colors.white,
-              ),
-            ),
-          ),
-          IconButton(
-            icon: const Icon(Icons.add_circle_outline),
-            onPressed: () {
-                Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MuaCredit(email: email,),  
-                )
-               );
-            },
-            iconSize: 30,
-          ),
-        ],
       ),
       body: Container(
+           height: MediaQuery.of(context).size.height,
           decoration: const BoxDecoration(
             gradient: LinearGradient(colors: 
             [
@@ -72,6 +69,7 @@ class BangXepHangState extends State<BangXepHang>{
             end: Alignment.bottomLeft,
             ),
           ),  
+       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -79,127 +77,49 @@ class BangXepHangState extends State<BangXepHang>{
               padding: const EdgeInsets.all(15),
             ),
             Container(
-                padding: const EdgeInsets.all(15),
-                child: const Text(
-                  'Bảng Xếp Hạng',
+                padding: const EdgeInsets.only(top: 40, bottom: 10),
+                child: Text(
+                  'Bảng Xếp Hạng \n${linhVuc[0].tenLinhVuc}',
                   style: TextStyle(
                     fontSize: 30,
                     color: Colors.white,
                     fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
                 ),
               ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 2),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(15)
+               ListView.builder(
+                  padding: EdgeInsets.only(bottom: 20, top: 10),
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: nguoiChoi.length,
+                  itemBuilder: (BuildContext context, int index) {
+                   return  Card(
+                  margin: EdgeInsets.only(left: 20,right: 20, top: 5, bottom: 5),
+                    shape:const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                        Radius.circular(20),
+                        ),
+                      ),
+                      shadowColor: Colors.blueGrey,
+                      child: ListTile(
+                        leading: CircleAvatar(
+                          child: Image.asset('images/Logo.png'),
+                        ),           
+                        title: Text(nguoiChoi[index].tenNguoiChoi, style: TextStyle(fontSize: 20)),
+                        subtitle: Text('${nguoiChoi[index].tongDiem}', style: TextStyle(fontSize: 20),),
+                        trailing: Text("${index + 1}", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
                     ),
-                child: DropdownButton(
-                  value: selectedItem,
-                  items:  items.map((String items) {
-                    return DropdownMenuItem(                      
-                      value: items,
-                      child: Text(items, style: TextStyle(color: Colors.black),),
-                    );
-                  }).toList(),
-                  icon: Icon(Icons.arrow_drop_down),
-                  iconSize: 42,
-                  underline: SizedBox(),
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      selectedItem = newValue!;
-                    },
-                  );
-                }
-              )
-            ),
-            Container(
-              padding: const EdgeInsets.only(bottom: 20),
-            ),
-            Card(
-              margin: EdgeInsets.only(left: 20,right: 20, top: 5, bottom: 5),
-                shape:const OutlineInputBorder(
-                borderRadius: BorderRadius.all(
-                    Radius.circular(20),
-                    ),
-                  ),
-                  shadowColor: Colors.blueGrey,
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      child: Image.asset('images/Logo.png'),
-                    ),            
-                    title: Text('Player', style: TextStyle(fontSize: 20)),
-                    subtitle: Text('4000', style: TextStyle(fontSize: 20),),
-                  ),
-              ),
-           Card(
-              margin: EdgeInsets.only(left: 20,right: 20, top: 5, bottom: 5),
-                shape:const OutlineInputBorder(
-                borderRadius: BorderRadius.all(
-                    Radius.circular(20),
-                    ),
-                  ),
-                  shadowColor: Colors.blueGrey,
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      child: Image.asset('images/Logo.png'),
-                    ),            
-                    title: Text('Player', style: TextStyle(fontSize: 20)),
-                    subtitle: Text('4000', style: TextStyle(fontSize: 20),),
-                  ),
-              ),
-               Card(
-              margin: EdgeInsets.only(left: 20,right: 20, top: 5, bottom: 5),
-                shape:const OutlineInputBorder(
-                borderRadius: BorderRadius.all(
-                    Radius.circular(20),
-                    ),
-                  ),
-                  shadowColor: Colors.blueGrey,
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      child: Image.asset('images/Logo.png'),
-                    ),            
-                    title: Text('Player', style: TextStyle(fontSize: 20)),
-                    subtitle: Text('4000', style: TextStyle(fontSize: 20),),
-                  ),
-              ),
-               Card(
-              margin: EdgeInsets.only(left: 20,right: 20, top: 5, bottom: 5),
-                shape:const OutlineInputBorder(
-                borderRadius: BorderRadius.all(
-                    Radius.circular(20),
-                    ),
-                  ),
-                  shadowColor: Colors.blueGrey,
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      child: Image.asset('images/Logo.png'),
-                    ),            
-                    title: Text('Player', style: TextStyle(fontSize: 20)),
-                    subtitle: Text('4000', style: TextStyle(fontSize: 20),),
-                  ),
-              ),
-               Card(
-              margin: EdgeInsets.only(left: 20,right: 20, top: 5, bottom: 5),
-                shape:const OutlineInputBorder(
-                borderRadius: BorderRadius.all(
-                    Radius.circular(20),
-                    ),
-                  ),
-                  shadowColor: Colors.blueGrey,
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      child: Image.asset('images/Logo.png'),
-                    ),            
-                    title: Text('Player', style: TextStyle(fontSize: 20)),
-                    subtitle: Text('4000', style: TextStyle(fontSize: 20),),
-                  ),
-              ),
+                  );        
+                },
+             ),        
           ],      
         ),
+       ),
       )
     );
+  }   
+  return Text('');
+      }
+   );
   }
-
 }

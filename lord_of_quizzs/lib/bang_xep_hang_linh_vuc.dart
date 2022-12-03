@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lord_of_quizzs/bang_xep_hang.dart';
 import 'package:lord_of_quizzs/model/bo_cau_hoi_object.dart';
 import 'package:lord_of_quizzs/model/bo_cau_hoi_provider.dart';
 import 'package:lord_of_quizzs/model/linh_vuc_object.dart';
@@ -14,24 +15,20 @@ import 'model/thong_tin_object.dart';
 import 'model/thong_tin_provider.dart';
 import 'mua_credit.dart';
 
-class ChonLinhVuc extends StatefulWidget {
-  String name;
+class BangXepHangLinhVuc extends StatefulWidget {
   String email;
-  ChonLinhVuc({Key? key, required this.name, required this.email}) : super(key: key);
+  BangXepHangLinhVuc({Key? key,required this.email}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
     // ignore: todo
     // TODO: implement createState
-    return ChonLinhVucState( email: name);
+    return ChonLinBangXepHangLinhVucState( email: email);
   }
 }
 
-class ChonLinhVucState extends State<ChonLinhVuc> {
+class ChonLinBangXepHangLinhVucState extends State<BangXepHangLinhVuc> {
   String email;
-  ChonLinhVucState({Key? key, required this.email});
-  late int randomIdBoCauHoi;
-  var querySnapshots;
-  CollectionReference boCauHoi = FirebaseFirestore.instance.collection("bo_cau_hoi");
+  ChonLinBangXepHangLinhVucState({Key? key, required this.email});
   List<LinhVucObject> linhVuc = [];
   void _LoadLinhVuc() async {
     final data = await LinhVucProvider.getData();
@@ -41,7 +38,6 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
 
   @override
   void initState() {
-    randomIdBoCauHoi = Random().nextInt(2);
     // TODO: implement initState
     super.initState();
     _LoadLinhVuc();
@@ -49,13 +45,7 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<ThongTinObject>>(
-        future: ThongTinProvider.get(email),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            List<ThongTinObject> thongTin = snapshot.data!;
-            email = thongTin[0].email;
-            return Scaffold(
+      return Scaffold(
               extendBodyBehindAppBar: true,
               appBar: AppBar(
                 centerTitle: true,
@@ -66,31 +56,6 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
                   onPressed: () => Navigator.pop(context),
                   iconSize: 30,
                 ),
-                actions: <Widget>[
-                  const Icon(Icons.diamond_rounded, size: 30),
-                  Center(
-                    child: Text(
-                      '${thongTin[0].money}',
-                      style: TextStyle(
-                        fontSize: 25,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.add_circle_outline),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MuaCredit(
-                              email: email,
-                            ),
-                          ));
-                    },
-                    iconSize: 30,
-                  ),
-                ],
               ),
               body: Container(
                 height: MediaQuery.of(context).size.height,
@@ -108,48 +73,19 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                    children: [                                 
                       Container(
-                        padding: const EdgeInsets.only(top: 80),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Column(
-                              children: <Widget>[
-                                Text(
-                                  thongTin[0].name,
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const <Widget>[
-                              Icon(
-                                CupertinoIcons.heart_fill,
-                                size: 20,
-                                color: Colors.white,
-                              ),
-                              Text('5', style: TextStyle(fontSize: 20, color: Colors.white),
-                              ),                            
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.only(top: 20),
-                        child: const Text(
-                          'Chọn Lĩnh Vực ',
+                        padding: const EdgeInsets.only(top: 70),
+                             child: const Text(
+                          'Bảng Xếp Hạng \n Lĩnh Vực ',
                           style: TextStyle(
                             fontSize: 35,
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                           ),
+                          textAlign: TextAlign.center,             
                         ),
+                       
                       ),
                       ListView.builder(
                         padding: EdgeInsets.only(bottom: 20, top: 20),
@@ -167,10 +103,7 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => ChoiTroChoi(
-                                        idLinhVuc: linhVuc[index].idLinhVuc,
-                                        email: email, randomIdBoCauHoi: randomIdBoCauHoi,
-                                      ),
+                                      builder: (context) => BangXepHang(idLinhVuc: linhVuc[index].idLinhVuc)
                                     ));
                               },
                               // ignore: sort_child_properties_last
@@ -187,17 +120,14 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
                                           color: Colors.white,
                                           width: 2.0,
                                           style: BorderStyle.solid))),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          }
-          return Text('');
-        });
+                           ),
+                        );
+                      },
+                    ),
+                  ],
+               ),
+             ),
+          ),
+        );
+     }
   }
-}
