@@ -32,8 +32,10 @@ class ManHinhChinhState extends State<ManHinhChinh> {
     // TODO: implement initState
     super.initState();
   }
+
   @override
-  void setState(VoidCallback fn) {  
+  void setState(VoidCallback fn) {
+    
     super.setState(fn);
   }
   void getEmail() async{
@@ -227,7 +229,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                     iconSize: 30,
                   ),
                   actions: <Widget>[
-                    const Icon(Icons.diamond_rounded, size: 30),                   
+                    const Icon(Icons.diamond_rounded, size: 30),
                     Center(
                       child: Text(
                         '${thongTin[0].money}',
@@ -243,7 +245,9 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => MuaCredit(email: email,),
+                              builder: (context) => MuaCredit(
+                                email: email,
+                              ),
                             ));
                       }),
                       iconSize: 30,
@@ -273,7 +277,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                     ),
                     Container(
                       padding: const EdgeInsets.only(bottom: 15),
-                      child:  Text(
+                      child: Text(
                         thongTin[0].name,
                         style: TextStyle(
                             fontSize: 25,
@@ -322,7 +326,9 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => LichSu(email: email,),
+                                builder: (context) => LichSu(
+                                  email: email,
+                                ),
                               ));
                         },
                         // ignore: sort_child_properties_last
@@ -349,7 +355,9 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => BangXepHang(email: email,),
+                              builder: (context) => BangXepHang(
+                                email: email,
+                              ),
                             ),
                           );
                         },
@@ -397,7 +405,6 @@ class ManHinhChinhState extends State<ManHinhChinh> {
             );
           }
           return Text('');
-        }
-        );
+        });
   }
 }
