@@ -103,30 +103,12 @@ class DangNhapState extends State<DangNhap> {
                 height: 80,
                 child: OutlinedButton(
                     onPressed: () async {
-<<<<<<< HEAD
                       if (txtEmail.text == "" || txtPass.text == "") {
                         final snackBar = SnackBar(
                             content: Text('Email hoặc mật khẩu trống'));
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       } else {
-                        try {
-                          final _user = await _auth.signInWithEmailAndPassword(
-                              email: txtEmail.text, password: txtPass.text);
-                          await _auth.authStateChanges().listen((event) {
-                            if (event != null) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      ManHinhChinh(email: txtEmail.text),
-                                ),
-                              );
-                            }
-                          });
-                        } catch (e) {
-                          final snackBar = SnackBar(
-=======
-                      try {
+                       try {
                         final _user = await _auth.signInWithEmailAndPassword(
                             email: txtEmail.text, password: txtPass.text);
                          _auth.authStateChanges().listen((event) {
@@ -146,7 +128,6 @@ class DangNhapState extends State<DangNhap> {
                         });
                       } catch (e) {                       
                           final snackBar = const SnackBar(
->>>>>>> cd1f5f6564ffcdaa7523f55e7f7c9d3685419dcb
                               content: Text('Email hoặc mật khẩu không đúng'));
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         }

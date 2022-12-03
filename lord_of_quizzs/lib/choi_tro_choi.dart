@@ -19,13 +19,6 @@ import 'man_hinh_chinh.dart';
 class ChoiTroChoi extends StatefulWidget {
   int idLinhVuc, randomIdBoCauHoi;
   String email;
-<<<<<<< HEAD
-  ChoiTroChoi({Key? key, required this.idLinhVuc, required this.email})
-      : super(key: key);
-  @override
-  State<StatefulWidget> createState() {
-    return ChoiTroChoiState(idLinhVucState: idLinhVuc, email: email);
-=======
   ChoiTroChoi({Key? key, required this.idLinhVuc, required this.email,
    required this.randomIdBoCauHoi }) : super(key: key);
   @override
@@ -33,19 +26,12 @@ class ChoiTroChoi extends StatefulWidget {
     // ignore: no_logic_in_create_state
     return ChoiTroChoiState(idLinhVucState: idLinhVuc, email: email, randomIdBoCauHoi: randomIdBoCauHoi);
     }
->>>>>>> cd1f5f6564ffcdaa7523f55e7f7c9d3685419dcb
   }
-}
 
 class ChoiTroChoiState extends State<ChoiTroChoi> {
   int idLinhVucState, randomIdBoCauHoi;
   String email;
-<<<<<<< HEAD
-  ChoiTroChoiState(
-      {Key? key, required this.idLinhVucState, required this.email});
-=======
   ChoiTroChoiState({Key? key, required this.idLinhVucState, required this.email, required this.randomIdBoCauHoi});
->>>>>>> cd1f5f6564ffcdaa7523f55e7f7c9d3685419dcb
   static const maxSeconds = 30;
   int seconds = maxSeconds;
   Timer? timer;
@@ -59,9 +45,6 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
       setState(() => seconds--);
     });
   }
-<<<<<<< HEAD
-
-=======
   void tro_Giup_50_50(){
     troGiup5050 = random.nextInt(5);
   }
@@ -70,7 +53,6 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
     setState(() {});
     thongTin = data;
   }
->>>>>>> cd1f5f6564ffcdaa7523f55e7f7c9d3685419dcb
   @override
   void initState() {
     super.initState(); 
@@ -80,41 +62,26 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
 
   @override
   void setState(VoidCallback fn) {
-<<<<<<< HEAD
-    if (seconds == 1) {
-      mang--;
-      if (mang != 0) {
-=======
     if(seconds == 1){
        mang--;
       if(mang > 0){
->>>>>>> cd1f5f6564ffcdaa7523f55e7f7c9d3685419dcb
         ngungChoi(soCauHoiBoCauHoi);
-      } else {
+      }
+      else{
         timer?.cancel();
         showDialog(
-            barrierDismissible: false,
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: Text('Kết thúc trò chơi'),
-                content: Text('Số điểm của bạn: ${diem}'),
-                actions: <Widget>[
-                  TextButton(
-                      onPressed: () {
+          barrierDismissible: false,
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+               title: Text('Kết thúc trò chơi'),
+               content: Text('Số điểm của bạn: ${diem}'),
+                 actions: <Widget>[
+                   TextButton(
+                     onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-<<<<<<< HEAD
-                            builder: (context) => ManHinhChinh(email: email),
-                          ),
-                        );
-                      },
-                      child: Text('Màn hình chính'))
-                ],
-              );
-            });
-=======
                             builder: (context) =>
                             ManHinhChinh(),
                       ),
@@ -126,7 +93,6 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
           );
         }
       );
->>>>>>> cd1f5f6564ffcdaa7523f55e7f7c9d3685419dcb
       }
     }
     super.setState(fn);
@@ -134,84 +100,8 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
 
   @override
   Widget build(BuildContext context) {
-    //Lấy id bộ câu hỏi dựa trên lĩnh vực
+       //Lấy id bộ câu hỏi dựa trên lĩnh vực
     return FutureBuilder<List<BoCauHoiObject>>(
-<<<<<<< HEAD
-        future: BoCauHoiProvider.getDataByID(idLinhVucState),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            List<BoCauHoiObject> linhVuc = snapshot.data!;
-            idBoCauHoi = linhVuc[1].idBoCauHoi;
-            //Lấy id của câu hỏi dựa trên id bộ câu hỏi
-            return FutureBuilder<List<CTBoCauHoiObject>>(
-                future: CTBoCauHoiProvider.getDataByID(idBoCauHoi),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    List<CTBoCauHoiObject> cauHoi = snapshot.data!;
-                    idCauHoi = cauHoi[i].idCauHoi;
-                    soCauHoiBoCauHoi = cauHoi.length;
-                    //Lấy id câu hỏi bằng id câu hỏi của ct bộ câu hỏi
-                    return FutureBuilder<List<CauHoiObject>>(
-                        future: CauHoiProvider.getDataById(idCauHoi),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            List<CauHoiObject> chiTietCauHoi = snapshot.data!;
-                            return Scaffold(
-                              extendBodyBehindAppBar: true,
-                              appBar: AppBar(
-                                centerTitle: true,
-                                elevation: 0,
-                                backgroundColor: Colors.transparent,
-                                leading: IconButton(
-                                  icon: const Icon(Icons.settings_outlined),
-                                  onPressed: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          backgroundColor:
-                                              const Color(0xFF701ebd),
-                                          content: SingleChildScrollView(
-                                            child: ListBody(
-                                              children: [
-                                                Container(
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: 40,
-                                                      vertical: 10),
-                                                  height: 80,
-                                                  width: 30,
-                                                  child: OutlinedButton(
-                                                    onPressed: () {
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              ManHinhChinh(
-                                                                  email: email),
-                                                        ),
-                                                      );
-                                                    },
-                                                    // ignore: sort_child_properties_last
-                                                    child: const Text(
-                                                      'Quay lại',
-                                                      style: TextStyle(
-                                                          fontSize: 25,
-                                                          color: Colors.white),
-                                                    ),
-                                                    style: ButtonStyle(
-                                                        backgroundColor:
-                                                            MaterialStateProperty
-                                                                .all(Colors
-                                                                    .transparent),
-                                                        side: MaterialStateProperty
-                                                            .all(const BorderSide(
-                                                                color: Colors
-                                                                    .white,
-                                                                width: 2.0,
-                                                                style: BorderStyle
-                                                                    .solid))),
-                                                  ),
-=======
       future: BoCauHoiProvider.getDataByID(idLinhVucState),
       builder: (context, snapshot) {
         if(snapshot.hasData){
@@ -267,161 +157,65 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                                 MaterialPageRoute(
                                                   builder: (context) =>
                                                       ManHinhChinh(),
->>>>>>> cd1f5f6564ffcdaa7523f55e7f7c9d3685419dcb
                                                 ),
-                                                Container(
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: 40,
-                                                      vertical: 10),
-                                                  height: 80,
-                                                  width: 30,
-                                                  child: OutlinedButton(
-                                                    onPressed: () {
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              exit(0),
-                                                        ),
-                                                      );
-                                                    },
-                                                    // ignore: sort_child_properties_last
-                                                    child: const Text(
-                                                      'Thoát',
-                                                      style: TextStyle(
-                                                          fontSize: 25,
-                                                          color: Colors.white),
-                                                    ),
-                                                    style: ButtonStyle(
-                                                        backgroundColor:
-                                                            MaterialStateProperty
-                                                                .all(Colors
-                                                                    .transparent),
-                                                        side: MaterialStateProperty
-                                                            .all(const BorderSide(
-                                                                color: Colors
-                                                                    .white,
-                                                                width: 2.0,
-                                                                style: BorderStyle
-                                                                    .solid))),
-                                                  ),
-                                                ),
-                                              ],
+                                              );
+                                            },
+                                            // ignore: sort_child_properties_last
+                                            child: const Text(
+                                              'Quay lại',
+                                              style: TextStyle(
+                                                  fontSize: 25,
+                                                  color: Colors.white),
                                             ),
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  },
-                                  iconSize: 30,
-                                ),
-                                actions: <Widget>[
-                                  const Icon(Icons.diamond_rounded, size: 30),
-                                  const Center(
-                                    child: Text(
-                                      '9999',
-                                      style: TextStyle(
-                                        fontSize: 25,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                  IconButton(
-                                    icon: const Icon(Icons.add_circle_outline),
-                                    onPressed: () {},
-                                    iconSize: 30,
-                                  ),
-                                ],
-                              ),
-                              body: Container(
-                                decoration: const BoxDecoration(
-                                  gradient: LinearGradient(
-                                    colors: [
-                                      Color(0xFF701ebd),
-                                      Color.fromARGB(255, 57, 86, 250),
-                                    ],
-                                    begin: Alignment.topRight,
-                                    end: Alignment.bottomLeft,
-                                  ),
-                                ),
-                                // child: SingleChildScrollView(
-                                // physics:const NeverScrollableScrollPhysics(),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      padding: const EdgeInsets.only(top: 87),
-                                    ),
-                                    Container(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 20),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: <Widget>[
-                                          Column(
-                                            children: const <Widget>[
-                                              Text(
-                                                'Tên Người Chơi',
-                                                style: TextStyle(
-                                                    fontSize: 20,
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                            ],
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: <Widget>[
-                                              Icon(
-                                                CupertinoIcons.heart_fill,
-                                                size: 20,
-                                                color: Colors.white,
-                                              ),
-                                              Text(
-                                                '${mang}',
-                                                style: TextStyle(
-                                                    fontSize: 20,
-                                                    color: Colors.white),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Row(
-                                      children: [
-                                        Container(
-                                          padding:
-                                              const EdgeInsets.only(left: 30),
-                                          child: Text(
-                                            'Điểm :${diem}',
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold),
+                                            style: ButtonStyle(
+                                                backgroundColor:
+                                                    MaterialStateProperty.all(
+                                                        Colors.transparent),
+                                                side: MaterialStateProperty.all(
+                                                    const BorderSide(
+                                                        color: Colors.white,
+                                                        width: 2.0,
+                                                        style: BorderStyle
+                                                            .solid))),
                                           ),
                                         ),
                                         Container(
-                                          padding:
-                                              const EdgeInsets.only(left: 150),
-                                          child: buildTimer(),
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 40, vertical: 10),
+                                          height: 80,
+                                          width: 30,
+                                          child: OutlinedButton(
+                                            onPressed: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) => exit(0),
+                                                ),
+                                              );
+                                            },
+                                            // ignore: sort_child_properties_last
+                                            child: const Text(
+                                              'Thoát',
+                                              style: TextStyle(
+                                                  fontSize: 25,
+                                                  color: Colors.white),
+                                            ),
+                                            style: ButtonStyle(
+                                                backgroundColor:
+                                                    MaterialStateProperty.all(
+                                                        Colors.transparent),
+                                                side: MaterialStateProperty.all(
+                                                    const BorderSide(
+                                                        color: Colors.white,
+                                                        width: 2.0,
+                                                        style: BorderStyle.solid
+                                                )
+                                              )
+                                            ),
+                                          ),
                                         ),
                                       ],
                                     ),
-<<<<<<< HEAD
-                                    Container(
-                                      padding: EdgeInsets.all(5),
-                                    ),
-                                    Container(
-                                        padding: const EdgeInsets.all(12),
-                                        child: Text(
-                                          'Câu ${soCauHoi}: ${chiTietCauHoi[0].cauHoi}',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-=======
                                   ),
                                 );
                               },
@@ -477,286 +271,20 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                       Text(
                                         thongTin[0].name,
                                         style: TextStyle(
->>>>>>> cd1f5f6564ffcdaa7523f55e7f7c9d3685419dcb
                                             fontSize: 20,
                                             color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        )),
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 25, vertical: 15),
-                                      width: 350,
-                                      height: 75,
-                                      child: OutlinedButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            if (chiTietCauHoi[0].dapAn == 1) {
-                                              diem = diem + (100 * seconds);
-                                              ngungChoi(soCauHoiBoCauHoi);
-                                            } else {
-                                              mang = mang - 1;
-                                              if (mang == 0) {
-                                                truMang();
-                                              } else
-                                                ngungChoi(soCauHoiBoCauHoi);
-                                            }
-                                          });
-                                        },
-                                        // ignore: sort_child_properties_last
-                                        child: Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Text(
-                                            chiTietCauHoi[0].cauTraLoi1,
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ),
-                                        style: ButtonStyle(
-                                            backgroundColor:
-                                                MaterialStateProperty.all(
-                                                    Colors.transparent),
-                                            side: MaterialStateProperty.all(
-                                                const BorderSide(
-                                                    color: Colors.white,
-                                                    width: 2.0,
-                                                    style: BorderStyle.solid))),
+                                            fontWeight: FontWeight.bold),
                                       ),
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 25, vertical: 15),
-                                      width: 350,
-                                      height: 75,
-                                      child: OutlinedButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            if (chiTietCauHoi[0].dapAn == 2) {
-                                              diem = diem + (100 * seconds);
-                                              ngungChoi(soCauHoiBoCauHoi);
-                                            } else {
-                                              mang = mang - 1;
-                                              if (mang == 0) {
-                                                truMang();
-                                              } else
-                                                ngungChoi(soCauHoiBoCauHoi);
-                                            }
-                                          });
-                                        },
-                                        // ignore: sort_child_properties_last
-                                        child: Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Text(
-                                            chiTietCauHoi[0].cauTraLoi2,
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ),
-                                        style: ButtonStyle(
-                                            backgroundColor:
-                                                MaterialStateProperty.all(
-                                                    Colors.transparent),
-                                            side: MaterialStateProperty.all(
-                                                const BorderSide(
-                                                    color: Colors.white,
-                                                    width: 2.0,
-                                                    style: BorderStyle.solid))),
-                                      ),
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 25, vertical: 15),
-                                      width: 350,
-                                      height: 75,
-                                      child: OutlinedButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            if (chiTietCauHoi[0].dapAn == 3) {
-                                              diem = diem + (100 * seconds);
-                                              ngungChoi(soCauHoiBoCauHoi);
-                                            } else {
-                                              mang = mang - 1;
-                                              if (mang == 0) {
-                                                truMang();
-                                              } else
-                                                ngungChoi(soCauHoiBoCauHoi);
-                                            }
-                                          });
-                                        },
-                                        // ignore: sort_child_properties_last
-                                        child: Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Text(
-                                            chiTietCauHoi[0].cauTraLoi3,
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ),
-                                        style: ButtonStyle(
-                                            backgroundColor:
-                                                MaterialStateProperty.all(
-                                                    Colors.transparent),
-                                            side: MaterialStateProperty.all(
-                                                const BorderSide(
-                                                    color: Colors.white,
-                                                    width: 2.0,
-                                                    style: BorderStyle.solid))),
-                                      ),
-                                    ),
-                                    Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 25, vertical: 14),
-                                        width: 350,
-                                        height: 75,
-                                        child: OutlinedButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              if (chiTietCauHoi[0].dapAn == 4) {
-                                                diem = diem + (100 * seconds);
-                                                ngungChoi(soCauHoiBoCauHoi);
-                                              } else {
-                                                mang = mang - 1;
-                                                if (mang == 0) {
-                                                  truMang();
-                                                } else
-                                                  ngungChoi(soCauHoiBoCauHoi);
-                                              }
-                                            });
-                                          },
-                                          // ignore: sort_child_properties_last
-                                          child: Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: Text(
-                                              chiTietCauHoi[0].cauTraLoi4,
-                                              style: TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                          style: ButtonStyle(
-                                              backgroundColor:
-                                                  MaterialStateProperty.all(
-                                                      Colors.transparent),
-                                              side: MaterialStateProperty.all(
-                                                  const BorderSide(
-                                                      color: Colors.white,
-                                                      width: 2.0,
-                                                      style:
-                                                          BorderStyle.solid))),
-                                        )),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
-                                        OutlinedButton(
-                                          onPressed: () {},
-                                          child: Text(
-                                            '50:50',
-                                            style: TextStyle(
-                                                fontSize: 17,
-                                                color: Colors.white),
-                                          ),
-                                          style: ButtonStyle(
-                                              backgroundColor:
-                                                  MaterialStateProperty.all(
-                                                      Colors.transparent),
-                                              side: MaterialStateProperty.all(
-                                                  const BorderSide(
-                                                color: Colors.white,
-                                                width: 2.0,
-                                                style: BorderStyle.solid,
-                                              ))),
-                                        ),
-                                        OutlinedButton(
-                                          onPressed: () {
-                                            showDialog(
-                                                context: context,
-                                                builder:
-                                                    (BuildContext context) {
-                                                  return AlertDialog(
-                                                    title: Text(
-                                                        'Hỗ trợ từ các khán giả'),
-                                                    content: Text('Xin chào'),
-                                                  );
-                                                });
-                                          },
-                                          child: Icon(
-                                            Icons.people,
-                                            color: Colors.white,
-                                          ),
-                                          style: ButtonStyle(
-                                              backgroundColor:
-                                                  MaterialStateProperty.all(
-                                                      Colors.transparent),
-                                              side: MaterialStateProperty.all(
-                                                  const BorderSide(
-                                                color: Colors.white,
-                                                width: 2.0,
-                                                style: BorderStyle.solid,
-                                              ))),
-                                        ),
-                                        OutlinedButton(
-                                          onPressed: () {},
-                                          child: Icon(Icons.phone,
-                                              color: Colors.white),
-                                          style: ButtonStyle(
-                                              backgroundColor:
-                                                  MaterialStateProperty.all(
-                                                      Colors.transparent),
-                                              side: MaterialStateProperty.all(
-                                                  const BorderSide(
-                                                color: Colors.white,
-                                                width: 2.0,
-                                                style: BorderStyle.solid,
-                                              ))),
-                                        ),
-                                        OutlinedButton(
-                                          onPressed: () {},
-                                          child: Icon(Icons.diamond_rounded,
-                                              color: Colors.white),
-                                          style: ButtonStyle(
-                                              backgroundColor:
-                                                  MaterialStateProperty.all(
-                                                      Colors.transparent),
-                                              side: MaterialStateProperty.all(
-                                                  const BorderSide(
-                                                color: Colors.white,
-                                                width: 2.0,
-                                                style: BorderStyle.solid,
-                                              ))),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
+                                    ],
+                                  ),
+                              Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(
+                                CupertinoIcons.heart_fill,
+                                size: 20,
+                                color: Colors.white,
                               ),
-<<<<<<< HEAD
-                            );
-                          }
-                          return Text('');
-                        });
-                  }
-                  return Text('');
-                });
-          }
-          return Text('');
-        });
-  }
-
-  void ngungChoi(int cauHoi) {
-    if (soCauHoi < cauHoi) {
-      soCauHoi++;
-      i++;
-      seconds = maxSeconds;
-    } else {
-=======
                               Text('${mang}', style: TextStyle(fontSize: 20, color: Colors.white),
                               ),                            
                             ],
@@ -1107,48 +635,11 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
   }            
   void truMang(){
     timer?.cancel();
->>>>>>> cd1f5f6564ffcdaa7523f55e7f7c9d3685419dcb
       showDialog(
-          barrierDismissible: false,
+         barrierDismissible: false,
           context: context,
           builder: (context) {
             return AlertDialog(
-<<<<<<< HEAD
-              title: Text('Kết thúc trò chơi'),
-              content: Text('Số điểm của bạn: ${diem}'),
-              actions: <Widget>[
-                TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ManHinhChinh(email: email),
-                        ),
-                      );
-                    },
-                    child: Text('Màn hình chính'))
-              ],
-            );
-          });
-    }
-  }
-
-  void truMang() {
-    showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text('Kết thúc trò chơi'),
-            content: Text('Số điểm của bạn: ${diem}'),
-            actions: <Widget>[
-              TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ManHinhChinh(email: email),
-=======
                title: Text('Kết thúc trò chơi'),
                content: Text('Số điểm của bạn: ${diem}'),
                  actions: <Widget>[
@@ -1159,16 +650,16 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                           MaterialPageRoute(
                             builder: (context) =>
                             ManHinhChinh(),
->>>>>>> cd1f5f6564ffcdaa7523f55e7f7c9d3685419dcb
                       ),
                     );
                   },
-                  child: Text('Màn hình chính'))
+                child: Text('Màn hình chính')
+              )
             ],
           );
-        });
-  }
-
+        }
+      );
+  }                
   Widget buildTime() {
     return Text(
       '$seconds',

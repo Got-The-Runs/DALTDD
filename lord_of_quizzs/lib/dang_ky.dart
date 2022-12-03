@@ -96,61 +96,6 @@ class DangKiState extends State<DangKi> {
                   child: Image.asset('images/Logo.png',
                       fit: BoxFit.cover, height: 120, width: 120),
                 ),
-<<<<<<< HEAD
-                Container(
-                  padding: const EdgeInsets.only(bottom: 15),
-                  child: const Text(
-                    'Bạn chưa có tài khoản?',
-                    style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Container(
-                    padding: const EdgeInsets.all(10),
-                    child: TextFormField(
-                      controller: txtTenNguoiChoi,
-                      style: const TextStyle(color: Colors.white),
-                      validator: (text) {
-                        if (text == null || text.isEmpty) {
-                          return 'Tên người chơi trống';
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                        labelText: 'Tên Người chơi',
-                        labelStyle: const TextStyle(color: Colors.white),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.white),
-                          borderRadius: BorderRadius.circular(25),
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25),
-                        ),
-                        prefixIcon:
-                            const Icon(Icons.person, color: Colors.white),
-                      ),
-                    )),
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  child: TextFormField(
-                    controller: txtEmail,
-                    style: const TextStyle(color: Colors.white),
-                    keyboardType: TextInputType.emailAddress,
-                    validator: (text) {
-                      if (text == null || text.isEmpty) {
-                        return 'Email trống';
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                      labelText: 'Email',
-                      labelStyle: const TextStyle(color: Colors.white),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white),
-=======
-              ),  
               Container(
                 padding: const EdgeInsets.only(bottom: 15),
                 child: const Text(
@@ -251,59 +196,12 @@ class DangKiState extends State<DangKi> {
                         borderSide:const BorderSide(
                           color: Colors.white
                         ),                   
->>>>>>> cd1f5f6564ffcdaa7523f55e7f7c9d3685419dcb
                         borderRadius: BorderRadius.circular(25),
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25),
-<<<<<<< HEAD
                       ),
                       prefixIcon: const Icon(Icons.email, color: Colors.white),
-=======
-                      ), 
-                    prefixIcon: const Icon(Icons.lock, color: Colors.white),
-                  ),
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.all(15),
-                width: 200,
-                height: 80,
-                child: OutlinedButton(
-                  onPressed: () {                 
-                      try{
-                        final newUser = _auth.createUserWithEmailAndPassword(
-                          email: txtEmail.text, password: txtMatKhau.text);                         
-                          if(newUser != null){                
-                            Navigator.pop(context, 'Đăng ký thành công');
-                            addUser();
-                          }else {
-                            final snackBar = SnackBar(content: Text('Tài khoản này không hợp lệ'));
-                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                          }
-                      }
-                      catch(e){
-                        final snackBar = SnackBar(content: Text('Có lỗi xảy ra !'));
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      }                                                  
-                  },
-                 
-                  // ignore: sort_child_properties_last
-                  child: const Text(
-                    'Đăng ký',
-                    style: TextStyle(fontSize: 20, 
-                    color: Colors.white),
-                  ),
-                  style: ButtonStyle(
-                     backgroundColor: MaterialStateProperty.all(Colors.transparent),  
-                     side: MaterialStateProperty.all(                 
-                      const BorderSide(
-                        color: Colors.white,
-                        width: 2.0,
-                        style: BorderStyle.solid
-                        )
-                      ) 
->>>>>>> cd1f5f6564ffcdaa7523f55e7f7c9d3685419dcb
                     ),
                   ),
                 ),
@@ -337,16 +235,7 @@ class DangKiState extends State<DangKi> {
                   child: TextFormField(
                     controller: txtNhapLaiMatKhau,
                     obscureText: true,
-                    style: const TextStyle(color: Colors.white),
-                    validator: (text) {
-                      if (text == null || text.isEmpty) {
-                        return 'Nhập lại mật khẩu trống';
-                      }
-                      if (txtNhapLaiMatKhau.text != txtMatKhau.text) {
-                        return 'Nhập lại mật khẩu không trùng với mật khẩu';
-                      }
-                      return null;
-                    },
+                    style: const TextStyle(color: Colors.white),                 
                     decoration: InputDecoration(
                       labelText: 'Nhập lại mật khẩu',
                       labelStyle: const TextStyle(color: Colors.white),
