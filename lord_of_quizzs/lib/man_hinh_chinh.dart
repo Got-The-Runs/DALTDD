@@ -16,7 +16,7 @@ import 'package:lord_of_quizzs/tai_khoan.dart';
 import 'dang_nhap.dart';
 
 class ManHinhChinh extends StatefulWidget {
-  ManHinhChinh({Key? key,}) : super(key: key);
+  ManHinhChinh({Key? key}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return ManHinhChinhState();

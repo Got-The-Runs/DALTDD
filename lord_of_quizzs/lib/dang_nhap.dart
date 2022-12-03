@@ -103,7 +103,12 @@ class DangNhapState extends State<DangNhap> {
                 height: 80,
                 child: OutlinedButton(
                     onPressed: () async {
-                      try {
+                      if (txtEmail.text == "" || txtPass.text == "") {
+                        final snackBar = SnackBar(
+                            content: Text('Email hoặc mật khẩu trống'));
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      } else {
+                       try {
                         final _user = await _auth.signInWithEmailAndPassword(
                             email: txtEmail.text, password: txtPass.text);
                          _auth.authStateChanges().listen((event) {
@@ -125,6 +130,7 @@ class DangNhapState extends State<DangNhap> {
                           final snackBar = const SnackBar(
                               content: Text('Email hoặc mật khẩu không đúng'));
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        }
                       }
                     },
                     // ignore: sort_child_properties_last
