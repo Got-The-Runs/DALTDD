@@ -11,15 +11,19 @@ import 'package:lord_of_quizzs/model/cau_hoi_object.dart';
 import 'package:lord_of_quizzs/model/cau_hoi_provider.dart';
 import 'package:lord_of_quizzs/model/ct_bo_cau_hoi_object.dart';
 import 'package:lord_of_quizzs/model/ct_bo_cau_hoi_provider.dart';
+import 'package:lord_of_quizzs/model/thong_tin_object.dart';
+import 'package:lord_of_quizzs/model/thong_tin_provider.dart';
 import 'man_hinh_chinh.dart';
 
 // ignore: must_be_immutable
 class ChoiTroChoi extends StatefulWidget {
   int idLinhVuc, randomIdBoCauHoi;
   String email;
-  ChoiTroChoi({Key? key, required this.idLinhVuc, required this.email, required this.randomIdBoCauHoi}) : super(key: key);
+  ChoiTroChoi({Key? key, required this.idLinhVuc, required this.email,
+   required this.randomIdBoCauHoi }) : super(key: key);
   @override
   State<StatefulWidget> createState() {
+    // ignore: no_logic_in_create_state
     return ChoiTroChoiState(idLinhVucState: idLinhVuc, email: email, randomIdBoCauHoi: randomIdBoCauHoi);
     }
   }
@@ -31,11 +35,11 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
   static const maxSeconds = 30;
   int seconds = maxSeconds;
   Timer? timer;
-  late int idBoCauHoi, soCauHoiBoCauHoi, troGiup5050;
+  late int idBoCauHoi, soCauHoiBoCauHoi, troGiup5050, idCauHoi;
   int diem = 0, mang = 5, i = 1, soCauHoi =1;
   late String a,b,c,d ;
   Random random = new Random();
-  late int idCauHoi;
+  List<ThongTinObject> thongTin = [];
   void startTimer() {
     timer = Timer.periodic(const Duration(seconds: 1), (_) {
       setState(() => seconds--);
@@ -44,10 +48,15 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
   void tro_Giup_50_50(){
     troGiup5050 = random.nextInt(5);
   }
+  void loadThongTin()async {
+    final data = await ThongTinProvider.get(email);
+    setState(() {});
+    thongTin = data;
+  }
   @override
   void initState() {
-    super.initState();
-    
+    super.initState(); 
+    loadThongTin();
     startTimer();
   }
 
@@ -216,9 +225,9 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                         ),
                         actions: <Widget>[
                           const Icon(Icons.diamond_rounded, size: 30),
-                          const Center(
+                          Center(
                             child: Text(
-                              "0",
+                              '${thongTin[0].money}',
                               style: TextStyle(
                                 fontSize: 25,
                                 color: Colors.white,
@@ -258,9 +267,9 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                     MainAxisAlignment.spaceAround,
                                 children: <Widget>[
                                   Column(
-                                    children: const <Widget>[
+                                    children:  <Widget>[
                                       Text(
-                                        'Tên Người Chơi',
+                                        thongTin[0].name,
                                         style: TextStyle(
                                             fontSize: 20,
                                             color: Colors.white,

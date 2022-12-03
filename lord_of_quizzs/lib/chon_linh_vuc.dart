@@ -130,31 +130,13 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const <Widget>[
-                                Icon(
-                                  CupertinoIcons.heart_fill,
-                                  size: 20,
-                                  color: Colors.white,
-                                ),
-                                Icon(
-                                  CupertinoIcons.heart_fill,
-                                  size: 20,
-                                  color: Colors.white,
-                                ),
-                                Icon(
-                                  CupertinoIcons.heart_fill,
-                                  size: 20,
-                                  color: Colors.white,
-                                ),
-                                Icon(
-                                  CupertinoIcons.heart_fill,
-                                  size: 20,
-                                  color: Colors.white,
-                                ),
-                                Icon(
-                                  CupertinoIcons.heart_fill,
-                                  size: 20,
-                                  color: Colors.white,
-                                ),
+                              Icon(
+                                CupertinoIcons.heart_fill,
+                                size: 20,
+                                color: Colors.white,
+                              ),
+                              Text('5', style: TextStyle(fontSize: 20, color: Colors.white),
+                              ),                            
                               ],
                             ),
                           ],

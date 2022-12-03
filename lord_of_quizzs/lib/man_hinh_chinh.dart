@@ -28,11 +28,9 @@ class ManHinhChinhState extends State<ManHinhChinh> {
   String email = "";
   @override
   void initState() {
-
     // TODO: implement initState
     super.initState();
   }
-
   @override
   void setState(VoidCallback fn) {
     
