@@ -100,6 +100,20 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
 
   @override
   Widget build(BuildContext context) {
+    //   Future<void> addNguoiChoi() {
+    //   // Call the user's CollectionReference to add a new user
+    //   return thongTin 
+    //       .add({
+    //         // 'id': 4,
+    //         'email': txtEmail.text, 
+    //         // 'mat_khau': txtMatKhau.text, 
+    //         'ten_nguoi_choi': txtTenNguoiChoi.text,
+    //         'tien_ao': tienAo,
+    //         'trang_thai': trangThai
+    //       })
+    //       .then((value) => Navigator.pop(context, 'Đăng ký thành công'))
+    //       .catchError((error) => Navigator.pop(context, 'Đăng ký thất bại $error'));        
+    // }
        //Lấy id bộ câu hỏi dựa trên lĩnh vực
     return FutureBuilder<List<BoCauHoiObject>>(
       future: BoCauHoiProvider.getDataByID(idLinhVucState),
