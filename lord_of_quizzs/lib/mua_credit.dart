@@ -33,16 +33,11 @@ class MuaCreditState extends State<MuaCredit>{
   var querySnapshots;
   final _formKey = GlobalKey<FormState>();
   CollectionReference user = FirebaseFirestore.instance.collection("thong_tin");
-  Future<void> updateUser(var docID, int cre) {
+  Future<void> updateUser(var docID, var  cre) {
     return user
         .doc(docID)
         .update({'tien_ao': cre});
   }
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 6ec17b8e0ce5eb0b1cb53bd0356e8e09c5b04464
   @override
   Widget build(BuildContext context) {
      return FutureBuilder<List<ThongTinObject>>(
@@ -134,18 +129,11 @@ class MuaCreditState extends State<MuaCredit>{
                                     credit_0 = snapshot['tien_ao'];
                                   }
                                 }
-<<<<<<< HEAD
-                                credit_0 = credit_0 +item1;  
-                                int creditd = int.parse(credit_0.toString());                 
-                                updateUser(docID,creditd);
-                                // setState(){
-=======
                                 credit_0 += item1;                               
                                 updateUser (docID,credit_0);
                                 setState(){
->>>>>>> 6ec17b8e0ce5eb0b1cb53bd0356e8e09c5b04464
 
-                                // };
+                                };
                               } catch (e) {
                                 final snackBar =
                                     SnackBar(content: Text('Có lỗi xảy ra !'));

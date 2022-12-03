@@ -17,13 +17,7 @@ import 'mua_credit.dart';
 class ChonLinhVuc extends StatefulWidget {
   String name;
   String email;
-<<<<<<< HEAD
   ChonLinhVuc({Key? key, required this.name, required this.email}) : super(key: key);
-=======
-  ChonLinhVuc({Key? key, required this.name, required this.email})
-      : super(key: key);
-
->>>>>>> 6ec17b8e0ce5eb0b1cb53bd0356e8e09c5b04464
   @override
   State<StatefulWidget> createState() {
     // ignore: todo
@@ -57,89 +51,6 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        leading: IconButton(
-          icon: const Icon(Icons.chevron_left),
-          onPressed: () => Navigator.pop(context),
-          iconSize: 30,
-        ),
-        actions: <Widget>[
-          const Icon(Icons.diamond_rounded, size: 30),
-          const Center(
-            child: Text(
-              '9999',
-              style: TextStyle(
-                fontSize: 25,
-                color: Colors.white,
-              ),
-            ),
-          ),
-          IconButton(
-            icon: const Icon(Icons.add_circle_outline),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MuaCredit(email: email,),
-                  ));
-            },
-            iconSize: 30,
-          ),
-        ],
-      ),
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color(0xFF701ebd),
-              Color.fromARGB(255, 57, 86, 250),
-            ],
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-          ),
-        ),
-        // physics:const NeverScrollableScrollPhysics(),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                padding: const EdgeInsets.only(top: 80),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    Column(
-                      children: const <Widget>[
-                        Text(
-                          'Tên Người Chơi',
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const <Widget>[
-                         Icon(
-                                CupertinoIcons.heart_fill,
-                                size: 20,
-                                color: Colors.white,
-                              ),
-                              Text('5', style: TextStyle(fontSize: 20, color: Colors.white),
-                              ),                            
-                      ],
-                    ),
-                  ],
-=======
     return FutureBuilder<List<ThongTinObject>>(
         future: ThongTinProvider.get(email),
         builder: (context, snapshot) {
@@ -156,7 +67,6 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
                   icon: const Icon(Icons.chevron_left),
                   onPressed: () => Navigator.pop(context),
                   iconSize: 30,
->>>>>>> 6ec17b8e0ce5eb0b1cb53bd0356e8e09c5b04464
                 ),
                 actions: <Widget>[
                   const Icon(Icons.diamond_rounded, size: 30),
@@ -279,7 +189,7 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
                                     MaterialPageRoute(
                                       builder: (context) => ChoiTroChoi(
                                         idLinhVuc: linhVuc[index].idLinhVuc,
-                                        email: email,
+                                        email: email, randomIdBoCauHoi: randomIdBoCauHoi,
                                       ),
                                     ));
                               },
@@ -305,75 +215,9 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
                   ),
                 ),
               ),
-<<<<<<< HEAD
-              ListView.builder(
-                padding: EdgeInsets.only(bottom: 20, top: 20),
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: linhVuc.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-                    width: 350,
-                    height: 85,
-                    child: OutlinedButton(
-                      onPressed: ()async {    
-                        try {
-                           querySnapshots = await boCauHoi.get();
-                           for (var snapshot in querySnapshots.docs) {
-                              if (linhVuc[index].idLinhVuc == snapshot['id_linh_vuc']) {
-                                  int hasdata =1;
-                                  if(hasdata == 1){
-                                    // ignore: use_build_context_synchronously
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => ChoiTroChoi( idLinhVuc: linhVuc[index].idLinhVuc, email: email,
-                                                  randomIdBoCauHoi: randomIdBoCauHoi,
-                                        ),
-                                      ));
-                                   break;
-                                  }
-                              }
-                          }
-                        }
-                        catch(e){
-                                      final snackBar =
-                                    SnackBar(content: Text('Không có dữ liệu câu hỏi!'));
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(snackBar);
-                        }
-                          
-  
-                                   
-                                                           
-                      },
-                      // ignore: sort_child_properties_last
-                      child: Text(
-                        linhVuc[index].tenLinhVuc,
-                        style: TextStyle(fontSize: 20, color: Colors.white),
-                      ),
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.transparent),
-                          side: MaterialStateProperty.all(const BorderSide(
-                              color: Colors.white,
-                              width: 2.0,
-                              style: BorderStyle.solid))),
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-=======
             );
           }
           return Text('');
         });
->>>>>>> 6ec17b8e0ce5eb0b1cb53bd0356e8e09c5b04464
   }
 }

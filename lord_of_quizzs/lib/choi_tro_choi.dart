@@ -31,25 +31,11 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
   static const maxSeconds = 30;
   int seconds = maxSeconds;
   Timer? timer;
-<<<<<<< HEAD
-  late int idBoCauHoi, soCauHoiBoCauHoi, idCauHoi;
-  int diem = 0,mang = 5, i = 0, soCauHoi = 1;
-=======
-  late int idBoCauHoi;
-  late int soCauHoiBoCauHoi;
-  late String A ;
-  late String B ;
-  late String C ;
-  late String D ;
+  late int idBoCauHoi, soCauHoiBoCauHoi, troGiup5050;
+  int diem = 0, mang = 5, i = 1, soCauHoi =1;
+  late String a,b,c,d ;
   Random random = new Random();
-  late int troGiup5050 ;
-  int diem = 0;
-  int mang = 5;
-  int i = 0;
-  int soCauHoi = 1;
-  
   late int idCauHoi;
->>>>>>> 6ec17b8e0ce5eb0b1cb53bd0356e8e09c5b04464
   void startTimer() {
     timer = Timer.periodic(const Duration(seconds: 1), (_) {
       setState(() => seconds--);
@@ -125,20 +111,14 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
             future: CauHoiProvider.getDataById(idCauHoi),
             builder: (context, snapshot) {
               if(snapshot.hasData){
-<<<<<<< HEAD
-                List<CauHoiObject> chiTietCauHoi = snapshot.data!;      
+                List<CauHoiObject> chiTietCauHoi = snapshot.data!;    
+                a = chiTietCauHoi[0].cauTraLoi1;
+                b = chiTietCauHoi[0].cauTraLoi2;
+                c = chiTietCauHoi[0].cauTraLoi3;
+                d = chiTietCauHoi[0].cauTraLoi4;  
               return  WillPopScope(
                       onWillPop: () async => false,
                child: Scaffold(
-=======
-                List<CauHoiObject> chiTietCauHoi = snapshot.data!; 
-                A = chiTietCauHoi[0].cauTraLoi1;
-                B = chiTietCauHoi[0].cauTraLoi2;
-                C = chiTietCauHoi[0].cauTraLoi3;
-                D = chiTietCauHoi[0].cauTraLoi4;
-
-              return  Scaffold(
->>>>>>> 6ec17b8e0ce5eb0b1cb53bd0356e8e09c5b04464
               extendBodyBehindAppBar: true,
               appBar: AppBar(
                 centerTitle: true,
@@ -361,7 +341,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            A
+                            a
                             ,
                             style: TextStyle(
                               fontSize: 20,
@@ -403,7 +383,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                           B,
+                           b,
                             style: TextStyle(
                               fontSize: 20,
                               color: Colors.white,
@@ -444,7 +424,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            C,
+                            c,
                             style: TextStyle(
                               fontSize: 20,
                               color: Colors.white,
@@ -485,7 +465,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                         child:  Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                             D,
+                             d,
                             style: TextStyle(
                               fontSize: 20,
                               color: Colors.white,
@@ -512,16 +492,16 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                       troGiup5050 = random.nextInt(5);
                                     }
                                     if(troGiup5050 != 1 && chiTietCauHoi[0].dapAn != 1){
-                                      A = "";
+                                      a = "";
                                     }
                                     if(troGiup5050 != 2 && chiTietCauHoi[0].dapAn != 2){
-                                      B = "";
+                                      b = "";
                                     }
                                     if(troGiup5050 != 3 && chiTietCauHoi[0].dapAn != 3){
-                                      C = "";
+                                      c = "";
                                     }
                                     if(troGiup5050 != 4 && chiTietCauHoi[0].dapAn != 4){
-                                      D = "";
+                                      d = "";
                                     }}
                                     setState(() {
                                       
