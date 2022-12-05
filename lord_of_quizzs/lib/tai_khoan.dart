@@ -83,15 +83,12 @@ class ManHinhTaiKhoanState extends State<ManHinhTaiKhoan> {
                       ),
                       Container(
                         padding: const EdgeInsets.all(10),
-                        child: TextButton(
-                          onPressed: () {},
-                          child: const Text(
-                            'Đổi ảnh đại diện',
-                            style: TextStyle(
-                                decoration: TextDecoration.underline,
-                                fontSize: 20,
-                                color: Colors.white),
-                          ),
+                        child: const Text(
+                          'THÔNG TIN TÀI KHOẢN',
+                          style: TextStyle(
+                              fontSize: 30,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                       Container(

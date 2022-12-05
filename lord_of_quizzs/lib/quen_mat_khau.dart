@@ -118,21 +118,22 @@ class QuenMatKhauState extends State<QuenMatKhau> {
                         for (var snapshot in querySnapshots.docs) {
                           if (txtEmail.text == snapshot['email']) {
                             documentID = snapshot.id;
+                            final user = await _auth.sendPasswordResetEmail(
+                                email: txtEmail.text);
+                            Navigator.pop(context, 'Quên mật khẩu thành công');
                           }
                         }
-                        if (txtMatKhau.text == txtMatKhauXT.text) {
-                          final user = _auth.sendPasswordResetEmail(
-                              email: txtEmail.text);
-                          Navigator.pop(context, 'Quên mật khẩu thành công');
-                        } else {
-                          final snackBar = SnackBar(
-                              content:
-                                  Text('Mật khẩu xác nhận không trùng khớp'));
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        }
+                        // if (txtMatKhau.text == txtMatKhauXT.text) {
+
+                        // } else {
+                        //   final snackBar = SnackBar(
+                        //       content:
+                        //           Text('Mật khẩu xác nhận không trùng khớp'));
+                        //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        // }
                       } catch (e) {
                         final snackBar =
-                            SnackBar(content: Text('Có lỗi xảy ra !'));
+                            SnackBar(content: Text('Có lỗi xảy ra!'));
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       }
                     }

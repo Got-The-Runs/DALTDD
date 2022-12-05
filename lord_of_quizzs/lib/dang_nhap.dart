@@ -108,25 +108,24 @@ class DangNhapState extends State<DangNhap> {
                             content: Text('Email hoặc mật khẩu trống'));
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       } else {
-                       try {
-                        final _user = await _auth.signInWithEmailAndPassword(
-                            email: txtEmail.text, password: txtPass.text);
-                         _auth.authStateChanges().listen((event) {
-                          if (event != null) {
-                            // Navigator.push(
-                            //     context, 
-                            //     MaterialPageRoute(builder: 
-                            //     (context) => ManHinhChinh(email: txtEmail.text),
-                            //     ),
-                            //   );
-                            if(_auth != null){
-                              Navigator.pushNamedAndRemoveUntil(context,
-                              'home', (route) => false);
+                        try {
+                          final _user = await _auth.signInWithEmailAndPassword(
+                              email: txtEmail.text, password: txtPass.text);
+                          _auth.authStateChanges().listen((event) {
+                            if (event != null) {
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(builder:
+                              //     (context) => ManHinhChinh(email: txtEmail.text),
+                              //     ),
+                              //   );
+                              if (_auth != null) {
+                                Navigator.pushNamedAndRemoveUntil(
+                                    context, 'home', (route) => false);
+                              }
                             }
-                          
-                          }
-                        });
-                      } catch (e) {                       
+                          });
+                        } catch (e) {
                           final snackBar = const SnackBar(
                               content: Text('Email hoặc mật khẩu không đúng'));
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);

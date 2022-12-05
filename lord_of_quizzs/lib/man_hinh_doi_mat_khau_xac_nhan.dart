@@ -83,7 +83,7 @@ class DangNhapXNState extends State<DangNhapXN> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                padding: const EdgeInsets.only(top: 40),
+                padding: const EdgeInsets.only(top: 70),
                 child: Image.asset('images/Logo.png',
                     fit: BoxFit.cover, height: 120, width: 120),
               ),
@@ -152,25 +152,31 @@ class DangNhapXNState extends State<DangNhapXN> {
                 height: 80,
                 child: OutlinedButton(
                     onPressed: () async {
-                      try {
-                        final _user = await _auth.signInWithEmailAndPassword(
-                            email: email, password: txtPass.text);
-                        await _auth.authStateChanges().listen((event) {
-                          if (event != null) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => DoiMatKhau(
-                                  email: email,
-                                ),
-                              ),
-                            );
-                          }
-                        });
-                      } catch (e) {
+                      if (txtPass.text == "") {
                         final snackBar =
                             SnackBar(content: Text('Chưa nhập mật khẩu'));
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      } else {
+                        try {
+                          final _user = await _auth.signInWithEmailAndPassword(
+                              email: email, password: txtPass.text);
+                          await _auth.authStateChanges().listen((event) {
+                            if (event != null) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DoiMatKhau(
+                                    email: email,
+                                  ),
+                                ),
+                              );
+                            }
+                          });
+                        } catch (e) {
+                          final snackBar =
+                              SnackBar(content: Text('Sai mật khẩu'));
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        }
                       }
                     },
                     // ignore: sort_child_properties_last

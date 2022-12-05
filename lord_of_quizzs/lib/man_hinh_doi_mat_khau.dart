@@ -165,6 +165,12 @@ class DoiMatKhauState extends State<DoiMatKhau> {
                       final snackBar =
                           SnackBar(content: Text("Chưa điền mật khẩu"));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    } else if (txtMatKhauMoi.text.length < 6 ||
+                        txtMatKhauMoi.text.length > 16) {
+                      final snackBar = SnackBar(
+                          content: Text(
+                              "Mật khẩu phải nhập ít nhất 6 ký tự và không quá 16 ký tự"));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     } else if (txtMatKhauMoi.text != txtMatKhauXT.text) {
                       final snackBar = SnackBar(
                           content: Text(
@@ -172,11 +178,13 @@ class DoiMatKhauState extends State<DoiMatKhau> {
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     } else {
                       final user = _auth?.updatePassword(txtMatKhauMoi.text);
+                      final snackBar =
+                          SnackBar(content: Text("Đổi mật khẩu thành công"));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ManHinhChinh(
-                          ),
+                          builder: (context) => ManHinhChinh(),
                         ),
                       );
                     }

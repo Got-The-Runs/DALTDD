@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // ignore: unused_import
 import 'package:lord_of_quizzs/dang_nhap.dart';
+import 'package:lord_of_quizzs/model/thong_tin_object.dart';
 
 class DangKi extends StatefulWidget {
   const DangKi({super.key});
@@ -21,7 +22,8 @@ class DangKi extends StatefulWidget {
 
 class DangKiState extends State<DangKi> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  CollectionReference thongTin = FirebaseFirestore.instance.collection('thong_tin');
+  CollectionReference thongTin =
+      FirebaseFirestore.instance.collection('thong_tin');
   TextEditingController txtTenNguoiChoi = TextEditingController();
   int tienAo = 0;
   int trangThai = 1;
@@ -31,6 +33,7 @@ class DangKiState extends State<DangKi> {
   final _auth = FirebaseAuth.instance;
   final CollectionReference<Map<String, dynamic>> listThongTin =
       FirebaseFirestore.instance.collection('thong_tin');
+
   @override
   Widget build(BuildContext context) {
     // Future<int> countUsers() async {
@@ -95,59 +98,55 @@ class DangKiState extends State<DangKi> {
                   child: Image.asset('images/Logo.png',
                       fit: BoxFit.cover, height: 120, width: 120),
                 ),
-              Container(
-                padding: const EdgeInsets.only(bottom: 15),
-                child: const Text(
-                  'Bạn chưa có tài khoản?',
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold),
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.all(10),
-                child: TextFormField(
-                  controller: txtTenNguoiChoi,
-                  style:const TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                    labelText: 'Tên Người chơi',
-                    labelStyle: const TextStyle(color: Colors.white),
-                    enabledBorder:  OutlineInputBorder(
-                      borderSide:const BorderSide(
-                        color: Colors.white
-                      ),                   
-                      borderRadius: BorderRadius.circular(25),
-                    ),       
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25),
-                    ), 
-                    prefixIcon: const Icon(Icons.person, color: Colors.white),
-                  ),
-                )
-               ),
-              Container(
-                padding: const EdgeInsets.all(10),
-                child: TextFormField(
-                  controller: txtEmail,
-                  style:const TextStyle(color: Colors.white),
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(               
-                    labelText: 'Email',
-                    labelStyle: const TextStyle(color: Colors.white),
-                    enabledBorder:  OutlineInputBorder(
-                      borderSide:const BorderSide(
-                        color: Colors.white
-                      ),                   
-                      borderRadius: BorderRadius.circular(25),
-                    ),       
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25),
-                    ), 
-                    prefixIcon: const Icon(Icons.email, color: Colors.white),
+                Container(
+                  padding: const EdgeInsets.only(bottom: 15),
+                  child: const Text(
+                    'Bạn chưa có tài khoản?',
+                    style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
-              ),         
+                Container(
+                    padding: const EdgeInsets.all(10),
+                    child: TextFormField(
+                      controller: txtTenNguoiChoi,
+                      style: const TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                        labelText: 'Tên Người chơi',
+                        labelStyle: const TextStyle(color: Colors.white),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                        prefixIcon:
+                            const Icon(Icons.person, color: Colors.white),
+                      ),
+                    )),
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  child: TextFormField(
+                    controller: txtEmail,
+                    style: const TextStyle(color: Colors.white),
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(
+                      labelText: 'Email',
+                      labelStyle: const TextStyle(color: Colors.white),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      prefixIcon: const Icon(Icons.email, color: Colors.white),
+                    ),
+                  ),
+                ),
                 Container(
                     padding: const EdgeInsets.all(10),
                     child: TextFormField(
@@ -172,7 +171,7 @@ class DangKiState extends State<DangKi> {
                   child: TextFormField(
                     controller: txtNhapLaiMatKhau,
                     obscureText: true,
-                    style: const TextStyle(color: Colors.white),                 
+                    style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       labelText: 'Nhập lại mật khẩu',
                       labelStyle: const TextStyle(color: Colors.white),
@@ -193,34 +192,37 @@ class DangKiState extends State<DangKi> {
                   height: 80,
                   child: OutlinedButton(
                     onPressed: () async {
-                      if ((txtEmail.text=="" || txtTenNguoiChoi.text=="" || txtMatKhau.text=="" || txtNhapLaiMatKhau.text=="")  ) {
+                      if ((txtEmail.text == "" ||
+                          txtTenNguoiChoi.text == "" ||
+                          txtMatKhau.text == "" ||
+                          txtNhapLaiMatKhau.text == "")) {
                         final snackBar = SnackBar(
                             content: Text('Chưa điền thông tin tài khoản'));
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      }
-                      
-                      else
-                      if(txtMatKhau.text.length < 6  || txtMatKhau.text.length > 16 ){
+                      } else if (txtMatKhau.text.length < 6 ||
+                          txtMatKhau.text.length > 16) {
                         final snackBar = SnackBar(
-                            content: Text('Mật khẩu phải nhập ít nhất 6 ký tự và không quá 16 ký tự'));
+                            content: Text(
+                                'Mật khẩu phải nhập ít nhất 6 ký tự và không quá 16 ký tự'));
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      }
-                      else if(txtNhapLaiMatKhau.text != txtMatKhau.text){
+                      } else if (txtNhapLaiMatKhau.text != txtMatKhau.text) {
                         final snackBar = SnackBar(
-                            content: Text('Nhập lại mật khẩu không trùng với mật khẩu'));
+                            content: Text(
+                                'Nhập lại mật khẩu không trùng với mật khẩu'));
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      }
-                      else {
+                      } else {
                         try {
-                           final newUser = await _auth.createUserWithEmailAndPassword(
-                              email: txtEmail.text, password: txtMatKhau.text);
+                          final newUser =
+                              await _auth.createUserWithEmailAndPassword(
+                                  email: txtEmail.text,
+                                  password: txtMatKhau.text);
                           if (newUser != null) {
                             Navigator.pop(context, 'Đăng ký thành công');
                             addUser();
-                          } 
+                          }
                         } catch (e) {
-                          final snackBar = SnackBar(
-                              content: Text('Thông tin tài khoản không hợp lệ'));
+                          final snackBar =
+                              SnackBar(content: Text('Email đã tồn tại'));
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         }
                       }
