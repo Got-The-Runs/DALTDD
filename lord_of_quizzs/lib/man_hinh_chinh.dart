@@ -17,7 +17,8 @@ import 'package:lord_of_quizzs/tai_khoan.dart';
 import 'dang_nhap.dart';
 
 class ManHinhChinh extends StatefulWidget {
-  ManHinhChinh({Key? key}) : super(key: key);
+  // num credit;
+  // ManHinhChinh({Key? key,required this.credit}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return ManHinhChinhState();
@@ -25,6 +26,9 @@ class ManHinhChinh extends StatefulWidget {
 }
 
 class ManHinhChinhState extends State<ManHinhChinh> {   
+  late num credit;
+  late String name;
+  // ManHinhChinhState({Key? key,required this.credit});
   final FirebaseAuth _auth = FirebaseAuth.instance;
   String email = "";
   @override
@@ -50,8 +54,11 @@ class ManHinhChinhState extends State<ManHinhChinh> {
         future: ThongTinProvider.get(email),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            List<ThongTinObject> thongTin = snapshot.data!;
-            email = thongTin[0].email;
+              List<ThongTinObject> thongTin = snapshot.data!;
+                          email = thongTin[0].email;
+              credit = thongTin[0].money;
+              name = thongTin[0].name;
+
             return Scaffold(
               extendBodyBehindAppBar: true,
               appBar: AppBar(
@@ -231,7 +238,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                     const Icon(Icons.diamond_rounded, size: 30),
                     Center(
                       child: Text(
-                        '${thongTin[0].money}',
+                        '${credit}',
                         style: TextStyle(
                           fontSize: 25,
                           color: Colors.white,
@@ -277,7 +284,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                     Container(
                       padding: const EdgeInsets.only(bottom: 15),
                       child: Text(
-                        thongTin[0].name,
+                        name,
                         style: TextStyle(
                             fontSize: 25,
                             color: Colors.white,
