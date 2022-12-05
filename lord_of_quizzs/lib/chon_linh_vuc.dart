@@ -117,7 +117,7 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
                             Column(
                               children: <Widget>[
                                 Text(
-                                  thongTin[0].name,
+                                 thongTin[0].name,
                                   style: TextStyle(
                                       fontSize: 20,
                                       color: Colors.white,
@@ -161,19 +161,35 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
                             padding: EdgeInsets.symmetric(
                                 horizontal: 25, vertical: 15),
                             width: 350,
-                            height: 85,
+                            height: 85, 
                             child: OutlinedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => ChoiTroChoi(
-                                        idLinhVuc: linhVuc[index].idLinhVuc,
-                                        email: email, randomIdBoCauHoi: randomIdBoCauHoi,
-                                      ),
-                                    ));
-                              },
-                              // ignore: sort_child_properties_last
+                              onPressed: ()async {    
+                                try {
+                                  querySnapshots = await boCauHoi.get();
+                                  for (var snapshot in querySnapshots.docs) {
+                                      if (linhVuc[index].idLinhVuc == snapshot['id_linh_vuc']) {
+                                          int hasdata =1;
+                                          if(hasdata == 1){
+                                            // ignore: use_build_context_synchronously
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => ChoiTroChoi( idLinhVuc: linhVuc[index].idLinhVuc, email: email,
+                                                          randomIdBoCauHoi: randomIdBoCauHoi,
+                                                ),
+                                              ));
+                                          break;
+                                          }
+                                      }
+                                  }
+                                }
+                                catch(e){
+                                              final snackBar =
+                                            SnackBar(content: Text('Không có dữ liệu câu hỏi!'));
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(snackBar);
+                                }
+                              },               // ignore: sort_child_properties_last
                               child: Text(
                                 linhVuc[index].tenLinhVuc,
                                 style: TextStyle(

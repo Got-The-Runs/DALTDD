@@ -110,12 +110,6 @@ class DangKiState extends State<DangKi> {
                 child: TextFormField(
                   controller: txtTenNguoiChoi,
                   style:const TextStyle(color: Colors.white),
-                  validator: (text) {
-                    if (text == null || text.isEmpty) {
-                      return 'Tên người chơi trống';
-                    }
-                    return null;
-                  },
                   decoration: InputDecoration(
                     labelText: 'Tên Người chơi',
                     labelStyle: const TextStyle(color: Colors.white),
@@ -153,69 +147,13 @@ class DangKiState extends State<DangKi> {
                     prefixIcon: const Icon(Icons.email, color: Colors.white),
                   ),
                 ),
-              ),
-              Container(
-                padding: const EdgeInsets.all(10),
-                child: TextFormField(
-                  controller: txtMatKhau,
-                  obscureText: true,
-                  style:const TextStyle(color: Colors.white),
-                  validator: (text) {
-                    if (text == null || text.isEmpty) {
-                      return 'Mật khẩu trống';
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                    labelText: 'Mật khẩu',
-                    labelStyle: const TextStyle(color: Colors.white),
-                    enabledBorder:  OutlineInputBorder(
-                      borderSide:const BorderSide(
-                        color: Colors.white
-                      ),                   
-                      borderRadius: BorderRadius.circular(25),
-                    ),       
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25),
-                    ), 
-                    prefixIcon: const Icon(Icons.lock, color: Colors.white),
-                  ),
-                )
-              ),
-              Container(
-                padding: const EdgeInsets.all(10),
-                child: TextFormField(
-                  controller:  txtNhapLaiMatKhau,
-                  obscureText: true,
-                  style:const TextStyle(color: Colors.white),                
-                  decoration: InputDecoration(
-                    labelText: 'Nhập lại mật khẩu',
-                    labelStyle: const TextStyle(color: Colors.white),
-                      enabledBorder:  OutlineInputBorder(
-                        borderSide:const BorderSide(
-                          color: Colors.white
-                        ),                   
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      prefixIcon: const Icon(Icons.email, color: Colors.white),
-                    ),
-                  ),
-                ),
+              ),         
                 Container(
                     padding: const EdgeInsets.all(10),
                     child: TextFormField(
                       controller: txtMatKhau,
                       obscureText: true,
                       style: const TextStyle(color: Colors.white),
-                      validator: (text) {
-                        if (text == null || text.isEmpty) {
-                          return 'Mật khẩu trống';
-                        }
-                        return null;
-                      },
                       decoration: InputDecoration(
                         labelText: 'Mật khẩu',
                         labelStyle: const TextStyle(color: Colors.white),
@@ -261,7 +199,8 @@ class DangKiState extends State<DangKi> {
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       }
                       
-                      else if(txtMatKhau.text.length < 6  || txtMatKhau.text.length > 16 ){
+                      else
+                      if(txtMatKhau.text.length < 6  || txtMatKhau.text.length > 16 ){
                         final snackBar = SnackBar(
                             content: Text('Mật khẩu phải nhập ít nhất 6 ký tự và không quá 16 ký tự'));
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -281,7 +220,7 @@ class DangKiState extends State<DangKi> {
                           } 
                         } catch (e) {
                           final snackBar = SnackBar(
-                              content: Text('Thông tin tài khoản sai'));
+                              content: Text('Thông tin tài khoản không hợp lệ'));
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         }
                       }
