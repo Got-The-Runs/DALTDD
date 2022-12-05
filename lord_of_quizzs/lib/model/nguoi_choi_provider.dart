@@ -11,4 +11,11 @@ class NguoiChoiProvider{
      ThongTinChoi = snapshot.docs.map((json) => NguoiChoiObject.fromJson(json.data()as Map<String, dynamic>)).toList();
     return ThongTinChoi;
   }
+   static Future<List<NguoiChoiObject>> getdata(String email) async {
+    List<NguoiChoiObject> ThongTinChoi = [];
+    final snapshot = await FirebaseFirestore.instance.collection("nguoi_choi")
+    .where('email', isEqualTo: email).get();
+     ThongTinChoi = snapshot.docs.map((json) => NguoiChoiObject.fromJson(json.data()as Map<String, dynamic>)).toList();
+    return ThongTinChoi;
+  }
 }
