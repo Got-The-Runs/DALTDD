@@ -25,7 +25,7 @@ class ManHinhChinh extends StatefulWidget {
   }
 }
 
-class ManHinhChinhState extends State<ManHinhChinh> {   
+class ManHinhChinhState extends State<ManHinhChinh> {
   late num credit;
   late String name;
   // ManHinhChinhState({Key? key,required this.credit});
@@ -36,17 +36,19 @@ class ManHinhChinhState extends State<ManHinhChinh> {
     // TODO: implement initState
     super.initState();
   }
+
   @override
   void setState(VoidCallback fn) {
-    
     super.setState(fn);
   }
-  void getEmail() async{
-      final user =  _auth.currentUser;
-      if(user != null){
-        email = user.email.toString();
-      }
-}
+
+  void getEmail() async {
+    final user = _auth.currentUser;
+    if (user != null) {
+      email = user.email.toString();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     getEmail();
@@ -54,10 +56,10 @@ class ManHinhChinhState extends State<ManHinhChinh> {
         future: ThongTinProvider.get(email),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-              List<ThongTinObject> thongTin = snapshot.data!;
-                          email = thongTin[0].email;
-              credit = thongTin[0].money;
-              name = thongTin[0].name;
+            List<ThongTinObject> thongTin = snapshot.data!;
+            email = thongTin[0].email;
+            credit = thongTin[0].money;
+            name = thongTin[0].name;
 
             return Scaffold(
               extendBodyBehindAppBar: true,
@@ -81,14 +83,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                                       children: [
                                         IconButton(
                                           onPressed: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ManHinhChinh(
-                                                ),
-                                              ),
-                                            );
+                                            Navigator.pop(context);
                                           },
                                           icon: Icon(
                                             Icons.clear,
@@ -289,7 +284,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                             fontSize: 25,
                             color: Colors.white,
                             fontWeight: FontWeight.bold),
-                      ),  
+                      ),
                     ),
                     Container(
                       padding:
