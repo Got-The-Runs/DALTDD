@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:lord_of_quizzs/bang_xep_hang.dart';
 import 'package:lord_of_quizzs/chon_linh_vuc.dart';
 import 'package:lord_of_quizzs/man_hinh_doi_mat_khau.dart';
+import 'package:lord_of_quizzs/model/nguoi_choi_provider.dart';
 import 'package:lord_of_quizzs/mua_credit.dart';
+
+import 'model/nguoi_choi_object.dart';
 
 class LichSu extends StatefulWidget {
   String email;
@@ -19,269 +22,97 @@ class LichSu extends StatefulWidget {
 class LichSuState extends State<LichSu> {
   String email;
   LichSuState({Key? key, required this.email});
+  List<NguoiChoiObject> nguoiChoi = [];
+  void _LoadNguoiChoi() async {
+    final data = await NguoiChoiProvider.getdata(email);
+    setState(() {});
+    nguoiChoi = data;
+  }
+
   @override
   // ignore: dead_code
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-         leading: IconButton(
-          icon: const Icon(Icons.chevron_left),
-          onPressed: () => Navigator.pop(context),
-          iconSize: 30,
-        ),
-        actions: <Widget> [
-          const Icon(Icons.diamond_rounded, size: 30),
-          const Center(
-            child: Text(
-              '9999',
-                style: TextStyle(
-                fontSize: 25,
-                color: Colors.white,
+    return FutureBuilder<List<NguoiChoiObject>>(
+        future: NguoiChoiProvider.getdata(email),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            List<NguoiChoiObject> nguoiChoi = snapshot.data!;
+            return Scaffold(
+              extendBodyBehindAppBar: true,
+              appBar: AppBar(
+                centerTitle: true,
+                elevation: 0,
+                backgroundColor: Colors.transparent,
+                leading: IconButton(
+                  icon: const Icon(Icons.chevron_left),
+                  onPressed: () => Navigator.pop(context),
+                  iconSize: 30,
                 ),
               ),
-            ),
-          IconButton(
-            icon: const Icon(Icons.add_circle_outline),
-            onPressed: (() {
-               Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MuaCredit(email:email ,),  
-                )
-               );
-            }),
-            iconSize: 30,
-          ),
-        ]
-      ),
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color(0xFF701ebd),
-              Color.fromARGB(255, 57, 86, 250),
-            ],
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-          ),
-        ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(20),
-              ),
-             
-              Container(
-                padding: const EdgeInsets.only(bottom: 15),
-                child: const Text(
-                  'Lịch sử chơi',
-                  style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-              Padding(padding: 
-              EdgeInsets.all(15),
-              child: Container(
-                padding: EdgeInsets.all(10),
-                width: 370,
-                height: 85,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white)
-                ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                         Container(
-                        child: Text('Tên người chơi',
-                        style: TextStyle(fontSize: 20, color: Colors.white),),
-                        alignment: Alignment.topLeft,
-                      ),
-                      Container(
-                        
-                        child: Text('Điểm: 2503',
-                        style: TextStyle(fontSize: 20, color: Colors.white),),
-                        alignment: Alignment.topRight
-                      ),    
-                      ],
-                     ), 
-                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                         Container(
-                        child: Text('4/10/2022',
-                        style: TextStyle(fontSize: 20, color: Colors.white),),
-                        alignment: Alignment.bottomLeft,
-                      ),
-                      Container(
-                        child: Text('Số câu: 30',
-                        style: TextStyle(fontSize: 20, color: Colors.white),),
-                        alignment: Alignment.bottomRight
-                      ),    
-                      
+              body: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Color(0xFF701ebd),
+                      Color.fromARGB(255, 57, 86, 250),
                     ],
-                  )
-                    ]   
-              ),
-              ),
-              ),
-              Padding(padding: 
-              EdgeInsets.all(10),
-              child:  Container(
-                padding: EdgeInsets.all(10),
-                width: 370,
-                height: 85,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white)
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                  ),
                 ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                         Container(
-                        child: Text('Tên người chơi',
-                        style: TextStyle(fontSize: 20, color: Colors.white),),
-                        alignment: Alignment.topLeft,
+                child: SingleChildScrollView(
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                      Container(
+                        padding: const EdgeInsets.all(25),
                       ),
                       Container(
-                        
-                        child: Text('Điểm: 2203',
-                        style: TextStyle(fontSize: 20, color: Colors.white),),
-                        alignment: Alignment.topRight
-                      ),    
-                      ],
-                     ), 
-                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                         Container(
-                        child: Text('3/10/2022',
-                        style: TextStyle(fontSize: 20, color: Colors.white),),
-                        alignment: Alignment.bottomLeft,
+                        padding: const EdgeInsets.only(top: 40, bottom: 10),
+                        child: const Text(
+                          'Lịch sử chơi',
+                          style: TextStyle(
+                              fontSize: 30,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
-                      Container(
-                        child: Text('Số câu: 25',
-                        style: TextStyle(fontSize: 20, color: Colors.white),),
-                        alignment: Alignment.bottomRight
-                      ),    
-                      
-                    ],
-                  )
-                    ]   
-              ),
-              ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(10),
-                child: Container(
-                padding: EdgeInsets.all(10),
-                width: 370,
-                height: 85,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white)
-                ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                         Container(
-                        child: Text('Tên người chơi',
-                        style: TextStyle(fontSize: 20, color: Colors.white),),
-                        alignment: Alignment.topLeft,
+                      ListView.builder(
+                        padding: EdgeInsets.only(bottom: 20, top: 10),
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: nguoiChoi.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Card(
+                            margin: EdgeInsets.only(
+                                left: 20, right: 20, top: 5, bottom: 5),
+                            shape: const OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(20),
+                              ),
+                            ),
+                            shadowColor: Colors.blueGrey,
+                            child: ListTile(
+                              title: Text(nguoiChoi[index].tenNguoiChoi,
+                                  style: TextStyle(fontSize: 20)),
+                              subtitle: Text(
+                                nguoiChoi[index].ngayChoi,
+                                style: TextStyle(fontSize: 20),
+                              ),
+                              trailing: Text(
+                                  "Số câu: ${nguoiChoi[0].soCauDung} \nĐiểm: ${nguoiChoi[index].tongDiem}",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                  )),
+                            ),
+                          );
+                        },
                       ),
-                      Container(
-                        
-                        child: Text('Điểm: 3020',
-                        style: TextStyle(fontSize: 20, color: Colors.white),),
-                        alignment: Alignment.topRight
-                      ),    
-                      ],
-                     ), 
-                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                         Container(
-                        child: Text('2/10/2022',
-                        style: TextStyle(fontSize: 20, color: Colors.white),),
-                        alignment: Alignment.bottomLeft,
-                      ),
-                      Container(
-                        child: Text('Số câu: 35',
-                        style: TextStyle(fontSize: 20, color: Colors.white),),
-                        alignment: Alignment.bottomRight
-                      ),    
-                      
-                    ],
-                  )
-                    ]   
+                    ])),
               ),
-              ), 
-              ),
-              Padding(
-                padding: EdgeInsets.all(10),
-                child: Container(
-                padding: EdgeInsets.all(10),
-                width: 370,
-                height: 85,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white)
-                ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                         Container(
-                        child: Text('Tên người chơi',
-                        style: TextStyle(fontSize: 20, color: Colors.white),),
-                        alignment: Alignment.topLeft,
-                      ),
-                      Container(
-                        
-                        child: Text('Điểm: 1530',
-                        style: TextStyle(fontSize: 20, color: Colors.white),),
-                        alignment: Alignment.topRight
-                      ),    
-                      ],
-                     ), 
-                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                         Container(
-                        child: Text('29/9/2022',
-                        style: TextStyle(fontSize: 20, color: Colors.white),),
-                        alignment: Alignment.bottomLeft,
-                      ),
-                      Container(
-                        child: Text('Số câu: 16',
-                        style: TextStyle(fontSize: 20, color: Colors.white),),
-                        alignment: Alignment.bottomRight
-                      ),    
-                      
-                    ],
-                  )
-                    ]   
-              ),
-              ),)
-              
-              
-          ])
-            ),
-          );
-        ;
+            );
+          }
+          return Text('');
+        });
   }
 }
