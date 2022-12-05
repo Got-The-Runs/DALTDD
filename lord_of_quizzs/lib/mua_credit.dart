@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:lord_of_quizzs/man_hinh_chinh.dart';
 import 'package:lord_of_quizzs/model/thong_tin_object.dart';
 
 import 'model/thong_tin_provider.dart';
@@ -49,12 +50,14 @@ class MuaCreditState extends State<MuaCredit>{
             return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        centerTitle: true,
+        centerTitle: true, 
         elevation: 0,
         backgroundColor: Colors.transparent,
         leading: IconButton(
           icon: const Icon(Icons.chevron_left),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context)=>ManHinhChinh())),
           iconSize: 30,
         ),
         actions: <Widget>[
