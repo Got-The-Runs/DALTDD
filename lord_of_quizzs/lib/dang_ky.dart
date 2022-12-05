@@ -198,9 +198,8 @@ class DangKiState extends State<DangKi> {
                             content: Text('Chưa điền thông tin tài khoản'));
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       }
-                      
-                      else
-                      if(txtMatKhau.text.length < 6  || txtMatKhau.text.length > 16 ){
+                            
+                      else if(txtMatKhau.text.length < 6  || txtMatKhau.text.length > 16 ){
                         final snackBar = SnackBar(
                             content: Text('Mật khẩu phải nhập ít nhất 6 ký tự và không quá 16 ký tự'));
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
