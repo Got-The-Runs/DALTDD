@@ -114,15 +114,15 @@ class QuenMatKhauState extends State<QuenMatKhau> {
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     } else {
                       try {
-                        querySnapshots = await user.get();
-                        for (var snapshot in querySnapshots.docs) {
-                          if (txtEmail.text == snapshot['email']) {
-                            documentID = snapshot.id;
-                            final user = await _auth.sendPasswordResetEmail(
-                                email: txtEmail.text);
-                            Navigator.pop(context, 'Quên mật khẩu thành công');
-                          }
-                        }
+                        // querySnapshots = await user.get();
+                        // for (var snapshot in querySnapshots.docs) {
+                        //   if (txtEmail.text == snapshot['email']) {
+                        //     documentID = snapshot.id;
+                        final user = await _auth.sendPasswordResetEmail(
+                            email: txtEmail.text);
+                        Navigator.pop(context, 'Quên mật khẩu thành công');
+                        // }
+                        // }
                         // if (txtMatKhau.text == txtMatKhauXT.text) {
 
                         // } else {
