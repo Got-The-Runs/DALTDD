@@ -644,14 +644,14 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                 ),
                                 OutlinedButton(
                                   onPressed: () {},
-                                  child: Icon(Icons.phone, color: Colors.white),
+                                  child: Icon(Icons.phone, color: daMuaDapAn==false?Colors.white:Color.fromARGB(134, 158, 158, 158),),
                                   style: ButtonStyle(
                                       backgroundColor:
                                           MaterialStateProperty.all(
                                               Colors.transparent),
                                       side: MaterialStateProperty.all(
-                                          const BorderSide(
-                                        color: Colors.white,
+                                         BorderSide(
+                                        color: daMuaDapAn==false?Colors.white:Color.fromARGB(134, 158, 158, 158),
                                         width: 2.0,
                                         style: BorderStyle.solid,
                                       ))),
