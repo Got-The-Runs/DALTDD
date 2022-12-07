@@ -36,9 +36,9 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
   int seconds = maxSeconds;
   Timer? timer;
   late int idBoCauHoi, soCauHoiBoCauHoi, troGiup5050, idCauHoi;
-  int diem = 0, mang = 5, i = 0, soCauHoi = 1, soCauDung = 0,soLanMuaCredit=0;
+  int diem = 0, mang = 5, i = 0, soCauHoi = 1, soCauDung = 0,soLanMuaCredit = 0;
   String a="",b="",c="",d="" ;
-  bool truyenA=true,truyenB=true,truyenC=true,truyenD=true,suDungTroGiup5050=true,daMuaDapAn=false,highlight = false;
+  bool truyenA=true,truyenB=true,truyenC=true,truyenD=true,suDungTroGiup5050=true,daMuaDapAn=false,highlight = false,truyenCre=false;
   Random random = new Random();
   List<ThongTinObject> thongTin = [];
   CollectionReference nguoiChoi =FirebaseFirestore.instance.collection('nguoi_choi');
@@ -97,6 +97,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
       truyenB=true;
       truyenC=true;
       truyenD=true;
+      daMuaDapAn=false;
        mang--;
       if(mang > 0){
         ngungChoi(soCauHoiBoCauHoi);
@@ -164,7 +165,11 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                 c = chiTietCauHoi[0].cauTraLoi3;
                 if(truyenD==true)
                 d = chiTietCauHoi[0].cauTraLoi4;
-                credit_0=thongTin[0].money;  
+                if(truyenCre == false){
+                  credit_0=thongTin[0].money;
+                  truyenCre=true;
+                }
+                
               return  WillPopScope(
                       onWillPop: () async => false,
                child: Scaffold(
@@ -267,7 +272,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                           const Icon(Icons.diamond_rounded, size: 30),
                           Center(
                             child: Text(
-                              '${credit_0-(soLanMuaCredit*100)}',
+                              '${credit_0}',
                               style: TextStyle(
                                 fontSize: 25,
                                 color: Colors.white,
@@ -644,14 +649,14 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                 ),
                                 OutlinedButton(
                                   onPressed: () {},
-                                  child: Icon(Icons.phone, color: daMuaDapAn==false?Colors.white:Color.fromARGB(134, 158, 158, 158),),
+                                  child: Icon(Icons.phone, color:Colors.white),
                                   style: ButtonStyle(
                                       backgroundColor:
                                           MaterialStateProperty.all(
                                               Colors.transparent),
                                       side: MaterialStateProperty.all(
                                          BorderSide(
-                                        color: daMuaDapAn==false?Colors.white:Color.fromARGB(134, 158, 158, 158),
+                                        color: Colors.white,
                                         width: 2.0,
                                         style: BorderStyle.solid,
                                       ))),
@@ -670,20 +675,21 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                               TextButton(
                                                 onPressed: () async{
                                                   try {
-                                                        if(credit_0>=(soLanMuaCredit+1)*100){
-                                                          daMuaDapAn=true;
-                                                          
+                                                        if(credit_0>= (soLanMuaCredit+1)*100){
+                                                          daMuaDapAn=true;                                       
                                                             querySnapshots = await user.get();
                                                             for (var snapshot in querySnapshots.docs) {
                                                               if (email == snapshot['email']) {
                                                                 docID = snapshot.id;
+                                                                credit_0=snapshot['tien_ao'];
                                                               }
                                                             }    
-                                                            credit_0-=(soLanMuaCredit+1)*100;
-                                                            soLanMuaCredit++;                      
-                                                            updateUser (docID,credit_0);                                
+                                                            soLanMuaCredit++;     
+                                                            credit_0 -=(soLanMuaCredit*100);                                                                                                                               
+                                                            updateUser (docID,credit_0);                       
                                                             setState(() { });
-                                                            Navigator.pop(context);
+                                                              
+                                                            Navigator.pop(context);                                                       
                                                         }
                                                         else{
                                                           Navigator.pop(context);
@@ -719,14 +725,14 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                     }
                                   },
                                   child: Icon(Icons.diamond_rounded,
-                                      color: Colors.white),
+                                      color: daMuaDapAn==false?Colors.white:Color.fromARGB(134, 158, 158, 158)),
                                   style: ButtonStyle(
                                       backgroundColor:
                                           MaterialStateProperty.all(
                                               Colors.transparent),
                                       side: MaterialStateProperty.all(
-                                          const BorderSide(
-                                        color: Colors.white,
+                                           BorderSide(
+                                        color:  daMuaDapAn==false?Colors.white:Color.fromARGB(134, 158, 158, 158),
                                         width: 2.0,
                                         style: BorderStyle.solid,
                            ))),
