@@ -36,12 +36,18 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
   int seconds = maxSeconds;
   Timer? timer;
   late int idBoCauHoi, soCauHoiBoCauHoi, troGiup5050, idCauHoi;
-  int diem = 0, mang = 5, i = 0, soCauHoi = 1, soCauDung = 0;
-  late String a,b,c,d ;
+  int diem = 0, mang = 5, i = 0, soCauHoi = 1, soCauDung = 0,soLanMuaCredit=0;
+  String a="",b="",c="",d="" ;
+  bool truyenA=true,truyenB=true,truyenC=true,truyenD=true,suDungTroGiup5050=true,daMuaDapAn=false,highlight = false;
   Random random = new Random();
   List<ThongTinObject> thongTin = [];
   CollectionReference nguoiChoi =FirebaseFirestore.instance.collection('nguoi_choi');
   DateTime ngay = DateTime.now();
+  late var docID;
+  late var querySnapshots;
+  final _formKey = GlobalKey<FormState>();
+  CollectionReference user = FirebaseFirestore.instance.collection("thong_tin");
+  late num credit_0;
   late String ngayHienTai;
   void startTimer() {
     timer = Timer.periodic(const Duration(seconds: 1), (_) {
@@ -49,7 +55,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
     });
   }
   void tro_Giup_50_50(){
-    troGiup5050 = random.nextInt(5);
+    troGiup5050 = random.nextInt(4)+1;
   }
   void loadThongTin()async {
     final data = await ThongTinProvider.get(email);
@@ -59,12 +65,18 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
   void getNgay(){
     ngayHienTai = DateFormat('dd/MM/yyyy').format(ngay); 
   }
+  
   @override
   void initState() {
     super.initState(); 
     getNgay();
     loadThongTin();
     startTimer();
+  }
+  Future<void> updateUser(var docID, var  cre) {
+    return user
+        .doc(docID)
+        .update({'tien_ao': cre});
   }
     Future<void> addNguoiChoi() {
       // Call the user's CollectionReference to add a new user
@@ -81,6 +93,10 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
   @override
   void setState(VoidCallback fn) {
     if(seconds == 1){
+      truyenA=true;
+      truyenB=true;
+      truyenC=true;
+      truyenD=true;
        mang--;
       if(mang > 0){
         ngungChoi(soCauHoiBoCauHoi);
@@ -140,10 +156,15 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
             builder: (context, snapshot) {
               if(snapshot.hasData){
                 List<CauHoiObject> chiTietCauHoi = snapshot.data!;    
+                if(truyenA==true)
                 a = chiTietCauHoi[0].cauTraLoi1;
+                if(truyenB==true)
                 b = chiTietCauHoi[0].cauTraLoi2;
+                if(truyenC==true)
                 c = chiTietCauHoi[0].cauTraLoi3;
-                d = chiTietCauHoi[0].cauTraLoi4;  
+                if(truyenD==true)
+                d = chiTietCauHoi[0].cauTraLoi4;
+                credit_0=thongTin[0].money;  
               return  WillPopScope(
                       onWillPop: () async => false,
                child: Scaffold(
@@ -246,7 +267,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                           const Icon(Icons.diamond_rounded, size: 30),
                           Center(
                             child: Text(
-                              '${thongTin[0].money}',
+                              '${credit_0-(soLanMuaCredit*100)}',
                               style: TextStyle(
                                 fontSize: 25,
                                 color: Colors.white,
@@ -350,14 +371,21 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                       height: 75,
                       child: OutlinedButton(
                          onPressed: () {
-                          setState(() {
+                          if(truyenA == true){
+                            setState(() {
                             if(chiTietCauHoi[0].dapAn == 1){
                               soCauDung++;
                               diem = diem + (100*seconds);
+                              truyenB=true;
+                              truyenC=true;
+                              truyenD=true;
                               ngungChoi(soCauHoiBoCauHoi);
                             }
                              else{
                               mang = mang -1;
+                              truyenB=true;
+                              truyenC=true;
+                              truyenD=true;
                               if(mang ==0){
                                 truMang();
                               }
@@ -365,6 +393,8 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                 ngungChoi(soCauHoiBoCauHoi);
                             }
                           });
+                          daMuaDapAn=false;
+                          }
                         },
                         // ignore: sort_child_properties_last
                         child: Align(
@@ -374,7 +404,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                             ,
                             style: TextStyle(
                               fontSize: 20,
-                              color: Colors.white,
+                              color:chiTietCauHoi[0].dapAn == 1 && daMuaDapAn == true?Colors.green:Colors.white,
                             ),
                           ),
                         ),
@@ -393,14 +423,21 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                       height: 75,
                       child: OutlinedButton(
                           onPressed: () {
-                          setState(() {
+                          if(truyenB==true){
+                            setState(() {
                             if(chiTietCauHoi[0].dapAn == 2){
                               soCauDung++;
                               diem = diem + (100*seconds);
+                              truyenA=true;
+                              truyenC=true;
+                              truyenD=true;
                               ngungChoi(soCauHoiBoCauHoi);
                             }
                             else{
                               mang = mang -1;
+                              truyenA=true;
+                              truyenC=true;
+                              truyenD=true;
                               if(mang ==0){
                                 truMang();
                               }
@@ -408,6 +445,8 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                 ngungChoi(soCauHoiBoCauHoi);
                             }
                           });
+                          daMuaDapAn=false;
+                          }
                         },
                         // ignore: sort_child_properties_last
                         child: Align(
@@ -416,7 +455,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                            b,
                             style: TextStyle(
                               fontSize: 20,
-                              color: Colors.white,
+                              color: chiTietCauHoi[0].dapAn == 2 && daMuaDapAn == true?Colors.green:Colors.white,
                             ),
                           ),
                         ),
@@ -435,21 +474,31 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                       height: 75,
                       child: OutlinedButton(
                           onPressed: () {
-                          setState(() {
+                         if(truyenC==true){
+                           setState(() {
                             if(chiTietCauHoi[0].dapAn == 3){
                               soCauDung++;
                               diem = diem + (100*seconds);
+                              truyenA=true;
+                              truyenB=true;
+                              truyenD=true;
                               ngungChoi(soCauHoiBoCauHoi);
                             }
                             else{
                               mang = mang -1;
+                              truyenA=true;
+                              truyenB=true;
+                              truyenD=true;
                               if(mang ==0){
+                                
                                 truMang();
                               }
                               else               
                                 ngungChoi(soCauHoiBoCauHoi);
                             }
                           });
+                          daMuaDapAn=false;
+                         }
                         },
                         // ignore: sort_child_properties_last
                         child: Align(
@@ -458,7 +507,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                             c,
                             style: TextStyle(
                               fontSize: 20,
-                              color: Colors.white,
+                              color:  chiTietCauHoi[0].dapAn == 3 && daMuaDapAn == true?Colors.green:Colors.white,
                             ),
                           ),
                         ),
@@ -477,21 +526,31 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                       height: 75,
                       child: OutlinedButton(
                          onPressed: () {
-                          setState(() {
+                         if(truyenD == true){
+                           setState(() {
                             if(chiTietCauHoi[0].dapAn == 4){
                               soCauDung++;
                               diem = diem + (100*seconds);
+                              truyenA=true;
+                              truyenB=true;
+                              truyenC=true;
                               ngungChoi(soCauHoiBoCauHoi);
                             }
                             else{
                               mang = mang -1;
+                              truyenA=true;
+                              truyenB=true;
+                              truyenC=true;
                               if(mang ==0){
+                                
                                 truMang();
                               }
                               else               
                                 ngungChoi(soCauHoiBoCauHoi);
                             }
                           });
+                          daMuaDapAn=false;
+                         }                      
                         },
                         // ignore: sort_child_properties_last
                         child:  Align(
@@ -500,7 +559,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                              d,
                             style: TextStyle(
                               fontSize: 20,
-                              color: Colors.white,
+                              color:  chiTietCauHoi[0].dapAn == 4 && daMuaDapAn == true?Colors.green:Colors.white,
                               ),
                           ),
                         ),
@@ -519,39 +578,49 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                               children: [
                                 OutlinedButton(
                                   onPressed: () {
-                                     { tro_Giup_50_50();
+                                     { 
+                                      if(suDungTroGiup5050 == true){
+                                        suDungTroGiup5050=false;
+                                      tro_Giup_50_50();
                                     while(chiTietCauHoi[0].dapAn == troGiup5050){
-                                      troGiup5050 = random.nextInt(5);
+                                      tro_Giup_50_50();
                                     }
                                     if(troGiup5050 != 1 && chiTietCauHoi[0].dapAn != 1){
                                       a = "";
+                                      truyenA=false;
                                     }
                                     if(troGiup5050 != 2 && chiTietCauHoi[0].dapAn != 2){
                                       b = "";
+                                      truyenB=false;
                                     }
                                     if(troGiup5050 != 3 && chiTietCauHoi[0].dapAn != 3){
                                       c = "";
+                                      truyenC=false;
                                     }
                                     if(troGiup5050 != 4 && chiTietCauHoi[0].dapAn != 4){
-                                      d = "";
-                                    }}
+                                      d = "";       
+                                      truyenD=false;              
+                                    }
+                                    }
+
                                     setState(() {
                                       
                                     });
+                                      }
 
                                   },
                                   child: Text(
                                     '50:50',
                                     style: TextStyle(
-                                        fontSize: 17, color: Colors.white),
+                                        fontSize: 17, color: suDungTroGiup5050==true?Colors.white:Color.fromARGB(134, 158, 158, 158),),
                                   ),
                                   style: ButtonStyle(
                                       backgroundColor:
                                           MaterialStateProperty.all(
                                               Colors.transparent),
                                       side: MaterialStateProperty.all(
-                                          const BorderSide(
-                                        color: Colors.white,
+                                          BorderSide(
+                                        color: suDungTroGiup5050==true?Colors.white:Color.fromARGB(134, 158, 158, 158),
                                         width: 2.0,
                                         style: BorderStyle.solid,
                                       ))),
@@ -588,7 +657,67 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                       ))),
                                 ),
                                 OutlinedButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    if(daMuaDapAn==false){
+                                      showDialog(
+                                    barrierDismissible: false,
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          title: Text('Mua câu trả lời bằng credit'),
+                                          content: Text('Bạn có chắc muốn dùng ${(soLanMuaCredit+1)*100} để mua đáp án' ),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                onPressed: () async{
+                                                  try {
+                                                        if(credit_0>=(soLanMuaCredit+1)*100){
+                                                          daMuaDapAn=true;
+                                                          
+                                                            querySnapshots = await user.get();
+                                                            for (var snapshot in querySnapshots.docs) {
+                                                              if (email == snapshot['email']) {
+                                                                docID = snapshot.id;
+                                                              }
+                                                            }    
+                                                            credit_0-=(soLanMuaCredit+1)*100;
+                                                            soLanMuaCredit++;                      
+                                                            updateUser (docID,credit_0);                                
+                                                            setState(() { });
+                                                            Navigator.pop(context);
+                                                        }
+                                                        else{
+                                                          Navigator.pop(context);
+                                                          showDialog(context: context, builder: (context)
+                                                          {
+                                                            return AlertDialog(
+                                                              title: Text('Thông báo'),
+                                                              content: Text('Không đủ credit'),);
+                                                          });
+                                                          
+                                                        }
+                                                          } catch (e) {
+                                                            final snackBar =
+                                                                SnackBar(content: Text('Có lỗi xảy ra !'));
+                                                            ScaffoldMessenger.of(context)
+                                                                .showSnackBar(snackBar);
+                                                          }
+                                                          setState(() {
+                                                            
+                                                          });                   
+                                                        },                
+                                            child: Text('Yes')
+                                          ),
+                                          TextButton(
+                                                onPressed: () {
+                                                    Navigator.pop(context);
+                                              },
+                                            child: Text('No')
+                                        )],
+                                      );
+                                    }
+                                  );
+                                    }
+                                  },
                                   child: Icon(Icons.diamond_rounded,
                                       color: Colors.white),
                                   style: ButtonStyle(
