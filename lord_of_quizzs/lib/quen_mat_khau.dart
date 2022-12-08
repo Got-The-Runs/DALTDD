@@ -114,23 +114,20 @@ class QuenMatKhauState extends State<QuenMatKhau> {
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     } else {
                       try {
-                        // querySnapshots = await user.get();
-                        // for (var snapshot in querySnapshots.docs) {
-                        //   if (txtEmail.text == snapshot['email']) {
-                        //     documentID = snapshot.id;
-                        final user = await _auth.sendPasswordResetEmail(
-                            email: txtEmail.text);
-                        Navigator.pop(context, 'Quên mật khẩu thành công');
-                        // }
-                        // }
-                        // if (txtMatKhau.text == txtMatKhauXT.text) {
-
-                        // } else {
-                        //   final snackBar = SnackBar(
-                        //       content:
-                        //           Text('Mật khẩu xác nhận không trùng khớp'));
-                        //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        // }
+                        querySnapshots = await user.get();
+                        for (var snapshot in querySnapshots.docs) {
+                          if (txtEmail.text == snapshot['email']) {
+                            documentID = snapshot.id;
+                            final user = await _auth.sendPasswordResetEmail(
+                                email: txtEmail.text);
+                            Navigator.pop(context, 'Gửi mã xác nhận thành công');
+                          }
+                        }
+                        if(documentID == null){
+                          final snackBar =
+                          SnackBar(content: Text('Email không tồn tại'));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        } 
                       } catch (e) {
                         final snackBar =
                             SnackBar(content: Text('Có lỗi xảy ra!'));
@@ -140,7 +137,7 @@ class QuenMatKhauState extends State<QuenMatKhau> {
                   },
                   // ignore: sort_child_properties_last
                   child: const Text(
-                    'Xác nhận',
+                    'Gửi ',
                     style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
                   style: ButtonStyle(
