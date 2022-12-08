@@ -127,15 +127,7 @@ class QuenMatKhauState extends State<QuenMatKhau> {
                           final snackBar =
                           SnackBar(content: Text('Email không tồn tại'));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        }
-                        // if (txtMatKhau.text == txtMatKhauXT.text) {
-
-                        // } else {
-                        //   final snackBar = SnackBar(
-                        //       content:
-                        //           Text('Mật khẩu xác nhận không trùng khớp'));
-                        //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        // }
+                        } 
                       } catch (e) {
                         final snackBar =
                             SnackBar(content: Text('Có lỗi xảy ra!'));
