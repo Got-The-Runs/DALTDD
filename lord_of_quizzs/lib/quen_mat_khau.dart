@@ -120,8 +120,13 @@ class QuenMatKhauState extends State<QuenMatKhau> {
                             documentID = snapshot.id;
                             final user = await _auth.sendPasswordResetEmail(
                                 email: txtEmail.text);
-                            Navigator.pop(context, 'Quên mật khẩu thành công');
+                            Navigator.pop(context, 'Gửi mã xác nhận thành công');
                           }
+                        }
+                        if(documentID == null){
+                          final snackBar =
+                          SnackBar(content: Text('Email không tồn tại'));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         }
                         // if (txtMatKhau.text == txtMatKhauXT.text) {
 
@@ -140,7 +145,7 @@ class QuenMatKhauState extends State<QuenMatKhau> {
                   },
                   // ignore: sort_child_properties_last
                   child: const Text(
-                    'Xác nhận',
+                    'Gửi ',
                     style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
                   style: ButtonStyle(
