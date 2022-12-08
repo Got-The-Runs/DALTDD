@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:math';
-import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -48,26 +47,48 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
   int seconds = maxSeconds;
   Timer? timer;
   late int idBoCauHoi, soCauHoiBoCauHoi, troGiup5050, idCauHoi, khangia;
-  int diem = 0, mang = 5, i = 0, soCauHoi = 1, soCauDung = 0;
-  late String a, b, c, d, dapAn;
+  int diem = 0,
+      mang = 5,
+      i = 0,
+      soCauHoi = 1,
+      soCauDung = 0,
+      soLanMuaCredit = 0;
+  String a = "", b = "", c = "", d = "", dapAn = "";
+  bool truyenA = true,
+      truyenB = true,
+      truyenC = true,
+      truyenD = true,
+      suDungTroGiup5050 = true,
+      khanGia = true,
+      goiDien = true,
+      daMuaDapAn = false,
+      highlight = false,
+      truyenCre = false;
   Random random = new Random();
   List<ThongTinObject> thongTin = [];
   CollectionReference nguoiChoi =
       FirebaseFirestore.instance.collection('nguoi_choi');
   DateTime ngay = DateTime.now();
+  late var docID;
+  late var querySnapshots;
+  final _formKey = GlobalKey<FormState>();
+  CollectionReference user = FirebaseFirestore.instance.collection("thong_tin");
+  late num credit_0;
   late String ngayHienTai;
+
+  static int c1 = Random().nextInt(60) + 41;
+  static int c2 = Random().nextInt((100 - c1) + 1);
+  static int c3 = Random().nextInt((100 - c1 - c2) + 1);
+  static int c4 = 100 - c1 - c2 - c3;
+
   void startTimer() {
     timer = Timer.periodic(const Duration(seconds: 1), (_) {
       setState(() => seconds--);
     });
   }
 
-  void khan_gian() {
-    khangia = Random().nextInt(50);
-  }
-
   void tro_Giup_50_50() {
-    troGiup5050 = random.nextInt(5);
+    troGiup5050 = random.nextInt(4) + 1;
   }
 
   void loadThongTin() async {
@@ -88,6 +109,10 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
     startTimer();
   }
 
+  Future<void> updateUser(var docID, var cre) {
+    return user.doc(docID).update({'tien_ao': cre});
+  }
+
   Future<void> addNguoiChoi() {
     // Call the user's CollectionReference to add a new user
     return nguoiChoi.add({
@@ -103,6 +128,11 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
   @override
   void setState(VoidCallback fn) {
     if (seconds == 1) {
+      truyenA = true;
+      truyenB = true;
+      truyenC = true;
+      truyenD = true;
+      daMuaDapAn = false;
       mang--;
       if (mang > 0) {
         ngungChoi(soCauHoiBoCauHoi);
@@ -158,10 +188,19 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
                             List<CauHoiObject> chiTietCauHoi = snapshot.data!;
-                            a = chiTietCauHoi[0].cauTraLoi1;
-                            b = chiTietCauHoi[0].cauTraLoi2;
-                            c = chiTietCauHoi[0].cauTraLoi3;
-                            d = chiTietCauHoi[0].cauTraLoi4;
+                            if (truyenA == true)
+                              a = chiTietCauHoi[0].cauTraLoi1;
+                            if (truyenB == true)
+                              b = chiTietCauHoi[0].cauTraLoi2;
+                            if (truyenC == true)
+                              c = chiTietCauHoi[0].cauTraLoi3;
+                            if (truyenD == true)
+                              d = chiTietCauHoi[0].cauTraLoi4;
+                            if (truyenCre == false) {
+                              credit_0 = thongTin[0].money;
+                              truyenCre = true;
+                            }
+
                             return WillPopScope(
                               onWillPop: () async => false,
                               child: Scaffold(
@@ -277,7 +316,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                     const Icon(Icons.diamond_rounded, size: 30),
                                     Center(
                                       child: Text(
-                                        '${thongTin[0].money}',
+                                        '${credit_0}',
                                         style: TextStyle(
                                           fontSize: 25,
                                           color: Colors.white,
@@ -391,19 +430,29 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                         height: 75,
                                         child: OutlinedButton(
                                           onPressed: () {
-                                            setState(() {
-                                              if (chiTietCauHoi[0].dapAn == 1) {
-                                                soCauDung++;
-                                                diem = diem + (100 * seconds);
-                                                ngungChoi(soCauHoiBoCauHoi);
-                                              } else {
-                                                mang = mang - 1;
-                                                if (mang == 0) {
-                                                  truMang();
-                                                } else
+                                            if (truyenA == true) {
+                                              setState(() {
+                                                if (chiTietCauHoi[0].dapAn ==
+                                                    1) {
+                                                  soCauDung++;
+                                                  diem = diem + (100 * seconds);
+                                                  truyenB = true;
+                                                  truyenC = true;
+                                                  truyenD = true;
                                                   ngungChoi(soCauHoiBoCauHoi);
-                                              }
-                                            });
+                                                } else {
+                                                  mang = mang - 1;
+                                                  truyenB = true;
+                                                  truyenC = true;
+                                                  truyenD = true;
+                                                  if (mang == 0) {
+                                                    truMang();
+                                                  } else
+                                                    ngungChoi(soCauHoiBoCauHoi);
+                                                }
+                                              });
+                                              daMuaDapAn = false;
+                                            }
                                           },
                                           // ignore: sort_child_properties_last
                                           child: Align(
@@ -412,7 +461,11 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                               a,
                                               style: TextStyle(
                                                 fontSize: 20,
-                                                color: Colors.white,
+                                                color: chiTietCauHoi[0].dapAn ==
+                                                            1 &&
+                                                        daMuaDapAn == true
+                                                    ? Colors.green
+                                                    : Colors.white,
                                               ),
                                             ),
                                           ),
@@ -435,19 +488,29 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                         height: 75,
                                         child: OutlinedButton(
                                           onPressed: () {
-                                            setState(() {
-                                              if (chiTietCauHoi[0].dapAn == 2) {
-                                                soCauDung++;
-                                                diem = diem + (100 * seconds);
-                                                ngungChoi(soCauHoiBoCauHoi);
-                                              } else {
-                                                mang = mang - 1;
-                                                if (mang == 0) {
-                                                  truMang();
-                                                } else
+                                            if (truyenB == true) {
+                                              setState(() {
+                                                if (chiTietCauHoi[0].dapAn ==
+                                                    2) {
+                                                  soCauDung++;
+                                                  diem = diem + (100 * seconds);
+                                                  truyenA = true;
+                                                  truyenC = true;
+                                                  truyenD = true;
                                                   ngungChoi(soCauHoiBoCauHoi);
-                                              }
-                                            });
+                                                } else {
+                                                  mang = mang - 1;
+                                                  truyenA = true;
+                                                  truyenC = true;
+                                                  truyenD = true;
+                                                  if (mang == 0) {
+                                                    truMang();
+                                                  } else
+                                                    ngungChoi(soCauHoiBoCauHoi);
+                                                }
+                                              });
+                                              daMuaDapAn = false;
+                                            }
                                           },
                                           // ignore: sort_child_properties_last
                                           child: Align(
@@ -456,7 +519,11 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                               b,
                                               style: TextStyle(
                                                 fontSize: 20,
-                                                color: Colors.white,
+                                                color: chiTietCauHoi[0].dapAn ==
+                                                            2 &&
+                                                        daMuaDapAn == true
+                                                    ? Colors.green
+                                                    : Colors.white,
                                               ),
                                             ),
                                           ),
@@ -479,19 +546,29 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                         height: 75,
                                         child: OutlinedButton(
                                           onPressed: () {
-                                            setState(() {
-                                              if (chiTietCauHoi[0].dapAn == 3) {
-                                                soCauDung++;
-                                                diem = diem + (100 * seconds);
-                                                ngungChoi(soCauHoiBoCauHoi);
-                                              } else {
-                                                mang = mang - 1;
-                                                if (mang == 0) {
-                                                  truMang();
-                                                } else
+                                            if (truyenC == true) {
+                                              setState(() {
+                                                if (chiTietCauHoi[0].dapAn ==
+                                                    3) {
+                                                  soCauDung++;
+                                                  diem = diem + (100 * seconds);
+                                                  truyenA = true;
+                                                  truyenB = true;
+                                                  truyenD = true;
                                                   ngungChoi(soCauHoiBoCauHoi);
-                                              }
-                                            });
+                                                } else {
+                                                  mang = mang - 1;
+                                                  truyenA = true;
+                                                  truyenB = true;
+                                                  truyenD = true;
+                                                  if (mang == 0) {
+                                                    truMang();
+                                                  } else
+                                                    ngungChoi(soCauHoiBoCauHoi);
+                                                }
+                                              });
+                                              daMuaDapAn = false;
+                                            }
                                           },
                                           // ignore: sort_child_properties_last
                                           child: Align(
@@ -500,7 +577,11 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                               c,
                                               style: TextStyle(
                                                 fontSize: 20,
-                                                color: Colors.white,
+                                                color: chiTietCauHoi[0].dapAn ==
+                                                            3 &&
+                                                        daMuaDapAn == true
+                                                    ? Colors.green
+                                                    : Colors.white,
                                               ),
                                             ),
                                           ),
@@ -523,20 +604,31 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                           height: 75,
                                           child: OutlinedButton(
                                             onPressed: () {
-                                              setState(() {
-                                                if (chiTietCauHoi[0].dapAn ==
-                                                    4) {
-                                                  soCauDung++;
-                                                  diem = diem + (100 * seconds);
-                                                  ngungChoi(soCauHoiBoCauHoi);
-                                                } else {
-                                                  mang = mang - 1;
-                                                  if (mang == 0) {
-                                                    truMang();
-                                                  } else
+                                              if (truyenD == true) {
+                                                setState(() {
+                                                  if (chiTietCauHoi[0].dapAn ==
+                                                      4) {
+                                                    soCauDung++;
+                                                    diem =
+                                                        diem + (100 * seconds);
+                                                    truyenA = true;
+                                                    truyenB = true;
+                                                    truyenC = true;
                                                     ngungChoi(soCauHoiBoCauHoi);
-                                                }
-                                              });
+                                                  } else {
+                                                    mang = mang - 1;
+                                                    truyenA = true;
+                                                    truyenB = true;
+                                                    truyenC = true;
+                                                    if (mang == 0) {
+                                                      truMang();
+                                                    } else
+                                                      ngungChoi(
+                                                          soCauHoiBoCauHoi);
+                                                  }
+                                                });
+                                                daMuaDapAn = false;
+                                              }
                                             },
                                             // ignore: sort_child_properties_last
                                             child: Align(
@@ -545,7 +637,12 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                                 d,
                                                 style: TextStyle(
                                                   fontSize: 20,
-                                                  color: Colors.white,
+                                                  color:
+                                                      chiTietCauHoi[0].dapAn ==
+                                                                  4 &&
+                                                              daMuaDapAn == true
+                                                          ? Colors.green
+                                                          : Colors.white,
                                                 ),
                                               ),
                                             ),
@@ -567,48 +664,64 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                           OutlinedButton(
                                             onPressed: () {
                                               {
-                                                tro_Giup_50_50();
-                                                while (chiTietCauHoi[0].dapAn ==
-                                                    troGiup5050) {
-                                                  troGiup5050 =
-                                                      random.nextInt(5);
+                                                if (suDungTroGiup5050 == true) {
+                                                  suDungTroGiup5050 = false;
+                                                  tro_Giup_50_50();
+                                                  while (
+                                                      chiTietCauHoi[0].dapAn ==
+                                                          troGiup5050) {
+                                                    tro_Giup_50_50();
+                                                  }
+                                                  if (troGiup5050 != 1 &&
+                                                      chiTietCauHoi[0].dapAn !=
+                                                          1) {
+                                                    a = "";
+                                                    truyenA = false;
+                                                  }
+                                                  if (troGiup5050 != 2 &&
+                                                      chiTietCauHoi[0].dapAn !=
+                                                          2) {
+                                                    b = "";
+                                                    truyenB = false;
+                                                  }
+                                                  if (troGiup5050 != 3 &&
+                                                      chiTietCauHoi[0].dapAn !=
+                                                          3) {
+                                                    c = "";
+                                                    truyenC = false;
+                                                  }
+                                                  if (troGiup5050 != 4 &&
+                                                      chiTietCauHoi[0].dapAn !=
+                                                          4) {
+                                                    d = "";
+                                                    truyenD = false;
+                                                  }
                                                 }
-                                                if (troGiup5050 != 1 &&
-                                                    chiTietCauHoi[0].dapAn !=
-                                                        1) {
-                                                  a = "";
-                                                }
-                                                if (troGiup5050 != 2 &&
-                                                    chiTietCauHoi[0].dapAn !=
-                                                        2) {
-                                                  b = "";
-                                                }
-                                                if (troGiup5050 != 3 &&
-                                                    chiTietCauHoi[0].dapAn !=
-                                                        3) {
-                                                  c = "";
-                                                }
-                                                if (troGiup5050 != 4 &&
-                                                    chiTietCauHoi[0].dapAn !=
-                                                        4) {
-                                                  d = "";
-                                                }
+
+                                                setState(() {});
                                               }
-                                              setState(() {});
                                             },
                                             child: Text(
                                               '50:50',
                                               style: TextStyle(
-                                                  fontSize: 17,
-                                                  color: Colors.white),
+                                                fontSize: 17,
+                                                color: suDungTroGiup5050 == true
+                                                    ? Colors.white
+                                                    : Color.fromARGB(
+                                                        134, 158, 158, 158),
+                                              ),
                                             ),
                                             style: ButtonStyle(
                                                 backgroundColor:
                                                     MaterialStateProperty.all(
                                                         Colors.transparent),
                                                 side: MaterialStateProperty.all(
-                                                    const BorderSide(
-                                                  color: Colors.white,
+                                                    BorderSide(
+                                                  color: suDungTroGiup5050 ==
+                                                          true
+                                                      ? Colors.white
+                                                      : Color.fromARGB(
+                                                          134, 158, 158, 158),
                                                   width: 2.0,
                                                   style: BorderStyle.solid,
                                                 ))),
@@ -616,73 +729,75 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                           OutlinedButton(
                                             onPressed: () {
                                               {
-                                                if (chiTietCauHoi[0].dapAn ==
-                                                    1) {
-                                                  a = chiTietCauHoi[0]
-                                                      .cauTraLoi1;
-                                                  dapAn = "$khangia";
-                                                }
-                                                if (chiTietCauHoi[0].dapAn ==
-                                                    2) {
-                                                  b = chiTietCauHoi[0]
-                                                      .cauTraLoi1;
-                                                  dapAn = "$khangia";
-                                                }
-                                                if (chiTietCauHoi[0].dapAn ==
-                                                    3) {
-                                                  c = chiTietCauHoi[0]
-                                                      .cauTraLoi1;
-                                                  dapAn = "$khangia";
-                                                }
-                                                if (chiTietCauHoi[0].dapAn ==
-                                                    4) {
-                                                  d = chiTietCauHoi[0]
-                                                      .cauTraLoi1;
-                                                  dapAn = "$khangia";
-                                                }
-                                                showDialog(
-                                                    barrierDismissible: false,
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return AlertDialog(
-                                                        title: const Text(
-                                                            'Gọi điện từ người thân'),
-                                                        content: Container(
-                                                          child: Center(
-                                                            child: ListView(
-                                                              children: [
-                                                                Text(a),
-                                                                Text(b),
-                                                                Text(c),
-                                                                Text(d),
-                                                              ],
-                                                            ),
+                                                a = "A";
+                                                b = "B";
+                                                c = "C";
+                                                d = "D";
+                                                if (khanGia == true) {
+                                                  khanGia = false;
+                                                  if (chiTietCauHoi[0].dapAn ==
+                                                      1) {
+                                                    dapAn =
+                                                        "${a} : ${c1}%\n${b} : ${c2}%\n${c} : ${c3}%\n${d} : ${c4}%";
+                                                  }
+                                                  if (chiTietCauHoi[0].dapAn ==
+                                                      2) {
+                                                    dapAn =
+                                                        "${a} : ${c4}%\n${b} : ${c1}%\n${c} : ${c2}%\n${d} : ${c3}%";
+                                                  }
+                                                  if (chiTietCauHoi[0].dapAn ==
+                                                      3) {
+                                                    dapAn =
+                                                        "${a} : ${c3}%\n${b} : ${c4}%\n${c} : ${c1}%\n${d} : ${c2}%";
+                                                  }
+                                                  if (chiTietCauHoi[0].dapAn ==
+                                                      4) {
+                                                    dapAn =
+                                                        "${a} : ${c2}%\n${b} : ${c3}%\n${c} : ${c4}%\n${d} : ${c1}%";
+                                                  }
+                                                  setState(() {});
+                                                  showDialog(
+                                                      barrierDismissible: false,
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return AlertDialog(
+                                                          title: const Text(
+                                                              'Trợ giúp từ khán giả'),
+                                                          content: Text(
+                                                            '$dapAn',
                                                           ),
-                                                        ),
-                                                        actions: <Widget>[
-                                                          TextButton(
-                                                              onPressed: () {
-                                                                Navigator.pop(
-                                                                    context);
-                                                              },
-                                                              child: Text('Ok'))
-                                                        ],
-                                                      );
-                                                    });
-                                                setState(() {});
+                                                          actions: <Widget>[
+                                                            TextButton(
+                                                                onPressed: () {
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                },
+                                                                child:
+                                                                    Text('Ok'))
+                                                          ],
+                                                        );
+                                                      });
+                                                }
                                               }
                                             },
                                             child: Icon(
                                               Icons.people,
-                                              color: Colors.white,
+                                              size: 17,
+                                              color: khanGia == true
+                                                  ? Colors.white
+                                                  : Color.fromARGB(
+                                                      134, 158, 158, 158),
                                             ),
                                             style: ButtonStyle(
                                                 backgroundColor:
                                                     MaterialStateProperty.all(
                                                         Colors.transparent),
                                                 side: MaterialStateProperty.all(
-                                                    const BorderSide(
-                                                  color: Colors.white,
+                                                    BorderSide(
+                                                  color: khanGia == true
+                                                      ? Colors.white
+                                                      : Color.fromARGB(
+                                                          134, 158, 158, 158),
                                                   width: 2.0,
                                                   style: BorderStyle.solid,
                                                 ))),
@@ -690,76 +805,184 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                           OutlinedButton(
                                             onPressed: () {
                                               {
-                                                if (chiTietCauHoi[0].dapAn ==
-                                                    1) {
-                                                  a = chiTietCauHoi[0]
-                                                      .cauTraLoi1;
-                                                  dapAn = "A";
+                                                if (goiDien == true) {
+                                                  goiDien = false;
+                                                  if (chiTietCauHoi[0].dapAn ==
+                                                      1) {
+                                                    a = chiTietCauHoi[0]
+                                                        .cauTraLoi1;
+                                                    dapAn = "A";
+                                                  }
+                                                  if (chiTietCauHoi[0].dapAn ==
+                                                      2) {
+                                                    b = chiTietCauHoi[0]
+                                                        .cauTraLoi2;
+                                                    dapAn = "B";
+                                                  }
+                                                  if (chiTietCauHoi[0].dapAn ==
+                                                      3) {
+                                                    c = chiTietCauHoi[0]
+                                                        .cauTraLoi3;
+                                                    dapAn = "C";
+                                                  }
+                                                  if (chiTietCauHoi[0].dapAn ==
+                                                      4) {
+                                                    d = chiTietCauHoi[0]
+                                                        .cauTraLoi4;
+                                                    dapAn = "D";
+                                                  }
+                                                  setState(() {});
+                                                  showDialog(
+                                                      barrierDismissible: false,
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return AlertDialog(
+                                                          title: const Text(
+                                                              'Gọi điện từ người thân'),
+                                                          content: Text(
+                                                              'Câu trả lời gợi ý từ người thân: ${dapAn}'),
+                                                          actions: <Widget>[
+                                                            TextButton(
+                                                                onPressed: () {
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                },
+                                                                child:
+                                                                    Text('Ok'))
+                                                          ],
+                                                        );
+                                                      });
                                                 }
-                                                if (chiTietCauHoi[0].dapAn ==
-                                                    2) {
-                                                  b = chiTietCauHoi[0]
-                                                      .cauTraLoi2;
-                                                  dapAn = "B";
-                                                }
-                                                if (chiTietCauHoi[0].dapAn ==
-                                                    3) {
-                                                  c = chiTietCauHoi[0]
-                                                      .cauTraLoi3;
-                                                  dapAn = "C";
-                                                }
-                                                if (chiTietCauHoi[0].dapAn ==
-                                                    4) {
-                                                  d = chiTietCauHoi[0]
-                                                      .cauTraLoi4;
-                                                  dapAn = "D";
-                                                }
-                                                showDialog(
-                                                    barrierDismissible: false,
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return AlertDialog(
-                                                        title: const Text(
-                                                            'Gọi điện từ người thân'),
-                                                        content: Text(
-                                                            'Câu trả lời gợi ý từ người thân: ${dapAn}'),
-                                                        actions: <Widget>[
-                                                          TextButton(
-                                                              onPressed: () {
-                                                                Navigator.pop(
-                                                                    context);
-                                                              },
-                                                              child: Text('Ok'))
-                                                        ],
-                                                      );
-                                                    });
-                                                setState(() {});
                                               }
                                             },
-                                            child: Icon(Icons.phone,
-                                                color: Colors.white),
+                                            child: Icon(
+                                              Icons.phone,
+                                              size: 17,
+                                              color: goiDien == true
+                                                  ? Colors.white
+                                                  : Color.fromARGB(
+                                                      134, 158, 158, 158),
+                                            ),
                                             style: ButtonStyle(
                                                 backgroundColor:
                                                     MaterialStateProperty.all(
                                                         Colors.transparent),
                                                 side: MaterialStateProperty.all(
-                                                    const BorderSide(
-                                                  color: Colors.white,
+                                                    BorderSide(
+                                                  color: goiDien == true
+                                                      ? Colors.white
+                                                      : Color.fromARGB(
+                                                          134, 158, 158, 158),
                                                   width: 2.0,
                                                   style: BorderStyle.solid,
                                                 ))),
                                           ),
                                           OutlinedButton(
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              if (daMuaDapAn == false) {
+                                                showDialog(
+                                                    barrierDismissible: false,
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return AlertDialog(
+                                                        title: Text(
+                                                            'Mua câu trả lời bằng credit'),
+                                                        content: Text(
+                                                            'Bạn có chắc muốn dùng ${(soLanMuaCredit + 1) * 100} để mua đáp án'),
+                                                        actions: <Widget>[
+                                                          TextButton(
+                                                              onPressed:
+                                                                  () async {
+                                                                try {
+                                                                  if (credit_0 >=
+                                                                      (soLanMuaCredit +
+                                                                              1) *
+                                                                          100) {
+                                                                    daMuaDapAn =
+                                                                        true;
+                                                                    querySnapshots =
+                                                                        await user
+                                                                            .get();
+                                                                    for (var snapshot
+                                                                        in querySnapshots
+                                                                            .docs) {
+                                                                      if (email ==
+                                                                          snapshot[
+                                                                              'email']) {
+                                                                        docID =
+                                                                            snapshot.id;
+                                                                        credit_0 =
+                                                                            snapshot['tien_ao'];
+                                                                      }
+                                                                    }
+                                                                    soLanMuaCredit++;
+                                                                    credit_0 -=
+                                                                        (soLanMuaCredit *
+                                                                            100);
+                                                                    updateUser(
+                                                                        docID,
+                                                                        credit_0);
+                                                                    setState(
+                                                                        () {});
+
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                  } else {
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                    showDialog(
+                                                                        context:
+                                                                            context,
+                                                                        builder:
+                                                                            (context) {
+                                                                          return AlertDialog(
+                                                                            title:
+                                                                                Text('Thông báo'),
+                                                                            content:
+                                                                                Text('Không đủ credit'),
+                                                                          );
+                                                                        });
+                                                                  }
+                                                                } catch (e) {
+                                                                  final snackBar =
+                                                                      SnackBar(
+                                                                          content:
+                                                                              Text('Có lỗi xảy ra !'));
+                                                                  ScaffoldMessenger.of(
+                                                                          context)
+                                                                      .showSnackBar(
+                                                                          snackBar);
+                                                                }
+                                                                setState(() {});
+                                                              },
+                                                              child:
+                                                                  Text('Yes')),
+                                                          TextButton(
+                                                              onPressed: () {
+                                                                Navigator.pop(
+                                                                    context);
+                                                              },
+                                                              child: Text('No'))
+                                                        ],
+                                                      );
+                                                    });
+                                              }
+                                            },
                                             child: Icon(Icons.diamond_rounded,
-                                                color: Colors.white),
+                                                color: daMuaDapAn == false
+                                                    ? Colors.white
+                                                    : Color.fromARGB(
+                                                        134, 158, 158, 158)),
                                             style: ButtonStyle(
                                                 backgroundColor:
                                                     MaterialStateProperty.all(
                                                         Colors.transparent),
                                                 side: MaterialStateProperty.all(
-                                                    const BorderSide(
-                                                  color: Colors.white,
+                                                    BorderSide(
+                                                  color: daMuaDapAn == false
+                                                      ? Colors.white
+                                                      : Color.fromARGB(
+                                                          134, 158, 158, 158),
                                                   width: 2.0,
                                                   style: BorderStyle.solid,
                                                 ))),

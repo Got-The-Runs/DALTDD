@@ -1,7 +1,7 @@
 class CauHoiObject {
   final int idCauHoi;
   final String cauHoi;
-  final String cauTraLoi1;
+  late final String cauTraLoi1;
   final String cauTraLoi2;
   final String cauTraLoi3;
   final String cauTraLoi4;
