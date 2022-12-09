@@ -37,6 +37,7 @@ class LichSuState extends State<LichSu> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             List<NguoiChoiObject> nguoiChoi = snapshot.data!;
+            for (int i = 0; i < nguoiChoi.length; i++) {}
             return Scaffold(
               extendBodyBehindAppBar: true,
               appBar: AppBar(
@@ -50,6 +51,7 @@ class LichSuState extends State<LichSu> {
                 ),
               ),
               body: Container(
+                height: MediaQuery.of(context).size.height,
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     colors: [

@@ -121,6 +121,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
       'id_linh_vuc': idLinhVucState,
       'ngay_choi': ngayHienTai,
       'so_cau_dung': soCauDung,
+      'ngay_choi_2':ngay,
       'tong_diem': diem
     });
   }
@@ -729,31 +730,27 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                           OutlinedButton(
                                             onPressed: () {
                                               {
-                                                a = "A";
-                                                b = "B";
-                                                c = "C";
-                                                d = "D";
                                                 if (khanGia == true) {
                                                   khanGia = false;
                                                   if (chiTietCauHoi[0].dapAn ==
                                                       1) {
                                                     dapAn =
-                                                        "${a} : ${c1}%\n${b} : ${c2}%\n${c} : ${c3}%\n${d} : ${c4}%";
+                                                        "A : ${c1}%\nB : ${c2}%\nC : ${c3}%\nD : ${c4}%";
                                                   }
                                                   if (chiTietCauHoi[0].dapAn ==
                                                       2) {
                                                     dapAn =
-                                                        "${a} : ${c4}%\n${b} : ${c1}%\n${c} : ${c2}%\n${d} : ${c3}%";
+                                                        "A : ${c4}%\nB : ${c1}%\nC : ${c2}%\nD : ${c3}%";
                                                   }
                                                   if (chiTietCauHoi[0].dapAn ==
                                                       3) {
                                                     dapAn =
-                                                        "${a} : ${c3}%\n${b} : ${c4}%\n${c} : ${c1}%\n${d} : ${c2}%";
+                                                        "A : ${c3}%\nB : ${c4}%\nC : ${c1}%\nD : ${c2}%";
                                                   }
                                                   if (chiTietCauHoi[0].dapAn ==
                                                       4) {
                                                     dapAn =
-                                                        "${a} : ${c2}%\n${b} : ${c3}%\n${c} : ${c4}%\n${d} : ${c1}%";
+                                                        "B : ${c2}%\nB : ${c3}%\nC : ${c4}%\nD : ${c1}%";
                                                   }
                                                   setState(() {});
                                                   showDialog(
