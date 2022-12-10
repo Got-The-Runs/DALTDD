@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'dart:async';
 import 'dart:io';
 import 'dart:math';
@@ -64,14 +66,12 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
       daMuaDapAn = false,
       highlight = false,
       truyenCre = false;
+  // ignore: unnecessary_new
   Random random = new Random();
   List<ThongTinObject> thongTin = [];
-  CollectionReference nguoiChoi =
-      FirebaseFirestore.instance.collection('nguoi_choi');
+  CollectionReference nguoiChoi = FirebaseFirestore.instance.collection('nguoi_choi');
   DateTime ngay = DateTime.now();
-  late var docID;
-  late var querySnapshots;
-  final _formKey = GlobalKey<FormState>();
+  late var docID, querySnapshots;
   CollectionReference user = FirebaseFirestore.instance.collection("thong_tin");
   late num credit_0;
   late String ngayHienTai;
@@ -80,7 +80,8 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
   static int c2 = Random().nextInt((100 - c1) + 1);
   static int c3 = Random().nextInt((100 - c1 - c2) + 1);
   static int c4 = 100 - c1 - c2 - c3;
-
+  
+  //Đếm thời gian
   void startTimer() {
     timer = Timer.periodic(const Duration(seconds: 1), (_) {
       setState(() => seconds--);
@@ -90,13 +91,13 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
   void tro_Giup_50_50() {
     troGiup5050 = random.nextInt(4) + 1;
   }
-
+  //Lấy thông tin người chơi
   void loadThongTin() async {
     final data = await ThongTinProvider.get(email);
     setState(() {});
     thongTin = data;
   }
-
+//Lấy ngày hiện tại
   void getNgay() {
     ngayHienTai = DateFormat('dd/MM/yyyy').format(ngay);
   }
@@ -108,13 +109,12 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
     loadThongTin();
     startTimer();
   }
-
+//Cập nhật tiền ảo
   Future<void> updateUser(var docID, var cre) {
     return user.doc(docID).update({'tien_ao': cre});
   }
-
+//Thêm thông tin người chơi
   Future<void> addNguoiChoi() {
-    // Call the user's CollectionReference to add a new user
     return nguoiChoi.add({
       'email': email,
       'ten_nguoi_choi': thongTin[0].name,
@@ -125,7 +125,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
       'tong_diem': diem
     });
   }
-
+//Ngừng chơi nếu hết thời gian và hết mạng 
   @override
   void setState(VoidCallback fn) {
     if (seconds == 1) {
@@ -356,11 +356,13 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                             const EdgeInsets.only(bottom: 20),
                                         child: Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
+                                              MainAxisAlignment.spaceBetween,
                                           children: <Widget>[
                                             Column(
                                               children: <Widget>[
-                                                Text(
+                                              Container(
+                                                padding: EdgeInsets.only(left: 30),
+                                                child: Text(
                                                   thongTin[0].name,
                                                   style: TextStyle(
                                                       fontSize: 20,
@@ -368,9 +370,12 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 ),
+                                                ),
                                               ],
                                             ),
-                                            Row(
+                                            Container(
+                                              padding: EdgeInsets.only(right: 40),
+                                            child: Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
                                               children: <Widget>[
@@ -387,16 +392,18 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                                 ),
                                               ],
                                             ),
+                                            ),
                                           ],
                                         ),
                                       ),
                                       Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           Container(
                                             padding:
                                                 const EdgeInsets.only(left: 30),
                                             child: Text(
-                                              'Điểm :${diem}',
+                                              'Điểm : ${diem}',
                                               style: TextStyle(
                                                   fontSize: 20,
                                                   color: Colors.white,
@@ -405,20 +412,18 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                           ),
                                           Container(
                                             padding: const EdgeInsets.only(
-                                                left: 150),
+                                                right: 30),
                                             child: buildTimer(),
                                           ),
                                         ],
                                       ),
-                                      Container(
-                                        padding: EdgeInsets.all(5),
-                                      ),
+                                
                                       Container(
                                           padding: const EdgeInsets.all(12),
                                           child: Text(
                                             'Câu ${soCauHoi}: ${chiTietCauHoi[0].cauHoi}',
                                             textAlign: TextAlign.center,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontSize: 20,
                                               color: Colors.white,
                                               fontWeight: FontWeight.bold,
@@ -459,7 +464,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                           child: Align(
                                             alignment: Alignment.centerLeft,
                                             child: Text(
-                                              a,
+                                              "A: $a",
                                               style: TextStyle(
                                                 fontSize: 20,
                                                 color: chiTietCauHoi[0].dapAn ==
@@ -517,7 +522,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                           child: Align(
                                             alignment: Alignment.centerLeft,
                                             child: Text(
-                                              b,
+                                              "B: $b",
                                               style: TextStyle(
                                                 fontSize: 20,
                                                 color: chiTietCauHoi[0].dapAn ==
@@ -575,7 +580,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                           child: Align(
                                             alignment: Alignment.centerLeft,
                                             child: Text(
-                                              c,
+                                              "C: $c",
                                               style: TextStyle(
                                                 fontSize: 20,
                                                 color: chiTietCauHoi[0].dapAn ==
@@ -635,7 +640,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                             child: Align(
                                               alignment: Alignment.centerLeft,
                                               child: Text(
-                                                d,
+                                                "D: $d",
                                                 style: TextStyle(
                                                   fontSize: 20,
                                                   color:
@@ -658,6 +663,9 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                                         style: BorderStyle
                                                             .solid))),
                                           )),
+                                          Container(
+                                            padding: EdgeInsets.only(bottom: 5)
+                                          ),
                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceAround,

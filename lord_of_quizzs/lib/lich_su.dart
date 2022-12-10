@@ -1,11 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lord_of_quizzs/bang_xep_hang.dart';
-import 'package:lord_of_quizzs/chon_linh_vuc.dart';
-import 'package:lord_of_quizzs/man_hinh_doi_mat_khau.dart';
 import 'package:lord_of_quizzs/model/nguoi_choi_provider.dart';
-import 'package:lord_of_quizzs/mua_credit.dart';
-
 import 'model/nguoi_choi_object.dart';
 
 class LichSu extends StatefulWidget {

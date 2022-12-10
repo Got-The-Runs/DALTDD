@@ -50,9 +50,7 @@ class DangKiState extends State<DangKi> {
       // Call the user's CollectionReference to add a new user
       return thongTin
           .add({
-            // 'id': 4,
             'email': txtEmail.text,
-            // 'mat_khau': txtMatKhau.text,
             'ten_nguoi_choi': txtTenNguoiChoi.text,
             'tien_ao': tienAo,
             'trang_thai': trangThai
