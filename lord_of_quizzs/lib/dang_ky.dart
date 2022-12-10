@@ -1,13 +1,11 @@
 // ignore: unnecessary_import
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // ignore: unused_import
 import 'package:lord_of_quizzs/dang_nhap.dart';
 import 'package:lord_of_quizzs/model/thong_tin_object.dart';
+import 'package:lord_of_quizzs/model/thong_tin_provider.dart';
 
 class DangKi extends StatefulWidget {
   const DangKi({super.key});
@@ -21,9 +19,7 @@ class DangKi extends StatefulWidget {
 }
 
 class DangKiState extends State<DangKi> {
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  CollectionReference thongTin =
-      FirebaseFirestore.instance.collection('thong_tin');
+  CollectionReference thongTin = FirebaseFirestore.instance.collection('thong_tin');
   TextEditingController txtTenNguoiChoi = TextEditingController();
   int tienAo = 0;
   int trangThai = 1;
@@ -31,16 +27,24 @@ class DangKiState extends State<DangKi> {
   TextEditingController txtMatKhau = TextEditingController();
   TextEditingController txtNhapLaiMatKhau = TextEditingController();
   final _auth = FirebaseAuth.instance;
-  final CollectionReference<Map<String, dynamic>> listThongTin =
-      FirebaseFirestore.instance.collection('thong_tin');
+  List<ThongTinObject> thongTinEmail= [];
+  bool trungEmail = false;
+ // ignore: non_constant_identifier_names
+ void _LoadThongTin() async {
+    final data = await ThongTinProvider.getEmail();
+    setState(() {});
+    thongTinEmail= data;
+  }
 
   @override
+  void initState() {
+    // ignore: todo
+    // TODO: implement initState
+    super.initState();
+    _LoadThongTin();
+  }
+  @override
   Widget build(BuildContext context) {
-    // Future<int> countUsers() async {
-    //   AggregateQuerySnapshot query = await listThongTin.count().get();
-    //   int id = query.count;
-    //   return id ;
-    // }
 
     Future<void> addUser() {
       // Call the user's CollectionReference to add a new user
@@ -69,9 +73,7 @@ class DangKiState extends State<DangKi> {
           iconSize: 35,
         ),
       ),
-      body: Form(
-          key: _formKey,
-          child: Container(
+      body: Container(
             height: MediaQuery.of(context).size.height,
             decoration: const BoxDecoration(
               gradient: LinearGradient(
@@ -110,7 +112,7 @@ class DangKiState extends State<DangKi> {
                 ),
                 Container(
                     padding: const EdgeInsets.all(10),
-                    child: TextFormField(
+                    child: TextField(
                       controller: txtTenNguoiChoi,
                       style: const TextStyle(color: Colors.white),
                       decoration: InputDecoration(
@@ -129,7 +131,7 @@ class DangKiState extends State<DangKi> {
                     )),
                 Container(
                   padding: const EdgeInsets.all(10),
-                  child: TextFormField(
+                  child: TextField(
                     controller: txtEmail,
                     style: const TextStyle(color: Colors.white),
                     keyboardType: TextInputType.emailAddress,
@@ -192,10 +194,10 @@ class DangKiState extends State<DangKi> {
                   height: 80,
                   child: OutlinedButton(
                     onPressed: () async {
-                      if ((txtEmail.text == "" ||
+                      if (txtEmail.text == "" ||
                           txtTenNguoiChoi.text == "" ||
                           txtMatKhau.text == "" ||
-                          txtNhapLaiMatKhau.text == "")) {
+                          txtNhapLaiMatKhau.text == "") {
                         final snackBar = SnackBar(
                             content: Text('Chưa điền thông tin tài khoản'));
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -210,21 +212,33 @@ class DangKiState extends State<DangKi> {
                             content: Text(
                                 'Nhập lại mật khẩu không trùng với mật khẩu'));
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      } else {
-                        try {
-                          final newUser =
-                              await _auth.createUserWithEmailAndPassword(
-                                  email: txtEmail.text,
-                                  password: txtMatKhau.text);
-                          if (newUser != null) {
+                      }
+                      else {
+                        for(int i =0; i<thongTinEmail.length;i++){
+                          if(txtEmail.text == thongTinEmail[i].email){
+                              trungEmail=true;
+                          }
+                        }
+                        if(trungEmail==true){
+                          final snackBar = SnackBar(
+                                  content: Text('Email đã được sử dụng'));
+                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              trungEmail=false;
+                        }else{
+                          try {
+                           final newUser = await _auth.createUserWithEmailAndPassword(
+                              email: txtEmail.text, password: txtMatKhau.text);
+                          // if (newUser != null) {
                             Navigator.pop(context, 'Đăng ký thành công');
                             addUser();
-                          }
+                          // } 
                         } catch (e) {
                           final snackBar =
                               SnackBar(content: Text('Email đã tồn tại'));
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         }
+                        }
+                        
                       }
                     },
                     // ignore: sort_child_properties_last
@@ -243,7 +257,7 @@ class DangKiState extends State<DangKi> {
                 ),
               ],
             )),
-          )),
+        ),
     );
   }
 }

@@ -10,4 +10,12 @@ class ThongTinProvider{
      ThongTin = snapshot.docs.map((json) => ThongTinObject.fromJson(json.data()as Map<String, dynamic>)).toList();
     return ThongTin;
   }
+   static Future<List<ThongTinObject>> getEmail() async {
+    List<ThongTinObject> ThongTin = [];
+    final snapshot = await FirebaseFirestore.instance.collection("thong_tin")
+    .get();
+    // ignore: no_leading_underscores_for_local_identifiers
+     ThongTin = snapshot.docs.map((json) => ThongTinObject.fromJson(json.data()as Map<String, dynamic>)).toList();
+    return ThongTin;
+  }
 }
