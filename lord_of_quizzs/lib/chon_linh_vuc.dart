@@ -1,15 +1,10 @@
 import 'dart:math';
-import 'dart:ui';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lord_of_quizzs/model/bo_cau_hoi_object.dart';
-import 'package:lord_of_quizzs/model/bo_cau_hoi_provider.dart';
 import 'package:lord_of_quizzs/model/linh_vuc_object.dart';
 import 'package:lord_of_quizzs/model/linh_vuc_provider.dart';
 import 'package:lord_of_quizzs/choi_tro_choi.dart';
-
 import 'model/thong_tin_object.dart';
 import 'model/thong_tin_provider.dart';
 import 'mua_credit.dart';
@@ -77,19 +72,7 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
                       ),
                     ),
                   ),
-                  IconButton(
-                    icon: const Icon(Icons.add_circle_outline),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MuaCredit(
-                              email: email,
-                            ),
-                          ));
-                    },
-                    iconSize: 30,
-                  ),
+                 Padding(padding: EdgeInsets.only(right: 20))
                 ],
               ),
               body: Container(

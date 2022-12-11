@@ -324,12 +324,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                         ),
                                       ),
                                     ),
-                                    IconButton(
-                                      icon:
-                                          const Icon(Icons.add_circle_outline),
-                                      onPressed: () {},
-                                      iconSize: 30,
-                                    ),
+                                     Padding(padding: EdgeInsets.only(right: 20))
                                   ],
                                 ),
                                 body: Container(
