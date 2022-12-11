@@ -162,19 +162,29 @@ class DoiMatKhauState extends State<DoiMatKhau> {
                 child: OutlinedButton(
                   onPressed: () {
                     if (txtMatKhauMoi.text == "" || txtMatKhauXT.text == "") {
-                      final snackBar =
-                          SnackBar(content: Text("Chưa điền mật khẩu"));
+                      final snackBar = SnackBar(
+                          content: Text("Vui lòng nhập mật khẩu mới!"));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    } else if (txtMatKhauMoi.text.contains(' ')) {
+                      final snackBar = SnackBar(
+                          content: Text(
+                              "Mật khẩu mới có khoảng trắng\nVui lòng nhập lại!"));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     } else if (txtMatKhauMoi.text.length < 6 ||
                         txtMatKhauMoi.text.length > 16) {
                       final snackBar = SnackBar(
                           content: Text(
-                              "Mật khẩu phải nhập ít nhất 6 ký tự và không quá 16 ký tự"));
+                              "Mật khẩu mới tối thiểu 6 ký tự và tối đa 16 ký tự\nVui lòng nhập lại mật khẩu"));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    }
+                    if (txtMatKhauXT.text == "") {
+                      final snackBar = SnackBar(
+                          content: Text("Vui lòng nhập mật khẩu xác thực!"));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     } else if (txtMatKhauMoi.text != txtMatKhauXT.text) {
                       final snackBar = SnackBar(
                           content: Text(
-                              "Mật khẩu xác thực không trùng khớp với mật khẩu mới"));
+                              "Mật khẩu xác thực không trùng khớp với mật khẩu mới\nVui lòng nhập lại mật khẩu xác thực!"));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     } else {
                       final user = _auth?.updatePassword(txtMatKhauMoi.text);
