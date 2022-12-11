@@ -146,19 +146,26 @@ class ManHinhTaiKhoanState extends State<ManHinhTaiKhoan> {
                         height: 80,
                         child: OutlinedButton(
                           onPressed: () async {
-                            try {
-                              querySnapshots = await user.get();
-                              for (var snapshot in querySnapshots.docs) {
-                                if (email == snapshot['email']) {
-                                  docID = snapshot.id;
-                                }
-                              }
-                              updateUser(docID);
-                            } catch (e) {
-                              final snackBar =
-                                  SnackBar(content: Text('Có lỗi xảy ra !'));
+                            if (txtName.text == "") {
+                              final snackBar = SnackBar(
+                                  content: Text('Chưa nhập tên người chơi'));
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(snackBar);
+                            } else {
+                              try {
+                                querySnapshots = await user.get();
+                                for (var snapshot in querySnapshots.docs) {
+                                  if (email == snapshot['email']) {
+                                    docID = snapshot.id;
+                                  }
+                                }
+                                updateUser(docID);
+                              } catch (e) {
+                                final snackBar =
+                                    SnackBar(content: Text('Có lỗi xảy ra !'));
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+                              }
                             }
                           },
                           child: const Text(

@@ -103,10 +103,33 @@ class DangNhapState extends State<DangNhap> {
                 height: 80,
                 child: OutlinedButton(
                     onPressed: () async {
-                      if (txtEmail.text == "" || txtPass.text == "") {
-                        final snackBar = SnackBar(
-                            content: Text('Email hoặc mật khẩu trống'));
+                      if (txtEmail.text == "" && txtPass.text == "") {
+                        final snackBar =
+                            SnackBar(content: Text('Nhập thông tin đăng nhập'));
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        return;
+                      } else if (txtEmail.text == "") {
+                        final snackBar =
+                            SnackBar(content: Text('Vui lòng nhập Email!'));
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        return;
+                      } else if (txtEmail.text.contains(' ')) {
+                        final snackBar = SnackBar(
+                            content: Text(
+                                'Email có khoảng trắng\nVui lòng nhập lại Email!'));
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        return;
+                      } else if (txtPass.text == "") {
+                        final snackBar =
+                            SnackBar(content: Text('Vui lòng nhập mật khẩu'));
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        return;
+                      } else if (txtPass.text.contains(' ')) {
+                        final snackBar = SnackBar(
+                            content: Text(
+                                'Mật khẩu có khoảng trắng\nVui lòng nhập lại mật khẩu!'));
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        return;
                       } else {
                         try {
                           final _user = await _auth.signInWithEmailAndPassword(
@@ -129,6 +152,7 @@ class DangNhapState extends State<DangNhap> {
                           final snackBar = const SnackBar(
                               content: Text('Email hoặc mật khẩu không đúng'));
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          return;
                         }
                       }
                     },
