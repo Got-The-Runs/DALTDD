@@ -253,6 +253,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                     ),
                   ]),
               body: Container(
+                height: MediaQuery.of(context).size.height,
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
@@ -263,6 +264,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                     end: Alignment.bottomLeft,
                   ),
                 ),
+                // child: SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -407,7 +409,8 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                     )
                   ],
                 ),
-              ),
+                ),
+              // ),
             );
           }
           return Text('');

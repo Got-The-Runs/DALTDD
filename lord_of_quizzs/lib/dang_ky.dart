@@ -32,7 +32,6 @@ class DangKiState extends State<DangKi> {
  // ignore: non_constant_identifier_names
  void _LoadThongTin() async {
     final data = await ThongTinProvider.getEmail();
-    setState(() {});
     thongTinEmail= data;
   }
 
@@ -46,7 +45,7 @@ class DangKiState extends State<DangKi> {
   @override
   Widget build(BuildContext context) {
 
-    Future<void> addUser() {
+    Future<void> addUser() async{
       // Call the user's CollectionReference to add a new user
       return thongTin
           .add({
@@ -149,7 +148,7 @@ class DangKiState extends State<DangKi> {
                 ),
                 Container(
                     padding: const EdgeInsets.all(10),
-                    child: TextFormField(
+                    child: TextField(
                       controller: txtMatKhau,
                       obscureText: true,
                       style: const TextStyle(color: Colors.white),
@@ -168,7 +167,7 @@ class DangKiState extends State<DangKi> {
                     )),
                 Container(
                   padding: const EdgeInsets.all(10),
-                  child: TextFormField(
+                  child: TextField(
                     controller: txtNhapLaiMatKhau,
                     obscureText: true,
                     style: const TextStyle(color: Colors.white),
@@ -226,14 +225,19 @@ class DangKiState extends State<DangKi> {
                           try {
                            final newUser = await _auth.createUserWithEmailAndPassword(
                               email: txtEmail.text, password: txtMatKhau.text);
-                          // if (newUser != null) {
-                            Navigator.pop(context, 'Đăng ký thành công');
+                          if (newUser != null) {
                             addUser();
-                          // } 
+                              txtTenNguoiChoi.clear();
+                              txtEmail.clear();
+                              txtMatKhau.clear();
+                              txtNhapLaiMatKhau.clear();
+                              return;                  
+                          } 
                         } catch (e) {
                           final snackBar =
                               SnackBar(content: Text('Email đã tồn tại'));
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          return;
                         }
                         }
                         
