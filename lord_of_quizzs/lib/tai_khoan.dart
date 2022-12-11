@@ -148,9 +148,28 @@ class ManHinhTaiKhoanState extends State<ManHinhTaiKhoan> {
                           onPressed: () async {
                             if (txtName.text == "") {
                               final snackBar = SnackBar(
-                                  content: Text('Chưa nhập tên người chơi'));
+                                  content:
+                                      Text('Vui lòng nhập tên người chơi'));
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(snackBar);
+                              return;
+                            }
+                            if (txtName.text.length < 8 ||
+                                txtName.text.length > 16) {
+                              final snackBar = SnackBar(
+                                  content: Text(
+                                      'Tên người chơi tối thiểu 8 ký tự và tối đa 16 ký tự\nVui lòng nhập lại tên người chơi'));
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                              return;
+                            }
+                            if (txtName.text.contains(' ')) {
+                              final snackBar = SnackBar(
+                                  content: Text(
+                                      'Tên người chơi có khoảng trắng\nVui lòng nhập lại tên người chơi'));
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                              return;
                             } else {
                               try {
                                 querySnapshots = await user.get();
