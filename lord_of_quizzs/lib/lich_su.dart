@@ -96,7 +96,7 @@ class LichSuState extends State<LichSu> {
                                 style: TextStyle(fontSize: 20),
                               ),
                               trailing: Text(
-                                  "Số câu: ${nguoiChoi[0].soCauDung} \nĐiểm: ${nguoiChoi[index].tongDiem}",
+                                  "Số câu: ${nguoiChoi[index].soCauDung} \nĐiểm: ${nguoiChoi[index].tongDiem}",
                                   style: TextStyle(
                                     fontSize: 20,
                                   )),
