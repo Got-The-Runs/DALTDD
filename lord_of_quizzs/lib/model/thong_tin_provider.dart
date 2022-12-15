@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lord_of_quizzs/model/thong_tin_object.dart';
 
 class ThongTinProvider{
-  static Future<List<ThongTinObject>> get(String email,) async {
+  static Future<List<ThongTinObject>> get(String email) async {
     List<ThongTinObject> ThongTin = [];
     final snapshot = await FirebaseFirestore.instance.collection("thong_tin")
     .where('email', isEqualTo: email).get();

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:lord_of_quizzs/ban_be.dart';
 import 'package:lord_of_quizzs/bang_xep_hang_linh_vuc.dart';
 import 'package:lord_of_quizzs/chon_linh_vuc.dart';
 import 'package:lord_of_quizzs/huong_dan.dart';
@@ -365,6 +366,35 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                         // ignore: sort_child_properties_last
                         child: const Text(
                           'Bảng Xếp Hạng',
+                          style: TextStyle(fontSize: 20, color: Colors.white),
+                        ),
+                        style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.transparent),
+                            side: MaterialStateProperty.all(const BorderSide(
+                                color: Colors.white,
+                                width: 2.0,
+                                style: BorderStyle.solid))),
+                      ),
+                    ),
+                      Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 75, vertical: 15),
+                      width: 350,
+                      height: 85,
+                      child: OutlinedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => BanBe(
+                              ),
+                            ),
+                          );
+                        },
+                        // ignore: sort_child_properties_last
+                        child: const Text(
+                          'Bạn Bè',
                           style: TextStyle(fontSize: 20, color: Colors.white),
                         ),
                         style: ButtonStyle(
