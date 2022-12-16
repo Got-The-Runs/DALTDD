@@ -240,7 +240,6 @@ class DangKiState extends State<DangKi> {
                           return;
                         }
                         }
-                        
                       }
                     },
                     // ignore: sort_child_properties_last
