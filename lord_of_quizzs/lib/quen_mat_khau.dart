@@ -125,7 +125,7 @@ class QuenMatKhauState extends State<QuenMatKhau> {
                         }
                         if(documentID == null){
                           final snackBar =
-                          SnackBar(content: Text('Email không tồn tại'));
+                          SnackBar(content: Text('Email chưa được đăng ký tài khoản'));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         } 
                       } catch (e) {
