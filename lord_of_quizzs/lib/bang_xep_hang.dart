@@ -1,9 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lord_of_quizzs/model/bang_xep_hang_object.dart';
+import 'package:lord_of_quizzs/model/bang_xep_hang_provider.dart';
 import 'package:lord_of_quizzs/model/linh_vuc_object.dart';
 import 'package:lord_of_quizzs/model/linh_vuc_provider.dart';
 import 'package:lord_of_quizzs/model/nguoi_choi_object.dart';
 import 'package:lord_of_quizzs/model/nguoi_choi_provider.dart';
+import 'package:lord_of_quizzs/model/thong_tin_object.dart';
+import 'package:lord_of_quizzs/model/thong_tin_provider.dart';
 
 import 'mua_credit.dart';
 
@@ -20,18 +24,19 @@ class BangXepHang extends StatefulWidget{
 class BangXepHangState extends State<BangXepHang>{
   int idLinhVuc;
   BangXepHangState({Key? key, required this.idLinhVuc});
-  List<NguoiChoiObject> nguoiChoi = [];
-  void _LoadNguoiChoi() async {
-    final data = await NguoiChoiProvider.getNguoiChoi(idLinhVuc);
+  List<BangXepHangObject> bangXepHang = [];
+  String tenNguoiChoi ="";
+  void _LoadBangXepHang() async {
+    final data = await BangXepHangProvider.getdata(idLinhVuc);
     setState(() {});
-    nguoiChoi = data;
+    bangXepHang = data;
   }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _LoadNguoiChoi();
+    _LoadBangXepHang();
   }
   @override
   Widget build(BuildContext context) {
@@ -91,9 +96,20 @@ class BangXepHangState extends State<BangXepHang>{
                         padding: EdgeInsets.only(bottom: 20, top: 10),
                         physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
-                        itemCount: nguoiChoi.length,
+                        itemCount: bangXepHang.length,
                         itemBuilder: (BuildContext context, int index) {
-                        return  Card(
+                        return FutureBuilder<List<ThongTinObject>>(
+                             future: ThongTinProvider.getEmail(),
+                             builder: (context, snapshot) {
+                               if (snapshot.hasData) {
+                                  List<ThongTinObject> thongTin = snapshot.data!;
+                                  for(int i=0; i< thongTin.length; i++)
+                                  {
+                                     if(bangXepHang[index].email == thongTin[i].email){
+                                        tenNguoiChoi= thongTin[i].name;
+                                     }
+                                  }
+                        return Card(
                         margin: EdgeInsets.only(left: 20,right: 20, top: 5, bottom: 5),
                           shape:const OutlineInputBorder(
                           borderRadius: BorderRadius.all(
@@ -105,12 +121,16 @@ class BangXepHangState extends State<BangXepHang>{
                               leading: CircleAvatar(
                                 child: Image.asset('images/Logo.png'),
                               ),           
-                              title: Text(nguoiChoi[index].tenNguoiChoi, style: TextStyle(fontSize: 20)),
-                              subtitle: Text('${nguoiChoi[index].tongDiem}', style: TextStyle(fontSize: 20),),
+                              title: Text( tenNguoiChoi, style: TextStyle(fontSize: 20)),
+                              subtitle: Text('${bangXepHang[index].tongDiem}', style: TextStyle(fontSize: 20),),
                               trailing: Text("${index + 1}", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
-                          ),
-                        );        
-                      },
+                              ),
+                            );  
+                          }
+                        return Text('');
+                        }
+                      );      
+                    },
                   ),        
                 ],      
               ),
