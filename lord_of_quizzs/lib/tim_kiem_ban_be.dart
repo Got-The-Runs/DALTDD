@@ -27,6 +27,7 @@ class TimKiemBanBeState extends State<TimKiemBanBe>{
   List<ThongTinObject> thongTin=[];
   final FirebaseAuth _auth = FirebaseAuth.instance;
   bool laBanBe = false, laBanBeAccept = false;
+  bool checkLaBanBe = false, checkLaBanBeAccept = false;
   void getEmail() async {
     final user = _auth.currentUser;
     if (user != null) {
@@ -181,11 +182,24 @@ class TimKiemBanBeState extends State<TimKiemBanBe>{
                                         title: Text( thongTin[index].name, style: TextStyle(fontSize: 20)),
                                         trailing: IconButton(icon: Icon(laBanBe == true?Icons.people:laBanBeAccept==true?Icons.replay_outlined:Icons.person_add),
                                           onPressed: (){
-                                          if(laBanBe == true && laBanBeAccept == false){
+                                            setState((){
+ for(int i=0;i<banBe.length;i++){
+                                                if(thongTin[index].email == banBe[i].emailBanBe){                  
+                                                  checkLaBanBe = true;
+                                                  break;
+                                                }
+                                              }
+                                               for(int j=0; j<banBeAccept.length;j++){
+                                                if(thongTin[index].email == banBeAccept[j].emailBanBe){
+                                                  checkLaBanBeAccept = true;
+                                                  break;
+                                                }
+                                              }
+                                          if(checkLaBanBe == true && checkLaBanBeAccept == false){
                                               final snackBar = SnackBar(content: Text('Bạn và ${thongTin[index].name} đang là bạn bè'));
                                             ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                           }
-                                          else if (laBanBeAccept == true && laBanBe == false){
+                                          else if (checkLaBanBeAccept == true && checkLaBanBe == false){
                                               final snackBar = SnackBar(content: Text('Đang chờ ${thongTin[index].name} chấp nhận kết bạn'));
                                             ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                           }
@@ -193,8 +207,10 @@ class TimKiemBanBeState extends State<TimKiemBanBe>{
                                             insertLoiMoi(thongTin[index].email);
                                             insertGuiLoiMoi(thongTin[index].email);
                                             final snackBar = SnackBar(content: Text('Gửi lời mời kết bạn thành công'));
-                                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                                          }
+                                            ScaffoldMessenger.of(context).showSnackBar(snackBar);                     
+                                        }
+                                      }
+                                    );   
                                   },
                                 ),    
                               ),
