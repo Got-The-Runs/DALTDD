@@ -22,4 +22,13 @@ class BanBeProvider{
      listBanBe = snapshot.docs.map((json) => BanBeObject.fromJson(json.data()as Map<String, dynamic>)).toList();
     return listBanBe;
   }
+
+  static Future<List<BanBeObject>> getBanBeAll() async {
+    List<BanBeObject> listBanBe = []; 
+    final snapshot = await FirebaseFirestore.instance.collection("ban_be")
+    .where('trang_thai', isEqualTo: 1).get();
+    // ignore: no_leading_underscores_for_local_identifiers
+     listBanBe = snapshot.docs.map((json) => BanBeObject.fromJson(json.data()as Map<String, dynamic>)).toList();
+    return listBanBe;
+  }
 }
