@@ -45,8 +45,7 @@ class TimKiemBanBeState extends State<TimKiemBanBe>{
     return loiMoiKetBan.add({
       'email':emailBB,
       'email_ban_be':email,
-      'trang_thai':0});
-        
+      'trang_thai':0});   
   }
   @override
   Widget build(BuildContext context) {
@@ -183,7 +182,7 @@ class TimKiemBanBeState extends State<TimKiemBanBe>{
                                         trailing: IconButton(icon: Icon(laBanBe == true?Icons.people:laBanBeAccept==true?Icons.replay_outlined:Icons.person_add),
                                           onPressed: (){
                                             setState((){
- for(int i=0;i<banBe.length;i++){
+                                              for(int i=0;i<banBe.length;i++){
                                                 if(thongTin[index].email == banBe[i].emailBanBe){                  
                                                   checkLaBanBe = true;
                                                   break;
@@ -198,16 +197,25 @@ class TimKiemBanBeState extends State<TimKiemBanBe>{
                                           if(checkLaBanBe == true && checkLaBanBeAccept == false){
                                               final snackBar = SnackBar(content: Text('Bạn và ${thongTin[index].name} đang là bạn bè'));
                                             ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                            checkLaBanBeAccept = false;
+                                            checkLaBanBe = false;
                                           }
                                           else if (checkLaBanBeAccept == true && checkLaBanBe == false){
                                               final snackBar = SnackBar(content: Text('Đang chờ ${thongTin[index].name} chấp nhận kết bạn'));
                                             ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                            checkLaBanBeAccept = false;
+                                            checkLaBanBe = false;
                                           }
                                           else {
                                             insertLoiMoi(thongTin[index].email);
                                             insertGuiLoiMoi(thongTin[index].email);
                                             final snackBar = SnackBar(content: Text('Gửi lời mời kết bạn thành công'));
-                                            ScaffoldMessenger.of(context).showSnackBar(snackBar);                     
+                                            ScaffoldMessenger.of(context).showSnackBar(snackBar); 
+                                            setState((){
+                                              checkLaBanBeAccept = false;
+                                              checkLaBanBe = false;
+                                            });                 
+
                                         }
                                       }
                                     );   

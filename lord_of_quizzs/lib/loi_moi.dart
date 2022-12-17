@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lord_of_quizzs/model/ban_be_object.dart';
 import 'package:lord_of_quizzs/model/ban_be_provider.dart';
 import 'package:lord_of_quizzs/model/thong_tin_object.dart';
@@ -18,9 +18,10 @@ class LoiMoi extends StatefulWidget{
 class LoiMoiState extends State<LoiMoi>{
   final FirebaseAuth _auth = FirebaseAuth.instance;
   CollectionReference user = FirebaseFirestore.instance.collection("thong_tin");
+  CollectionReference thongTinBanBe = FirebaseFirestore.instance.collection("ban_be");
   String email = "";  
   String emailBanBe ="";
-
+ var docID, docID2,querySnapshots; 
   void getEmail() async {
     final user = _auth.currentUser;
     if (user != null) {
@@ -33,7 +34,14 @@ class LoiMoiState extends State<LoiMoi>{
     super.initState();
     getEmail();
   }
-
+  Future<void> deleteBanBe(var docID){
+      return thongTinBanBe.doc(docID).delete();
+  }
+  Future<void> updateBanBe(var docID) {
+    return thongTinBanBe
+        .doc(docID)
+        .update({'trang_thai': 1});
+  }
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -86,7 +94,72 @@ class LoiMoiState extends State<LoiMoi>{
                                           ),           
                                           title: Text('${emailBanBe}'),
                                           // subtitle: Text('T', style: TextStyle(fontSize: 20),),
-                                          trailing: IconButton(icon: Icon(Icons.check), onPressed: (){}),
+                                          trailing: Row(
+                                            mainAxisAlignment: MainAxisAlignment.end,
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                            IconButton(icon: Icon(FontAwesomeIcons.userXmark), onPressed: ()async {
+                                              try {
+                                                querySnapshots = await thongTinBanBe.get();
+                                                for (var snapshot in querySnapshots.docs) {
+                                                  if (email == snapshot['email'] && banBe[index].emailBanBe == snapshot['email_ban_be']) {
+                                                    docID = snapshot.id;
+                                                    deleteBanBe(docID);
+                                                    break;
+                                                  }
+                                                }    
+                                                for (var snapshot in querySnapshots.docs) {
+                                                  if (email == snapshot['email_ban_be'] && banBe[index].emailBanBe == snapshot['email']) {
+                                                    docID2 = snapshot.id;
+                                                    deleteBanBe(docID2);
+                                                    break;
+                                                  }
+                                                }           
+                                                final snackBar =
+                                                    SnackBar(content: Text('Xóa lời mời thành công'));
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(snackBar);  
+                                                    setState((){});                                                   
+                                              } catch (e) {
+                                                final snackBar =
+                                                    SnackBar(content: Text('Có lỗi xảy ra !'));
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(snackBar);
+                                              }
+                                          }
+                                        ),
+                                            IconButton(icon: Icon(FontAwesomeIcons.userCheck), onPressed: ()async{
+                                               try {
+                                                querySnapshots = await thongTinBanBe.get();
+                                                for (var snapshot in querySnapshots.docs) {
+                                                  if (email == snapshot['email'] && banBe[index].emailBanBe == snapshot['email_ban_be']) {
+                                                    docID = snapshot.id;
+                                                    updateBanBe(docID);
+                                                    break;
+                                                  }
+                                                }    
+                                                for (var snapshot in querySnapshots.docs) {
+                                                  if (email == snapshot['email_ban_be'] && banBe[index].emailBanBe == snapshot['email']) {
+                                                    docID2 = snapshot.id;
+                                                    updateBanBe(docID2);
+                                                    break;
+                                                  }
+                                                }           
+                                                final snackBar =
+                                                    SnackBar(content: Text('Chấp nhận lời mời thành công'));
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(snackBar);  
+                                                    setState((){});                                                   
+                                              } catch (e) {
+                                                final snackBar =
+                                                    SnackBar(content: Text('Có lỗi xảy ra !'));
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(snackBar);
+                                              }
+                                          }
+                                        ),
+                                    ],
+                                  )
                                ),
                              );  
                            }

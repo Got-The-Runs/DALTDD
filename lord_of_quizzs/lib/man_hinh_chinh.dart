@@ -171,7 +171,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                                           Navigator.pushNamedAndRemoveUntil(
                                               context,
                                               'welcome',
-                                              (route) => false);
+                                              (Route<dynamic> route) => false);
                                         },
                                         // ignore: sort_child_properties_last
                                         child: const Text(

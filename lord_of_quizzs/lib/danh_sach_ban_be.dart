@@ -19,7 +19,8 @@ class DanhSachBanBeState  extends State<DanhSachBanBe>{
   CollectionReference user = FirebaseFirestore.instance.collection("thong_tin");
   String email = "";  
   String emailBanBe ="";
-
+  var docID, docID2, querySnapshots;
+  CollectionReference thongTinBanBe = FirebaseFirestore.instance.collection("ban_be");
   void getEmail() async {
     final user = _auth.currentUser;
     if (user != null) {
@@ -32,7 +33,9 @@ class DanhSachBanBeState  extends State<DanhSachBanBe>{
     super.initState();
     getEmail();
   }
-
+  Future<void> deleteBanBe(var docID){
+      return thongTinBanBe.doc(docID).delete();
+  }
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -85,7 +88,36 @@ class DanhSachBanBeState  extends State<DanhSachBanBe>{
                                           ),           
                                           title: Text('${emailBanBe}'),
                                           // subtitle: Text('T', style: TextStyle(fontSize: 20),),
-                                          trailing: IconButton(icon: Icon(Icons.delete), onPressed: (){}),
+                                          trailing: IconButton(icon: Icon(Icons.delete), onPressed: ()async{
+                                             try {
+                                                querySnapshots = await thongTinBanBe.get();
+                                                for (var snapshot in querySnapshots.docs) {
+                                                  if (email == snapshot['email'] && banBe[index].emailBanBe == snapshot['email_ban_be']) {
+                                                    docID = snapshot.id;
+                                                    deleteBanBe(docID);
+                                                    break;
+                                                  }
+                                                }    
+                                                for (var snapshot in querySnapshots.docs) {
+                                                  if (email == snapshot['email_ban_be'] && banBe[index].emailBanBe == snapshot['email']) {
+                                                    docID2 = snapshot.id;
+                                                    deleteBanBe(docID2);
+                                                    break;
+                                                  }
+                                                }           
+                                                final snackBar =
+                                                    SnackBar(content: Text('Xóa kết bạn thành công'));
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(snackBar);  
+                                                    setState((){});                                                   
+                                              } catch (e) {
+                                                final snackBar =
+                                                    SnackBar(content: Text('Có lỗi xảy ra !'));
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(snackBar);
+                                      }
+                                    }
+                                  ),
                                ),
                              );  
                            }
