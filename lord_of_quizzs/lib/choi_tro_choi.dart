@@ -7,6 +7,8 @@ import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lord_of_quizzs/model/bang_xep_hang_object.dart';
+import 'package:lord_of_quizzs/model/bang_xep_hang_provider.dart';
 import 'package:lord_of_quizzs/model/bo_cau_hoi_object.dart';
 import 'package:lord_of_quizzs/model/bo_cau_hoi_provider.dart';
 import 'package:lord_of_quizzs/model/cau_hoi_object.dart';
@@ -49,33 +51,23 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
   int seconds = maxSeconds;
   Timer? timer;
   late int idBoCauHoi, soCauHoiBoCauHoi, troGiup5050, idCauHoi, khangia;
-  int diem = 0,
-      mang = 5,
-      i = 0,
-      soCauHoi = 1,
-      soCauDung = 0,
-      soLanMuaCredit = 0;
+  int diem = 0, mang = 5, i = 0, soCauHoi = 1, soCauDung = 0, soLanMuaCredit = 0;
   String a = "", b = "", c = "", d = "", dapAn = "";
-  bool truyenA = true,
-      truyenB = true,
-      truyenC = true,
-      truyenD = true,
-      suDungTroGiup5050 = true,
-      khanGia = true,
-      goiDien = true,
-      daMuaDapAn = false,
-      highlight = false,
-      truyenCre = false;
+  bool truyenA = true, truyenB = true, truyenC = true, truyenD = true, suDungTroGiup5050 = true, khanGia = true,
+      goiDien = true, daMuaDapAn = false, highlight = false, truyenCre = false;
   // ignore: unnecessary_new
   Random random = new Random();
   List<ThongTinObject> thongTin = [];
+  List<BangXepHangObject> thongTinBangXepHang =[];
   CollectionReference nguoiChoi = FirebaseFirestore.instance.collection('nguoi_choi');
   DateTime ngay = DateTime.now();
-  late var docID, querySnapshots;
+  late var docID, querySnapshots, docIDBXH;
   CollectionReference user = FirebaseFirestore.instance.collection("thong_tin");
+  CollectionReference bangXepHang = FirebaseFirestore.instance.collection("bang_xep_hang");
   late num credit_0;
+  num diemBXH = 0;
   late String ngayHienTai;
-
+  bool hasDataBXH = false;
   static int c1 = Random().nextInt(60) + 41;
   static int c2 = Random().nextInt((100 - c1) + 1);
   static int c3 = Random().nextInt((100 - c1 - c2) + 1);
@@ -97,6 +89,12 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
     setState(() {});
     thongTin = data;
   }
+  //Lấy thông tin tất cả user trong bảng xếp hạng
+  void loadBangXepHang() async{
+    final data = await BangXepHangProvider.getAllBXH();
+    setState(() {});
+    thongTinBangXepHang = data;
+  }
 //Lấy ngày hiện tại
   void getNgay() {
     ngayHienTai = DateFormat('dd/MM/yyyy').format(ngay);
@@ -107,6 +105,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
     super.initState();
     getNgay();
     loadThongTin();
+    loadBangXepHang();
     startTimer();
   }
 //Cập nhật tiền ảo
@@ -118,14 +117,46 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
     return nguoiChoi.add({
       'email': email,
       'ten_nguoi_choi': thongTin[0].name,
-      'id_linh_vuc': idLinhVucState,
       'ngay_choi': ngayHienTai,
       'so_cau_dung': soCauDung,
       'ngay_choi_2':ngay,
       'tong_diem': diem
     });
   }
-//Ngừng chơi nếu hết thời gian và hết mạng 
+  //Thêm thông tin bảng xếp hạng
+  Future<void> addBXH() {
+    return bangXepHang.add({
+      'email': email,
+      'id_linh_vuc': idLinhVucState,
+      'tong_diem': diem
+    });
+  }
+  //Cập nhật bảng xếp hạng
+ Future<void> updateBXH() async {
+    querySnapshots = await bangXepHang.get();
+    for (var snapshot in querySnapshots.docs) {
+       if (email == snapshot['email'] && idLinhVucState == snapshot['id_linh_vuc']) {
+         docIDBXH = snapshot.id;
+     }
+    }
+    return bangXepHang.doc(docIDBXH).update({'tong_diem': diem});
+  }
+    //Thêm hoặc update user bảng xếp hạng
+  Future<void> userBXH() async{
+    for(int i=0; i<thongTinBangXepHang.length;i++){
+      if(email == thongTinBangXepHang[i].email && idLinhVucState == thongTinBangXepHang[i].idLinhVuc){
+        hasDataBXH = true;
+        diemBXH = thongTinBangXepHang[i].tongDiem;
+      }
+    }
+    if(hasDataBXH == true && diem > diemBXH){
+      updateBXH();
+    }
+    if(hasDataBXH == false){
+      addBXH();
+    }
+  }
+//Ngừng chơi nếu hết thời gian và hết mạng
   @override
   void setState(VoidCallback fn) {
     if (seconds == 1) {
@@ -140,6 +171,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
       } else {
         timer?.cancel();
         addNguoiChoi();
+        userBXH();
         showDialog(
             barrierDismissible: false,
             context: context,
@@ -894,47 +926,26 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                                               onPressed:
                                                                   () async {
                                                                 try {
-                                                                  if (credit_0 >=
-                                                                      (soLanMuaCredit +
-                                                                              1) *
-                                                                          100) {
-                                                                    daMuaDapAn =
-                                                                        true;
-                                                                    querySnapshots =
-                                                                        await user
-                                                                            .get();
-                                                                    for (var snapshot
-                                                                        in querySnapshots
-                                                                            .docs) {
-                                                                      if (email ==
-                                                                          snapshot[
-                                                                              'email']) {
-                                                                        docID =
-                                                                            snapshot.id;
-                                                                        credit_0 =
-                                                                            snapshot['tien_ao'];
+                                                                  if (credit_0 >=  (soLanMuaCredit + 1) *  100) {
+                                                                    daMuaDapAn =  true;
+                                                                    querySnapshots = await user.get();
+                                                                    for (var snapshot in querySnapshots.docs) {
+                                                                      if (email == snapshot['email']) {
+                                                                        docID = snapshot.id;
+                                                                        credit_0 = snapshot['tien_ao'];
                                                                       }
                                                                     }
                                                                     soLanMuaCredit++;
                                                                     credit_0 -=
-                                                                        (soLanMuaCredit *
-                                                                            100);
-                                                                    updateUser(
-                                                                        docID,
-                                                                        credit_0);
+                                                                        (soLanMuaCredit * 100);
+                                                                    updateUser( docID, credit_0);
                                                                     setState(
                                                                         () {});
 
-                                                                    Navigator.pop(
-                                                                        context);
+                                                                    Navigator.pop(context);
                                                                   } else {
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                    showDialog(
-                                                                        context:
-                                                                            context,
-                                                                        builder:
-                                                                            (context) {
+                                                                    Navigator.pop( context);
+                                                                    showDialog(context: context, builder:(context) {
                                                                           return AlertDialog(
                                                                             title:
                                                                                 Text('Thông báo'),
@@ -1013,6 +1024,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
     } else {
       timer?.cancel();
       addNguoiChoi();
+      userBXH();
       showDialog(
           barrierDismissible: false,
           context: context,
@@ -1040,6 +1052,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
   void truMang() {
     timer?.cancel();
     addNguoiChoi();
+    userBXH();
     showDialog(
         barrierDismissible: false,
         context: context,

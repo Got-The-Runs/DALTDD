@@ -25,6 +25,7 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
   String email;
   ChonLinhVucState({Key? key, required this.email});
   late int randomIdBoCauHoi;
+  int hasData =0;
   var querySnapshots;
   CollectionReference boCauHoi = FirebaseFirestore.instance.collection("bo_cau_hoi");
   List<LinhVucObject> linhVuc = [];
@@ -51,11 +52,20 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
             List<ThongTinObject> thongTin = snapshot.data!;
             email = thongTin[0].email;
             return Scaffold(
-              extendBodyBehindAppBar: true,
               appBar: AppBar(
-                centerTitle: true,
-                elevation: 0,
-                backgroundColor: Colors.transparent,
+                title: Text( 'Chọn Lĩnh Vực', style: TextStyle( fontSize: 23, color: Colors.white,fontWeight: FontWeight.bold)),
+                 flexibleSpace:  Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Color(0xFF701ebd),
+                        Color.fromARGB(255, 57, 86, 250),
+                      ],
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                    ),
+                  ),
+                ),
                 leading: IconButton(
                   icon: const Icon(Icons.chevron_left),
                   onPressed: () => Navigator.pop(context),
@@ -75,104 +85,64 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
                  Padding(padding: EdgeInsets.only(right: 20))
                 ],
               ),
-              body: Container(
-                height: MediaQuery.of(context).size.height,
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Color(0xFF701ebd),
-                      Color.fromARGB(255, 57, 86, 250),
-                    ],
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomLeft,
-                  ),
-                ),
-                // physics:const NeverScrollableScrollPhysics(),
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.only(top: 80),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Column(
-                              children: <Widget>[
-                                Text(
-                                 thongTin[0].name,
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const <Widget>[
-                              Icon(
-                                CupertinoIcons.heart_fill,
-                                size: 20,
-                                color: Colors.white,
-                              ),
-                              Text('5', style: TextStyle(fontSize: 20, color: Colors.white),
-                              ),                            
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.only(top: 20),
-                        child: const Text(
-                          'Chọn Lĩnh Vực ',
-                          style: TextStyle(
-                            fontSize: 35,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      ListView.builder(
-                        padding: EdgeInsets.only(bottom: 20, top: 20),
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: linhVuc.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 25, vertical: 15),
-                            width: 350,
-                            height: 85, 
-                            child: OutlinedButton(
-                              onPressed: ()async {    
-                                try {
-                                  querySnapshots = await boCauHoi.get();
-                                  for (var snapshot in querySnapshots.docs) {
-                                      if (linhVuc[index].idLinhVuc == snapshot['id_linh_vuc']) {
-                                          int hasdata =1;
-                                          if(hasdata == 1){
-                                            // ignore: use_build_context_synchronously
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) => ChoiTroChoi( idLinhVuc: linhVuc[index].idLinhVuc, email: email,
-                                                          randomIdBoCauHoi: randomIdBoCauHoi,
-                                                ),
-                                              ));
-                                          break;
-                                          }
-                                      }
+              body: Stack(children: [
+                Container(
+                  height: MediaQuery.of(context).size.height,
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Color(0xFF701ebd),
+                        Color.fromARGB(255, 57, 86, 250),
+                      ],
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                    ),
+                  ),  
+                ),          
+                ListView.builder(
+                  padding: EdgeInsets.only(bottom: 20, top: 20),
+                  shrinkWrap: true,
+                  itemCount: linhVuc.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      padding: EdgeInsets.symmetric(
+                      horizontal: 25, vertical: 15),
+                      width: 350,
+                      height: 85, 
+                      child: OutlinedButton(
+                        onPressed: ()async {    
+                          try {
+                            querySnapshots = await boCauHoi.get();
+                              for (var snapshot in querySnapshots.docs) {
+                                if (linhVuc[index].idLinhVuc == snapshot['id_linh_vuc']) {
+                                  hasData = 1;
+                                  if(hasData == 1){
+                                    // ignore: use_build_context_synchronously
+                                     Navigator.push( context,
+                                       MaterialPageRoute( 
+                                        builder: (context) => 
+                                          ChoiTroChoi(idLinhVuc: linhVuc[index].idLinhVuc, email: email,
+                                                        randomIdBoCauHoi: randomIdBoCauHoi
+                                        ),
+                                      )
+                                    );
+                                    break;
                                   }
                                 }
-                                catch(e){
-                                              final snackBar =
-                                            SnackBar(content: Text('Không có dữ liệu câu hỏi!'));
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(snackBar);
+                              }
+                              if(hasData ==0){
+                                  final snackBar = SnackBar(content: Text('Lĩnh vực này đang được cập nhật'));
+                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                return;
                                 }
-                              },               // ignore: sort_child_properties_last
+                            }
+                            catch(e){
+                              final snackBar = SnackBar(content: Text('Lĩnh vực này đang được cập nhật'));
+                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                return;
+                                }
+                              },               
+                              // ignore: sort_child_properties_last
                               child: Text(
                                 linhVuc[index].tenLinhVuc,
                                 style: TextStyle(
@@ -185,18 +155,20 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
                                       const BorderSide(
                                           color: Colors.white,
                                           width: 2.0,
-                                          style: BorderStyle.solid))),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
+                                          style: BorderStyle.solid
+                              )
+                            )
+                          ),
+                        ),
+                      );
+                    },
                   ),
-                ),
+                ]
               ),
             );
           }
-          return Text('');
-        });
+        return Text('');
+      }
+    );
   }
 }

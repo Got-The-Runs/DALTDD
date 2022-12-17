@@ -31,20 +31,35 @@ class LichSuState extends State<LichSu> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             List<NguoiChoiObject> nguoiChoi = snapshot.data!;
-            for (int i = 0; i < nguoiChoi.length; i++) {}
             return Scaffold(
-              extendBodyBehindAppBar: true,
+              // extendBodyBehindAppBar: true,
               appBar: AppBar(
                 centerTitle: true,
-                elevation: 0,
-                backgroundColor: Colors.transparent,
+                title: Text( 'Lịch sử chơi', style: TextStyle( fontSize: 25, color: Colors.white,fontWeight: FontWeight.bold),
+                ),
+                // elevation: 0,
+                 flexibleSpace:  Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Color(0xFF701ebd),
+                        Color.fromARGB(255, 57, 86, 250),
+                      ],
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                    ),
+                  ),
+                ),
+                // backgroundColor: Colors.lightBlue,
                 leading: IconButton(
                   icon: const Icon(Icons.chevron_left),
                   onPressed: () => Navigator.pop(context),
                   iconSize: 30,
                 ),
               ),
-              body: Container(
+              body: Stack(
+                children: [
+                Container(
                 height: MediaQuery.of(context).size.height,
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
@@ -56,30 +71,13 @@ class LichSuState extends State<LichSu> {
                     end: Alignment.bottomLeft,
                   ),
                 ),
-                child: SingleChildScrollView(
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                      Container(
-                        padding: const EdgeInsets.all(25),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.only(top: 40, bottom: 10),
-                        child: const Text(
-                          'Lịch sử chơi',
-                          style: TextStyle(
-                              fontSize: 30,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      ListView.builder(
+                ),           
+                  ListView.builder(
                         padding: EdgeInsets.only(bottom: 20, top: 10),
-                        physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: nguoiChoi.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return Card(
+                            return Card(
                             margin: EdgeInsets.only(
                                 left: 20, right: 20, top: 5, bottom: 5),
                             shape: const OutlineInputBorder(
@@ -89,26 +87,31 @@ class LichSuState extends State<LichSu> {
                             ),
                             shadowColor: Colors.blueGrey,
                             child: ListTile(
+                              leading: CircleAvatar(
+                                child: Image.asset('images/Logo.png'),
+                              ),   
                               title: Text(nguoiChoi[index].tenNguoiChoi,
                                   style: TextStyle(fontSize: 20)),
                               subtitle: Text(
                                 nguoiChoi[index].ngayChoi,
-                                style: TextStyle(fontSize: 20),
+                                style: TextStyle(fontSize: 19),
                               ),
                               trailing: Text(
                                   "Số câu: ${nguoiChoi[index].soCauDung} \nĐiểm: ${nguoiChoi[index].tongDiem}",
                                   style: TextStyle(
                                     fontSize: 20,
-                                  )),
-                            ),
-                          );
-                        },
-                      ),
-                    ])),
+                            )
+                          ) ,
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
             );
           }
-          return Text('');
-        });
+        return Text('');
+      }
+    );
   }
 }
