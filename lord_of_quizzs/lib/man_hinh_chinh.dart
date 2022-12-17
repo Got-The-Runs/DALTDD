@@ -387,7 +387,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => BanBe(
+                              builder: (context) => BanBe(email: email,
                               ),
                             ),
                           );

@@ -7,16 +7,16 @@ import 'package:lord_of_quizzs/model/thong_tin_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TimKiemBanBe extends StatefulWidget{
-  // String email;
-  // TimKiemBanBe({Key? key, required this.email}) : super(key: key);
+  String email;
+  TimKiemBanBe({Key? key, required this.email}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
-    return TimKiemBanBeState();
+    return TimKiemBanBeState(email: email);
   }
 }
 class TimKiemBanBeState extends State<TimKiemBanBe>{
-  //  String email;
-  // TimKiemBanBeState({Key? key, required this.email});
+   String email;
+  TimKiemBanBeState({Key? key, required this.email});
   CollectionReference user = FirebaseFirestore.instance.collection("thong_tin");
   var txtSreach = TextEditingController();
   String fill = "";
@@ -24,7 +24,6 @@ class TimKiemBanBeState extends State<TimKiemBanBe>{
   late String temp;
   List<ThongTinObject> thongTin=[];
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  String email = "";
   bool laBanBe = false, laBanBeAccept = false;
   void getEmail() async {
     final user = _auth.currentUser;
@@ -58,14 +57,14 @@ class TimKiemBanBeState extends State<TimKiemBanBe>{
                                   querySnapshots = await user.get();
                                     for (var snapshot in querySnapshots.docs) {
                                       temp = snapshot['ten_nguoi_choi'];
-                                      if ( temp.toUpperCase().contains(txtSreach.text.toUpperCase()) == true) {
+                                      if ( temp.toUpperCase().contains(txtSreach.text.toUpperCase()) == true && snapshot['email'] != email) {
                                         ThongTinObject Obj = ThongTinObject(snapshot['ten_nguoi_choi'], snapshot['email'], 0, 1);  
                                         thongTin.add(Obj);
                                       }
                                     }
                                   } catch (e) {
                                     final snackBar =
-                                        SnackBar(content: Text('Không tìm thấy'));
+                                        SnackBar(content: Text('Lỗi kết nối'));
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(snackBar);
                                   }
@@ -164,12 +163,16 @@ class TimKiemBanBeState extends State<TimKiemBanBe>{
                                         title: Text( thongTin[index].name, style: TextStyle(fontSize: 20)),
                                         trailing: IconButton(icon: Icon(laBanBe == true?Icons.people:laBanBeAccept==true?Icons.replay_outlined:Icons.person_add),
                                           onPressed: (){
-                                          if(laBanBe == true && laBanBeAccept == false){
+                                          if(laBanBe == true && laBanBeAccept == true){
                                               final snackBar = SnackBar(content: Text('Bạn và ${thongTin[index].name} đang là bạn bè'));
                                             ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                           }
-                                          if(laBanBeAccept == true && laBanBe == false){
+                                          else if (laBanBeAccept == true && laBanBe == false){
                                               final snackBar = SnackBar(content: Text('Đang chờ ${thongTin[index].name} chấp nhận kết bạn'));
+                                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                          }
+                                          else {
+                                            final snackBar = SnackBar(content: Text('Gửi lời mời kết bạn thành công'));
                                             ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                           }
                                   },
@@ -191,3 +194,4 @@ class TimKiemBanBeState extends State<TimKiemBanBe>{
       );
     }
   }
+  
