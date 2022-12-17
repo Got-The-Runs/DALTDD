@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lord_of_quizzs/danh_sach_ban_be.dart';
 import 'package:lord_of_quizzs/loi_moi.dart';
+import 'package:lord_of_quizzs/tim_kiem_ban_be.dart';
 
 class BanBe extends StatefulWidget{
   @override
@@ -39,13 +40,11 @@ class BanBeState extends State<BanBe> with SingleTickerProviderStateMixin{
                     IconButton(
                       icon: const Icon(Icons.person_add),
                       onPressed: (() {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //       builder: (context) => MuaCredit(
-                        //         email: email,
-                        //       ),
-                        //     ));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => TimKiemBanBe(),
+                            ));
                       }),
                       iconSize: 30,
                     ),
