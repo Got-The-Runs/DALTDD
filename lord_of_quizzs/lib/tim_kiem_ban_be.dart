@@ -18,10 +18,12 @@ class TimKiemBanBeState extends State<TimKiemBanBe>{
    String email;
   TimKiemBanBeState({Key? key, required this.email});
   CollectionReference user = FirebaseFirestore.instance.collection("thong_tin");
+  CollectionReference loiMoiKetBan = FirebaseFirestore.instance.collection("ban_be");
   var txtSreach = TextEditingController();
   String fill = "";
     var querySnapshots;
   late String temp;
+  var docID;
   List<ThongTinObject> thongTin=[];
   final FirebaseAuth _auth = FirebaseAuth.instance;
   bool laBanBe = false, laBanBeAccept = false;
@@ -30,6 +32,20 @@ class TimKiemBanBeState extends State<TimKiemBanBe>{
     if (user != null) {
       email = user.email.toString();
     }
+  }
+  Future<void> insertLoiMoi(var emailBB) {
+    return loiMoiKetBan.add({
+      'email':email,
+      'email_ban_be':emailBB,
+      'trang_thai':2});
+        
+  }
+  Future<void> insertGuiLoiMoi(var emailBB) {
+    return loiMoiKetBan.add({
+      'email':emailBB,
+      'email_ban_be':email,
+      'trang_thai':0});
+        
   }
   @override
   Widget build(BuildContext context) {
@@ -129,13 +145,14 @@ class TimKiemBanBeState extends State<TimKiemBanBe>{
                   itemCount: thongTin.length == 0?0:thongTin.length,
                   itemBuilder: (BuildContext context, int index) {
                       return FutureBuilder<List<BanBeObject>>(
-                             future: BanBeProvider.getBanBeRequest(email),
+                             future: BanBeProvider.getBanBeRequest1(email),
                              builder: (context, snapshot) {
                                if (snapshot.hasData) {
                                 List<BanBeObject> banBeAccept = snapshot.data!;
                                 for(int i=0;i<banBe.length;i++){
                                   if(thongTin[index].email == banBe[i].emailBanBe){                  
                                      laBanBe = true;
+                                     break;
                                   }
                                   else{
                                     laBanBe = false;
@@ -144,6 +161,7 @@ class TimKiemBanBeState extends State<TimKiemBanBe>{
                                 for(int j=0; j<banBeAccept.length;j++){
                                   if(thongTin[index].email == banBeAccept[j].emailBanBe){
                                     laBanBeAccept = true;
+                                    break;
                                   } else{
                                     laBanBeAccept = false;
                                   }
@@ -163,7 +181,7 @@ class TimKiemBanBeState extends State<TimKiemBanBe>{
                                         title: Text( thongTin[index].name, style: TextStyle(fontSize: 20)),
                                         trailing: IconButton(icon: Icon(laBanBe == true?Icons.people:laBanBeAccept==true?Icons.replay_outlined:Icons.person_add),
                                           onPressed: (){
-                                          if(laBanBe == true && laBanBeAccept == true){
+                                          if(laBanBe == true && laBanBeAccept == false){
                                               final snackBar = SnackBar(content: Text('Bạn và ${thongTin[index].name} đang là bạn bè'));
                                             ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                           }
@@ -172,6 +190,8 @@ class TimKiemBanBeState extends State<TimKiemBanBe>{
                                             ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                           }
                                           else {
+                                            insertLoiMoi(thongTin[index].email);
+                                            insertGuiLoiMoi(thongTin[index].email);
                                             final snackBar = SnackBar(content: Text('Gửi lời mời kết bạn thành công'));
                                             ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                           }

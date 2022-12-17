@@ -17,7 +17,16 @@ class BanBeProvider{
   static Future<List<BanBeObject>> getBanBeRequest(String email) async {
     List<BanBeObject> listBanBe = []; 
     final snapshot = await FirebaseFirestore.instance.collection("ban_be")
-    .where('email', isEqualTo: email).where('trang_thai', isEqualTo: 0).get();
+    .where('email', isEqualTo: email ).where('trang_thai', isEqualTo: 0).get();
+    // ignore: no_leading_underscores_for_local_identifiers
+     listBanBe = snapshot.docs.map((json) => BanBeObject.fromJson(json.data()as Map<String, dynamic>)).toList();
+    return listBanBe;
+  }
+  static Future<List<BanBeObject>> getBanBeRequest1(String email) async {
+    List<BanBeObject> listBanBe = []; 
+    List<int> tempint = [0,2];
+    final snapshot = await FirebaseFirestore.instance.collection("ban_be")
+    .where('email', isEqualTo: email ).where('trang_thai', whereIn: tempint).get();
     // ignore: no_leading_underscores_for_local_identifiers
      listBanBe = snapshot.docs.map((json) => BanBeObject.fromJson(json.data()as Map<String, dynamic>)).toList();
     return listBanBe;
