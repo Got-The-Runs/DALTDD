@@ -55,6 +55,10 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
   String a = "", b = "", c = "", d = "", dapAn = "";
   bool truyenA = true, truyenB = true, truyenC = true, truyenD = true, suDungTroGiup5050 = true, khanGia = true,
       goiDien = true, daMuaDapAn = false, highlight = false, truyenCre = false;
+  List<Color> cau1 = [Colors.white];
+  List<Color> cau2 =[ Colors.white];
+  List<Color> cau3 = [Colors.white];
+  List<Color> cau4 = [Colors.white];
   // ignore: unnecessary_new
   Random random = new Random();
   List<ThongTinObject> thongTin = [];
@@ -72,7 +76,14 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
   static int c2 = Random().nextInt((100 - c1) + 1);
   static int c3 = Random().nextInt((100 - c1 - c2) + 1);
   static int c4 = 100 - c1 - c2 - c3;
-  
+
+  //resetColor
+  resetColor(){
+      cau1[0] = Colors.white;
+      cau2[0] =Colors.white;
+      cau3[0] =Colors.white;
+      cau4[0] = Colors.white;
+  }
   //Đếm thời gian
   void startTimer() {
     timer = Timer.periodic(const Duration(seconds: 1), (_) {
@@ -95,7 +106,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
     setState(() {});
     thongTinBangXepHang = data;
   }
-//Lấy ngày hiện tại
+  //Lấy ngày hiện tại
   void getNgay() {
     ngayHienTai = DateFormat('dd/MM/yyyy').format(ngay);
   }
@@ -232,8 +243,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                             if (truyenCre == false) {
                               credit_0 = thongTin[0].money;
                               truyenCre = true;
-                            }
-
+                            }                                           
                             return WillPopScope(
                               onWillPop: () async => false,
                               child: Scaffold(
@@ -359,7 +369,9 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                      Padding(padding: EdgeInsets.only(right: 20))
                                   ],
                                 ),
-                                body: Container(
+                                body: Stack(
+                                children: [
+                                Container(
                                   decoration: const BoxDecoration(
                                     gradient: LinearGradient(
                                       colors: [
@@ -370,9 +382,10 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                       end: Alignment.bottomLeft,
                                     ),
                                   ),
+                                ),
                                   // child: SingleChildScrollView(
                                   // physics:const NeverScrollableScrollPhysics(),
-                                  child: Column(
+                                 Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Container(
@@ -472,16 +485,31 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                                   truyenB = true;
                                                   truyenC = true;
                                                   truyenD = true;
-                                                  ngungChoi(soCauHoiBoCauHoi);
+                                                  cau1[0] = Colors.lightGreen;
+                                                  Future.delayed(
+                                                    const Duration(seconds: 1), () {
+                                                   setState((){
+                                                      ngungChoi(soCauHoiBoCauHoi);
+                                                    });  
+                                                  }  
+                                                  );
                                                 } else {
                                                   mang = mang - 1;
                                                   truyenB = true;
                                                   truyenC = true;
                                                   truyenD = true;
+                                                  cau1[0] = Colors.red;
                                                   if (mang == 0) {
                                                     truMang();
-                                                  } else
-                                                    ngungChoi(soCauHoiBoCauHoi);
+                                                  } else {
+                                                    Future.delayed(
+                                                    const Duration(seconds: 1), () {
+                                                   setState((){
+                                                      ngungChoi(soCauHoiBoCauHoi);
+                                                    });  
+                                                  }  
+                                                  );              
+                                                  }
                                                 }
                                               });
                                               daMuaDapAn = false;
@@ -498,14 +526,14 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                                             1 &&
                                                         daMuaDapAn == true
                                                     ? Colors.green
-                                                    : Colors.white,
+                                                    : Colors.black,
                                               ),
                                             ),
                                           ),
                                           style: ButtonStyle(
                                               backgroundColor:
                                                   MaterialStateProperty.all(
-                                                      Colors.transparent),
+                                                   cau1[0]),
                                               side: MaterialStateProperty.all(
                                                   const BorderSide(
                                                       color: Colors.white,
@@ -530,19 +558,34 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                                   truyenA = true;
                                                   truyenC = true;
                                                   truyenD = true;
-                                                  ngungChoi(soCauHoiBoCauHoi);
+                                                  cau2[0] = Colors.lightGreen;
+                                                   Future.delayed(
+                                                    const Duration(seconds: 1), () {
+                                                   setState((){
+                                                      ngungChoi(soCauHoiBoCauHoi);
+                                                    });  
+                                                  }  
+                                                  );  
                                                 } else {
                                                   mang = mang - 1;
                                                   truyenA = true;
                                                   truyenC = true;
                                                   truyenD = true;
+                                                  cau2[0] = Colors.red;
                                                   if (mang == 0) {
                                                     truMang();
-                                                  } else
-                                                    ngungChoi(soCauHoiBoCauHoi);
+                                                  } else {
+                                                   Future.delayed(
+                                                    const Duration(seconds: 1), () {
+                                                   setState((){
+                                                      ngungChoi(soCauHoiBoCauHoi);
+                                                    });  
+                                                  }  
+                                                  );  
+                                                  }
                                                 }
                                               });
-                                              daMuaDapAn = false;
+                                              daMuaDapAn = false; 
                                             }
                                           },
                                           // ignore: sort_child_properties_last
@@ -556,14 +599,14 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                                             2 &&
                                                         daMuaDapAn == true
                                                     ? Colors.green
-                                                    : Colors.white,
+                                                    : Colors.black,
                                               ),
                                             ),
                                           ),
                                           style: ButtonStyle(
                                               backgroundColor:
                                                   MaterialStateProperty.all(
-                                                      Colors.transparent),
+                                                 cau2[0]),
                                               side: MaterialStateProperty.all(
                                                   const BorderSide(
                                                       color: Colors.white,
@@ -588,16 +631,31 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                                   truyenA = true;
                                                   truyenB = true;
                                                   truyenD = true;
-                                                  ngungChoi(soCauHoiBoCauHoi);
+                                                  cau3[0] = Colors.lightGreen;
+                                                   Future.delayed(
+                                                    const Duration(seconds: 1), () {
+                                                   setState((){
+                                                      ngungChoi(soCauHoiBoCauHoi);
+                                                    });  
+                                                  }  
+                                                  );
                                                 } else {
                                                   mang = mang - 1;
                                                   truyenA = true;
                                                   truyenB = true;
                                                   truyenD = true;
+                                                  cau3[0] = Colors.red;
                                                   if (mang == 0) {
                                                     truMang();
-                                                  } else
-                                                    ngungChoi(soCauHoiBoCauHoi);
+                                                  } else {
+                                                     Future.delayed(
+                                                    const Duration(seconds: 1), () {
+                                                   setState((){
+                                                      ngungChoi(soCauHoiBoCauHoi);
+                                                    });  
+                                                  }  
+                                                  );
+                                                  }
                                                 }
                                               });
                                               daMuaDapAn = false;
@@ -614,14 +672,14 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                                             3 &&
                                                         daMuaDapAn == true
                                                     ? Colors.green
-                                                    : Colors.white,
+                                                    : Colors.black,
                                               ),
                                             ),
                                           ),
                                           style: ButtonStyle(
                                               backgroundColor:
                                                   MaterialStateProperty.all(
-                                                      Colors.transparent),
+                                                    cau3[0]),
                                               side: MaterialStateProperty.all(
                                                   const BorderSide(
                                                       color: Colors.white,
@@ -647,17 +705,31 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                                     truyenA = true;
                                                     truyenB = true;
                                                     truyenC = true;
-                                                    ngungChoi(soCauHoiBoCauHoi);
+                                                    cau4[0] = Colors.lightGreen;
+                                                   Future.delayed(
+                                                    const Duration(seconds: 1), () {
+                                                   setState((){
+                                                      ngungChoi(soCauHoiBoCauHoi);
+                                                    });  
+                                                  }  
+                                                  );   
                                                   } else {
                                                     mang = mang - 1;
                                                     truyenA = true;
                                                     truyenB = true;
                                                     truyenC = true;
+                                                    cau4[0] = Colors.red;
                                                     if (mang == 0) {
                                                       truMang();
-                                                    } else
-                                                      ngungChoi(
-                                                          soCauHoiBoCauHoi);
+                                                    } else {
+                                                      Future.delayed(
+                                                    const Duration(seconds: 1), () {
+                                                      setState((){
+                                                          ngungChoi(soCauHoiBoCauHoi);
+                                                        });  
+                                                      }  
+                                                      );  
+                                                    } 
                                                   }
                                                 });
                                                 daMuaDapAn = false;
@@ -670,26 +742,22 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                                 "D: $d",
                                                 style: TextStyle(
                                                   fontSize: 20,
-                                                  color:
-                                                      chiTietCauHoi[0].dapAn ==
-                                                                  4 &&
-                                                              daMuaDapAn == true
-                                                          ? Colors.green
-                                                          : Colors.white,
+                                                  color: chiTietCauHoi[0].dapAn == 4 && daMuaDapAn == true ? Colors.green: Colors.black,
                                                 ),
                                               ),
                                             ),
                                             style: ButtonStyle(
                                                 backgroundColor:
                                                     MaterialStateProperty.all(
-                                                        Colors.transparent),
+                                                      cau4[0]),
                                                 side: MaterialStateProperty.all(
-                                                    const BorderSide(
-                                                        color: Colors.white,
+                                                    BorderSide(
+                                                        color: chiTietCauHoi[0].dapAn == 4 && daMuaDapAn == true ? Colors.green: Colors.white,
                                                         width: 2.0,
                                                         style: BorderStyle
                                                             .solid))),
-                                          )),
+                                            )
+                                          ),
                                           Container(
                                             padding: EdgeInsets.only(bottom: 5)
                                           ),
@@ -972,11 +1040,12 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                                               onPressed: () {
                                                                 Navigator.pop(
                                                                     context);
-                                                              },
-                                                              child: Text('No'))
-                                                        ],
-                                                      );
-                                                    });
+                                                          },
+                                                        child: Text('No'))
+                                                      ],
+                                                    );
+                                                  }
+                                                );
                                               }
                                             },
                                             child: Icon(Icons.diamond_rounded,
@@ -996,31 +1065,38 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                                           134, 158, 158, 158),
                                                   width: 2.0,
                                                   style: BorderStyle.solid,
-                                                ))),
-                                          ),
-                                        ],
-                                      )
+                                            )
+                                          )
+                                        ),
+                                      ),
                                     ],
-                                  ),
-                                ),
+                                  )
+                                ],
                               ),
-                            );
-                          }
-                          return Text('');
-                        });
+                            ]
+                          ),
+                        ),
+                      );
+                    }
+                    return Text('');
                   }
-                  return Text('');
-                });
-          }
-          return Text('');
-        });
+                );
+              }
+              return Text('');
+            }
+          );
+        }
+        return Text('');
+      }
+    );
   }
 
   void ngungChoi(int cauHoi) {
     if (soCauHoi < cauHoi) {
       soCauHoi++;
       i++;
-      seconds = maxSeconds;
+      seconds = maxSeconds;   
+      resetColor();
     } else {
       timer?.cancel();
       addNguoiChoi();
@@ -1047,6 +1123,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
             );
           });
     }
+
   }
 
   void truMang() {
