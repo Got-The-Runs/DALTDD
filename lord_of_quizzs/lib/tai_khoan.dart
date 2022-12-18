@@ -54,13 +54,35 @@ class ManHinhTaiKhoanState extends State<ManHinhTaiKhoan> {
             List<ThongTinObject> thongTin = snapshot.data!;
             email = thongTin[0].email;
             return Scaffold(
-              extendBodyBehindAppBar: true,
-              appBar: AppBar(
-                centerTitle: true,
-                elevation: 0,
-                backgroundColor: Colors.transparent,
+               appBar: AppBar(
+              centerTitle: true,
+              title: const Text( 'Tài Khoản',
+                        style: TextStyle( fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center
+                      ),
+              // elevation: 0,
+              // backgroundColor: Colors.transparent,
+               flexibleSpace:  Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Color(0xFF701ebd),
+                        Color.fromARGB(255, 57, 86, 250),
+                      ],
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                    ),
+                  ),
+                ),
+              leading: IconButton(
+              icon: const Icon(Icons.chevron_left),
+                onPressed: () => Navigator.pop(context),
+                iconSize: 25,  
               ),
-              body: Container(
+            ),
+              body: Stack(
+              children:[
+               Container(
                 height: MediaQuery.of(context).size.height,
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
@@ -72,21 +94,22 @@ class ManHinhTaiKhoanState extends State<ManHinhTaiKhoan> {
                     end: Alignment.bottomLeft,
                   ),
                 ),
-                child: SingleChildScrollView(
+                ),
+                SingleChildScrollView(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        padding: const EdgeInsets.only(top: 70),
+                        padding: const EdgeInsets.only(top: 40),
                         child: Image.asset('images/Logo.png',
                             fit: BoxFit.cover, height: 120, width: 120),
                       ),
                       Container(
                         padding: const EdgeInsets.all(10),
                         child: const Text(
-                          'THÔNG TIN TÀI KHOẢN',
+                          'Thông Tin Tài Khoản',
                           style: TextStyle(
-                              fontSize: 30,
+                              fontSize: 25,
                               color: Colors.white,
                               fontWeight: FontWeight.bold),
                         ),
@@ -199,6 +222,7 @@ class ManHinhTaiKhoanState extends State<ManHinhTaiKhoan> {
                     ],
                   ),
                 ),
+              ]
               ),
             );
           }

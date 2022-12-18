@@ -35,10 +35,23 @@ class BanBeState extends State<BanBe> with SingleTickerProviderStateMixin{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+         toolbarHeight: 40,
          leading: IconButton(
                   icon: const Icon(Icons.chevron_left),
                   onPressed: () => Navigator.pop(context),
                   iconSize: 30,
+                ),
+                 flexibleSpace:  Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Color(0xFF701ebd),
+                        Color.fromARGB(255, 57, 86, 250),
+                      ],
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                    ),
+                  ),
                 ),
               actions: <Widget>[
                     IconButton(
@@ -62,13 +75,29 @@ class BanBeState extends State<BanBe> with SingleTickerProviderStateMixin{
           ],
         ),
       ),
-      body: TabBarView(
-            controller: tabs,
+      body: Stack(children: [
+          Container(
+          height: MediaQuery.of(context).size.height,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color(0xFF701ebd),
+                Color.fromARGB(255, 57, 86, 250),
+              ],
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+            ),
+          ),
+        ),
+        TabBarView(
+              controller: tabs,
              children: [
               DanhSachBanBe(),
               LoiMoi(),
             ],
           ),
+        ]
+      )
     );
   }
 }

@@ -60,7 +60,9 @@ class ManHinhChinhState extends State<ManHinhChinh> {
             credit = thongTin[0].money;
             name = thongTin[0].name;
 
-            return Scaffold(
+            return WillPopScope(
+              onWillPop: () async => false,
+              child: Scaffold(
               extendBodyBehindAppBar: true,
               appBar: AppBar(
                   centerTitle: true,
@@ -253,7 +255,9 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                       iconSize: 30,
                     ),
                   ]),
-              body: Container(
+              body: Stack(
+                children: [
+                Container(
                 height: MediaQuery.of(context).size.height,
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
@@ -265,8 +269,9 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                     end: Alignment.bottomLeft,
                   ),
                 ),
+              ),
                 // child: SingleChildScrollView(
-                child: Column(
+               Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
@@ -275,10 +280,10 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                     Container(
                       padding: const EdgeInsets.all(10),
                       child: Image.asset('images/Logo.png',
-                          fit: BoxFit.cover, height: 120, width: 120),
+                          fit: BoxFit.cover, height: 110, width: 110),
                     ),
                     Container(
-                      padding: const EdgeInsets.only(bottom: 15),
+                      padding: const EdgeInsets.only(bottom: 10),
                       child: Text(
                         name,
                         style: TextStyle(
@@ -291,7 +296,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                       padding:
                           EdgeInsets.symmetric(horizontal: 75, vertical: 15),
                       width: 350,
-                      height: 85,
+                      height: 80,
                       child: OutlinedButton(
                         onPressed: () {
                           Navigator.push(
@@ -322,7 +327,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                       padding:
                           EdgeInsets.symmetric(horizontal: 75, vertical: 15),
                       width: 350,
-                      height: 85,
+                      height: 80,
                       child: OutlinedButton(
                         onPressed: () {
                           Navigator.push(
@@ -351,7 +356,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                       padding:
                           EdgeInsets.symmetric(horizontal: 75, vertical: 15),
                       width: 350,
-                      height: 85,
+                      height: 80,
                       child: OutlinedButton(
                         onPressed: () {
                           Navigator.push(
@@ -381,7 +386,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                       padding:
                           EdgeInsets.symmetric(horizontal: 75, vertical: 15),
                       width: 350,
-                      height: 85,
+                      height: 80,
                       child: OutlinedButton(
                         onPressed: () {
                           Navigator.push(
@@ -410,7 +415,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                       padding:
                           EdgeInsets.symmetric(horizontal: 75, vertical: 15),
                       width: 350,
-                      height: 85,
+                      height: 80,
                       child: OutlinedButton(
                         onPressed: () {
                           Navigator.push(
@@ -432,18 +437,17 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                                 color: Colors.white,
                                 width: 2.0,
                                 style: BorderStyle.solid))),
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(5.5),
-                    )
-                  ],
-                ),
-                ),
-              // ),
+                        ),
+                      ),               
+                    ],
+                  ),  
+                ], 
+              )
+            ),
             );
           }
-          return Text('');
-        });
+        return Text('');
+      }
+    );
   }
 }

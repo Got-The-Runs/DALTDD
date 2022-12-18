@@ -32,7 +32,9 @@ class DangNhapState extends State<DangNhap> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      body: Container(
+      body: Stack(
+      children: [
+      Container(
         height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -44,7 +46,9 @@ class DangNhapState extends State<DangNhap> {
             end: Alignment.bottomLeft,
           ),
         ),
-        child: SingleChildScrollView(
+      ),
+        SingleChildScrollView(
+          // physics: const NeverScrollableScrollPhysics(),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -70,7 +74,7 @@ class DangNhapState extends State<DangNhap> {
                     keyboardType: TextInputType.emailAddress,
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
-                      labelText: 'Tên đăng nhập',
+                      labelText: 'Email',
                       labelStyle: const TextStyle(color: Colors.white),
                       enabledBorder: OutlineInputBorder(
                         borderSide: const BorderSide(color: Colors.white),
@@ -220,12 +224,13 @@ class DangNhapState extends State<DangNhap> {
                         decoration: TextDecoration.underline,
                         fontSize: 20,
                         color: Colors.white),
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

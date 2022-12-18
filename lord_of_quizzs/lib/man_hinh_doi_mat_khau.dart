@@ -55,17 +55,35 @@ class DoiMatKhauState extends State<DoiMatKhau> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        leading: IconButton(
-          icon: const Icon(Icons.chevron_left),
-          onPressed: () => Navigator.pop(context),
-          iconSize: 35,
-        ),
-      ),
-      body: Container(
+              centerTitle: true,
+              title: const Text( 'Đổi Mật Khẩu',
+                        style: TextStyle( fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center
+                      ),
+              // elevation: 0,
+              // backgroundColor: Colors.transparent,
+               flexibleSpace:  Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Color(0xFF701ebd),
+                        Color.fromARGB(255, 57, 86, 250),
+                      ],
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                    ),
+                  ),
+                ),
+              leading: IconButton(
+              icon: const Icon(Icons.chevron_left),
+                onPressed: () => Navigator.pop(context),
+                iconSize: 25,  
+              ),
+            ),
+      body:Stack(
+      children: [
+      Container(
         height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -77,13 +95,14 @@ class DoiMatKhauState extends State<DoiMatKhau> {
             end: Alignment.bottomLeft,
           ),
         ),
-        child: SingleChildScrollView(
+      ),
+         SingleChildScrollView(
           // physics:const NeverScrollableScrollPhysics(),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                padding: const EdgeInsets.only(top: 70, bottom: 20),
+                padding: const EdgeInsets.only(top: 50, bottom: 20),
                 child: Image.asset('images/Logo.png',
                     fit: BoxFit.cover, height: 120, width: 120),
               ),
@@ -92,7 +111,7 @@ class DoiMatKhauState extends State<DoiMatKhau> {
                 child: const Text(
                   'Bạn muốn đổi mật khẩu?',
                   style: TextStyle(
-                      fontSize: 15,
+                      fontSize: 25,
                       color: Colors.white,
                       fontWeight: FontWeight.bold),
                 ),
@@ -216,6 +235,7 @@ class DoiMatKhauState extends State<DoiMatKhau> {
             ],
           ),
         ),
+        ]
       ),
     );
   }

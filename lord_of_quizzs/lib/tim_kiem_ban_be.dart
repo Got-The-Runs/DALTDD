@@ -96,9 +96,11 @@ class TimKiemBanBeState extends State<TimKiemBanBe>{
                 Expanded(
                   child: TextField(
                     controller: txtSreach,
+                    style: const TextStyle(color: Colors.white),
                     decoration: const InputDecoration(
-                        hintText:"Tìm kiếm",
+                        hintText: "Tìm kiếm",
                         border: InputBorder.none,
+                        hintStyle:  TextStyle(color: Colors.white),
                     ),
                   ),
                 ),
@@ -127,6 +129,7 @@ class TimKiemBanBeState extends State<TimKiemBanBe>{
               children:[
               Container(
                 height: MediaQuery.of(context).size.height,
+                
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(colors: 
                   [

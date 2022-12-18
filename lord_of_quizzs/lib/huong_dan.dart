@@ -17,18 +17,35 @@ class HuongDanState extends State<HuongDan> {
   // ignore: dead_code
   Widget build(BuildContext context) {
     return Scaffold(
-              extendBodyBehindAppBar: true,
               appBar: AppBar(
-                centerTitle: true,
-                elevation: 0,
-                backgroundColor: Colors.transparent,
-                leading: IconButton(
-                  icon: const Icon(Icons.chevron_left),
-                  onPressed: () => Navigator.pop(context),
-                  iconSize: 30,
+              centerTitle: true,
+              title: const Text( 'Hướng Dẫn Chơi',
+                        style: TextStyle( fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center
+                      ),
+              // elevation: 0,
+              // backgroundColor: Colors.transparent,
+               flexibleSpace:  Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Color(0xFF701ebd),
+                        Color.fromARGB(255, 57, 86, 250),
+                      ],
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                    ),
+                  ),
                 ),
+              leading: IconButton(
+              icon: const Icon(Icons.chevron_left),
+                onPressed: () => Navigator.pop(context),
+                iconSize: 25,  
               ),
-              body: Container(
+            ),
+              body:Stack(
+              children: [ 
+                Container(
                 height: MediaQuery.of(context).size.height,
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
@@ -40,20 +57,11 @@ class HuongDanState extends State<HuongDan> {
                     end: Alignment.bottomLeft,
                 ),
               ),
-           child: SingleChildScrollView(
+                ),
+            SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                      Container(
-                        padding: const EdgeInsets.only(top: 40, bottom: 10),
-                        child: const Text(
-                          'Hướng Dẫn Chơi',
-                          style: TextStyle(
-                              fontSize: 30,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                    ),              
-                  ),         
+                children: [   
                   Card(
                         margin: EdgeInsets.only(
                                 left: 10, right: 10, top: 10, bottom: 10),
@@ -159,15 +167,17 @@ class HuongDanState extends State<HuongDan> {
                                 child: Container(
                                   padding: EdgeInsets.all(5),
                                   child: Text('   - Mua đáp án bằng credit sẽ dùng credit bạn có để mua đáp án, số credit cần mua đáp án sẽ tăng theo số lần bạn mua.' ,style: TextStyle(fontSize: 15)),
-                                )),
-                              ],
-                            )
-                   ),
-                  )
-                ],
-              )
+                          )
+                        ),
+                      ],
+                    )
+                  ),
+                )
+              ],
+            )
           ),
-              ),
+        ]
+      ),
     );
   }
 }

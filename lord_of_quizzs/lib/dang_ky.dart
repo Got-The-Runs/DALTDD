@@ -29,6 +29,7 @@ class DangKiState extends State<DangKi> {
   final _auth = FirebaseAuth.instance;
   List<ThongTinObject> thongTinEmail= [];
   bool trungEmail = false;
+  bool trungTenNguoiChoi = false;
   bool _obscureText = true;
   bool _obscureText_accuracy = true;
  // ignore: non_constant_identifier_names
@@ -74,17 +75,35 @@ class DangKiState extends State<DangKi> {
     }
 
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.chevron_left),
-          onPressed: () => Navigator.pop(context),
-          iconSize: 35,
-        ),
-      ),
-      body: Container(
+       appBar: AppBar(
+              centerTitle: true,
+              title: const Text( 'Đăng Ký',
+                        style: TextStyle( fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center
+                      ),
+              // elevation: 0,
+              // backgroundColor: Colors.transparent,
+               flexibleSpace:  Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Color(0xFF701ebd),
+                        Color.fromARGB(255, 57, 86, 250),
+                      ],
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                    ),
+                  ),
+                ),
+              leading: IconButton(
+              icon: const Icon(Icons.chevron_left),
+                onPressed: () => Navigator.pop(context),
+                iconSize: 25,  
+              ),
+            ),
+      body:Stack(
+        children: [
+         Container(
             height: MediaQuery.of(context).size.height,
             decoration: const BoxDecoration(
               gradient: LinearGradient(
@@ -101,15 +120,16 @@ class DangKiState extends State<DangKi> {
                 end: Alignment.bottomLeft,
               ),
             ),
-            child: SingleChildScrollView(
+          ),
+            SingleChildScrollView(
                 // physics:const NeverScrollableScrollPhysics(),
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  padding: const EdgeInsets.only(top: 60),
+                  padding:const EdgeInsets.only(top: 10),
                   child: Image.asset('images/Logo.png',
-                      fit: BoxFit.cover, height: 120, width: 120),
+                      fit: BoxFit.cover, height: 110, width: 110),
                 ),
                 Container(
                   padding: const EdgeInsets.only(bottom: 15),
@@ -225,18 +245,20 @@ class DangKiState extends State<DangKi> {
                       if (txtEmail.text == "" ||
                           txtTenNguoiChoi.text == "" ||
                           txtMatKhau.text == "" ||
-                          txtNhapLaiMatKhau.text == "") {
-                        final snackBar = SnackBar(
+                          txtNhapLaiMatKhau.text == "") { 
+                        final snackBar = const SnackBar(
                             content: Text('Chưa điền thông tin tài khoản'));
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       } else if (txtMatKhau.text.length < 6 ||
                           txtMatKhau.text.length > 16) {
-                        final snackBar = SnackBar(
+                        // ignore: prefer_const_declarations
+                        final snackBar =  const SnackBar(
+                          duration: Duration(seconds: 1),
                             content: Text(
                                 'Mật khẩu phải nhập ít nhất 6 ký tự và không quá 16 ký tự'));
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       } else if (txtNhapLaiMatKhau.text != txtMatKhau.text) {
-                        final snackBar = SnackBar(
+                        final snackBar = const SnackBar(
                             content: Text(
                                 'Nhập lại mật khẩu không trùng với mật khẩu'));
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -246,12 +268,23 @@ class DangKiState extends State<DangKi> {
                           if(txtEmail.text == thongTinEmail[i].email){
                               trungEmail=true;
                           }
+                          if(txtTenNguoiChoi.text == thongTinEmail[i].name){
+                            trungTenNguoiChoi = true;
+                          }
                         }
-                        if(trungEmail==true){
-                          final snackBar = SnackBar(
+                        if(trungEmail==true|| trungTenNguoiChoi == true){
+                          if(trungEmail == true){
+                          final snackBar = const SnackBar(
                                   content: Text('Email đã được sử dụng'));
                               ScaffoldMessenger.of(context).showSnackBar(snackBar);
                               trungEmail=false;
+                          }
+                          if(trungTenNguoiChoi == true){
+                             final snackBar = const SnackBar(
+                                  content: Text('Tên người chơi đã được sử dụng'));
+                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              trungTenNguoiChoi=false;
+                          }
                         }else{
                           try {
                            final newUser = await _auth.createUserWithEmailAndPassword(
@@ -266,7 +299,7 @@ class DangKiState extends State<DangKi> {
                           } 
                         } catch (e) {
                           final snackBar =
-                              SnackBar(content: Text('Email đã tồn tại'));
+                              const SnackBar(content: Text('Email đã tồn tại'));
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                           return;
                         }
@@ -288,7 +321,9 @@ class DangKiState extends State<DangKi> {
                   ),
                 ),
               ],
-            )),
+            )
+          ),
+        ],
         ),
     );
   }

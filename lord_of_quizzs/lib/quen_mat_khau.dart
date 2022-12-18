@@ -40,17 +40,35 @@ class QuenMatKhauState extends State<QuenMatKhau> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        leading: IconButton(
-          icon: const Icon(Icons.chevron_left),
-          onPressed: () => Navigator.pop(context),
-          iconSize: 35,
-        ),
-      ),
-      body: Container(
+        appBar: AppBar(
+              centerTitle: true,
+              title: const Text( 'Quên Mật Khẩu',
+                        style: TextStyle( fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center
+                      ),
+              // elevation: 0,
+              // backgroundColor: Colors.transparent,
+               flexibleSpace:  Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Color(0xFF701ebd),
+                        Color.fromARGB(255, 57, 86, 250),
+                      ],
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                    ),
+                  ),
+                ),
+              leading: IconButton(
+              icon: const Icon(Icons.chevron_left),
+                onPressed: () => Navigator.pop(context),
+                iconSize: 25,  
+              ),
+            ),
+      body: Stack(
+      children: [
+      Container(
         height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -62,15 +80,17 @@ class QuenMatKhauState extends State<QuenMatKhau> {
             end: Alignment.bottomLeft,
           ),
         ),
-        child: SingleChildScrollView(
+      ),
+      SingleChildScrollView(
           // physics:const NeverScrollableScrollPhysics(),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                padding: const EdgeInsets.only(top: 60),
+                padding: const EdgeInsets.only(top: 70, bottom: 10),
                 child: Image.asset('images/Logo.png',
-                    fit: BoxFit.cover, height: 120, width: 120),
+                    fit: BoxFit.cover, height: 110, width: 110),
               ),
               Container(
                 padding: const EdgeInsets.only(bottom: 15),
@@ -152,6 +172,7 @@ class QuenMatKhauState extends State<QuenMatKhau> {
             ],
           ),
         ),
+      ],
       ),
     );
   }
