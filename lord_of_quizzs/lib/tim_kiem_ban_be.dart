@@ -78,6 +78,10 @@ class TimKiemBanBeState extends State<TimKiemBanBe>{
                                         thongTin.add(Obj);
                                       }
                                     }
+                                    setState(() {
+                                      
+                                    });
+                                    
                                   } catch (e) {
                                     final snackBar =
                                         SnackBar(content: Text('Lỗi kết nối'));

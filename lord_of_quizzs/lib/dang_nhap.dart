@@ -10,7 +10,6 @@ import 'package:lord_of_quizzs/quen_mat_khau.dart';
 
 class DangNhap extends StatefulWidget {
   const DangNhap({super.key});
-
   @override
   State<StatefulWidget> createState() {
     // ignore: todo
@@ -22,8 +21,13 @@ class DangNhap extends StatefulWidget {
 class DangNhapState extends State<DangNhap> {
   TextEditingController txtEmail = TextEditingController();
   TextEditingController txtPass = TextEditingController();
+  bool _obscureText = true;
   final _auth = FirebaseAuth.instance;
-
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,7 +86,7 @@ class DangNhapState extends State<DangNhap> {
                   padding: const EdgeInsets.all(15),
                   child: TextField(
                     controller: txtPass,
-                    obscureText: true,
+                    obscureText: _obscureText,
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       labelText: 'Mật khẩu',
@@ -95,6 +99,15 @@ class DangNhapState extends State<DangNhap> {
                         borderRadius: BorderRadius.circular(25),
                       ),
                       prefixIcon: const Icon(Icons.lock, color: Colors.white),
+                      suffixIcon: IconButton(
+                      icon: Icon(
+                        _obscureText
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        color: Colors.white,
+                      ),
+                      onPressed: _toggle,
+                    ),
                     ),
                   )),
               Container(

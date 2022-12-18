@@ -29,10 +29,24 @@ class DangKiState extends State<DangKi> {
   final _auth = FirebaseAuth.instance;
   List<ThongTinObject> thongTinEmail= [];
   bool trungEmail = false;
+  bool _obscureText = true;
+  bool _obscureText_accuracy = true;
  // ignore: non_constant_identifier_names
  void _LoadThongTin() async {
     final data = await ThongTinProvider.getEmail();
     thongTinEmail= data;
+  }
+
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
+
+  void _toggle_accuracy() {
+    setState(() {
+      _obscureText_accuracy = !_obscureText_accuracy;
+    });
   }
 
   @override
@@ -150,7 +164,7 @@ class DangKiState extends State<DangKi> {
                     padding: const EdgeInsets.all(10),
                     child: TextField(
                       controller: txtMatKhau,
-                      obscureText: true,
+                      obscureText: _obscureText,
                       style: const TextStyle(color: Colors.white),
                       decoration: InputDecoration(
                         labelText: 'Mật khẩu',
@@ -163,13 +177,21 @@ class DangKiState extends State<DangKi> {
                           borderRadius: BorderRadius.circular(25),
                         ),
                         prefixIcon: const Icon(Icons.lock, color: Colors.white),
+                        suffixIcon: IconButton(
+                        icon: Icon(
+                            _obscureText
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: Colors.white),
+                        onPressed: _toggle,
+                      ),
                       ),
                     )),
                 Container(
                   padding: const EdgeInsets.all(10),
                   child: TextField(
                     controller: txtNhapLaiMatKhau,
-                    obscureText: true,
+                    obscureText: _obscureText_accuracy,
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       labelText: 'Nhập lại mật khẩu',
@@ -182,6 +204,15 @@ class DangKiState extends State<DangKi> {
                         borderRadius: BorderRadius.circular(25),
                       ),
                       prefixIcon: const Icon(Icons.lock, color: Colors.white),
+                      suffixIcon: IconButton(
+                      icon: Icon(
+                        _obscureText_accuracy
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        color: Colors.white,
+                      ),
+                      onPressed: _toggle_accuracy,
+                    ),
                     ),
                   ),
                 ),
