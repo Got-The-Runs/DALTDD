@@ -384,7 +384,7 @@ class DangKiState extends State<DangKi> {
                           }
                         } catch (e) {
                           final snackBar =
-                              const SnackBar(content: Text('Email đã tồn tại'));
+                              const SnackBar(content: Text('Đăng ký thất bại!'));
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                           return;
                         }
