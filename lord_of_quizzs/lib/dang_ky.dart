@@ -336,16 +336,17 @@ class DangKiState extends State<DangKi> {
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       return;
                     } else {
-                      for (int i = 0;i < (txtTenNguoiChoi.text.length - 1);i++) {
-                                if (txtTenNguoiChoi.text.substring(i, i + 2) == "  ") {
-                                  final snackBar = SnackBar(
-                                      content: Text(
-                                          'Tên người chơi ở giữa tối thiểu 1 khoảng trắng\nVui lòng nhập lại tên người chơi!'));
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(snackBar);
-                                  return;
-                                }
-                              }
+                      for (int i = 0;
+                          i < (txtTenNguoiChoi.text.length - 1);
+                          i++) {
+                        if (txtTenNguoiChoi.text.substring(i, i + 2) == "  ") {
+                          final snackBar = SnackBar(
+                              content: Text(
+                                  'Tên người chơi ở giữa tối thiểu 1 khoảng trắng\nVui lòng nhập lại tên người chơi!'));
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          return;
+                        }
+                      }
                       for (int i = 0; i < thongTinEmail.length; i++) {
                         if (txtEmail.text == thongTinEmail[i].email) {
                           trungEmail = true;
