@@ -457,12 +457,11 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                           ),
                                         ],
                                       ),
-                                
                                       Container(
-                                          padding: const EdgeInsets.all(12),
+                                          padding: const EdgeInsets.only(left: 30, right: 30, top: 15),
                                           child: Text(
                                             'Câu ${soCauHoi}: ${chiTietCauHoi[0].cauHoi}',
-                                            textAlign: TextAlign.center,
+                                            textAlign: TextAlign.left,
                                             style: const TextStyle(
                                               fontSize: 20,
                                               color: Colors.white,
@@ -471,9 +470,9 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                           )),
                                       Container(
                                         padding: const EdgeInsets.symmetric(
-                                            horizontal: 25, vertical: 15),
+                                            horizontal: 25, vertical: 14),
                                         width: 350,
-                                        height: 75,
+                                        height: 80,
                                         child: OutlinedButton(
                                           onPressed: () {
                                             if (truyenA == true) {
@@ -535,8 +534,8 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                                   MaterialStateProperty.all(
                                                    cau1[0]),
                                               side: MaterialStateProperty.all(
-                                                  const BorderSide(
-                                                      color: Colors.white,
+                                                   BorderSide(
+                                                      color: chiTietCauHoi[0].dapAn == 1 && daMuaDapAn == true ? Colors.green: Colors.white,
                                                       width: 2.0,
                                                       style:
                                                           BorderStyle.solid))),
@@ -544,9 +543,9 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                       ),
                                       Container(
                                         padding: EdgeInsets.symmetric(
-                                            horizontal: 25, vertical: 15),
+                                            horizontal: 25, vertical: 14),
                                         width: 350,
-                                        height: 75,
+                                        height: 80,
                                         child: OutlinedButton(
                                           onPressed: () {
                                             if (truyenB == true) {
@@ -608,8 +607,8 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                                   MaterialStateProperty.all(
                                                  cau2[0]),
                                               side: MaterialStateProperty.all(
-                                                  const BorderSide(
-                                                      color: Colors.white,
+                                                  BorderSide(
+                                                      color: chiTietCauHoi[0].dapAn == 2 && daMuaDapAn == true ? Colors.green: Colors.white,
                                                       width: 2.0,
                                                       style:
                                                           BorderStyle.solid))),
@@ -617,9 +616,9 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                       ),
                                       Container(
                                         padding: EdgeInsets.symmetric(
-                                            horizontal: 25, vertical: 15),
+                                            horizontal: 25, vertical: 14),
                                         width: 350,
-                                        height: 75,
+                                        height: 80,
                                         child: OutlinedButton(
                                           onPressed: () {
                                             if (truyenC == true) {
@@ -681,8 +680,8 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                                   MaterialStateProperty.all(
                                                     cau3[0]),
                                               side: MaterialStateProperty.all(
-                                                  const BorderSide(
-                                                      color: Colors.white,
+                                                   BorderSide(
+                                                      color: chiTietCauHoi[0].dapAn == 3 && daMuaDapAn == true ? Colors.green: Colors.white,
                                                       width: 2.0,
                                                       style:
                                                           BorderStyle.solid))),
@@ -692,7 +691,7 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 25, vertical: 14),
                                           width: 350,
-                                          height: 75,
+                                          height: 80,
                                           child: OutlinedButton(
                                             onPressed: () {
                                               if (truyenD == true) {
@@ -758,14 +757,14 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                                             .solid))),
                                             )
                                           ),
-                                          Container(
-                                            padding: EdgeInsets.only(bottom: 5)
-                                          ),
+                                          ]),
                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceAround,
                                         children: [
-                                          OutlinedButton(
+                                          Align(
+                                          alignment: Alignment.bottomCenter,
+                                          child:OutlinedButton(
                                             onPressed: () {
                                               {
                                                 if (suDungTroGiup5050 == true) {
@@ -830,7 +829,10 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                                   style: BorderStyle.solid,
                                                 ))),
                                           ),
-                                          OutlinedButton(
+                                          ),
+                                          Align(
+                                          alignment: Alignment.bottomCenter,
+                                         child: OutlinedButton(
                                             onPressed: () {
                                               {
                                                 if (khanGia == true) {
@@ -902,7 +904,10 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                                   style: BorderStyle.solid,
                                                 ))),
                                           ),
-                                          OutlinedButton(
+                                          ),
+                                          Align(
+                                          alignment: Alignment.bottomCenter,
+                                          child: OutlinedButton(
                                             onPressed: () {
                                               {
                                                 if (goiDien == true) {
@@ -977,7 +982,10 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                                   style: BorderStyle.solid,
                                                 ))),
                                           ),
-                                          OutlinedButton(
+                                          ),
+                                          Align(
+                                          alignment: Alignment.bottomCenter,
+                                          child: OutlinedButton(
                                             onPressed: () {
                                               if (daMuaDapAn == false) {
                                                 showDialog(
@@ -1069,10 +1077,11 @@ class ChoiTroChoiState extends State<ChoiTroChoi> {
                                           )
                                         ),
                                       ),
+                                          ),
                                     ],
                                   )
-                                ],
-                              ),
+                              //   ],
+                              // ),
                             ]
                           ),
                         ),

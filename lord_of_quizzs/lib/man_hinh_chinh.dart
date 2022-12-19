@@ -96,7 +96,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                                     ),
                                     Container(
                                       padding: EdgeInsets.symmetric(
-                                          horizontal: 40, vertical: 10),
+                                          horizontal: 30, vertical: 10),
                                       width: 300,
                                       height: 80,
                                       child: OutlinedButton(
@@ -115,7 +115,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                                         child: const Text(
                                           'Tài Khoản',
                                           style: TextStyle(
-                                              fontSize: 25,
+                                              fontSize: 20,
                                               color: Colors.white),
                                         ),
                                         style: ButtonStyle(
@@ -131,7 +131,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                                     ),
                                     Container(
                                       padding: EdgeInsets.symmetric(
-                                          horizontal: 40, vertical: 10),
+                                          horizontal: 30, vertical: 10),
                                       width: 300,
                                       height: 80,
                                       child: OutlinedButton(
@@ -148,7 +148,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                                         child: const Text(
                                           'Đổi Mật Khẩu',
                                           style: TextStyle(
-                                              fontSize: 25,
+                                              fontSize: 20,
                                               color: Colors.white),
                                         ),
                                         style: ButtonStyle(
@@ -164,7 +164,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                                     ),
                                     Container(
                                       padding: EdgeInsets.symmetric(
-                                          horizontal: 40, vertical: 10),
+                                          horizontal: 30, vertical: 10),
                                       width: 300,
                                       height: 80,
                                       child: OutlinedButton(
@@ -179,7 +179,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                                         child: const Text(
                                           'Đăng Xuất',
                                           style: TextStyle(
-                                              fontSize: 25,
+                                              fontSize: 20,
                                               color: Colors.white),
                                         ),
                                         style: ButtonStyle(
@@ -195,7 +195,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                                     ),
                                     Container(
                                       padding: EdgeInsets.symmetric(
-                                          horizontal: 40, vertical: 10),
+                                          horizontal: 30, vertical: 10),
                                       width: 300,
                                       height: 80,
                                       child: OutlinedButton(
@@ -204,7 +204,7 @@ class ManHinhChinhState extends State<ManHinhChinh> {
                                         child: const Text(
                                           'Thoát',
                                           style: TextStyle(
-                                              fontSize: 25,
+                                              fontSize: 20,
                                               color: Colors.white),
                                         ),
                                         style: ButtonStyle(

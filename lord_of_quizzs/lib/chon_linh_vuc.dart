@@ -131,13 +131,20 @@ class ChonLinhVucState extends State<ChonLinhVuc> {
                                 }
                               }
                               if(hasData ==0){
-                                  final snackBar = SnackBar(content: Text('Lĩnh vực này đang được cập nhật'));
+                                  // ignore: prefer_const_declarations
+                                  final snackBar =const SnackBar(
+                                    duration: Duration(seconds: 1),
+                                    content: Text('Lĩnh vực này đang được cập nhật'));
+                                // ignore: use_build_context_synchronously
                                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                 return;
                                 }
                             }
                             catch(e){
-                              final snackBar = SnackBar(content: Text('Lĩnh vực này đang được cập nhật'));
+                              // ignore: prefer_const_declarations
+                              final snackBar =const SnackBar(
+                                duration: Duration(seconds: 1),
+                                content: Text('Lĩnh vực này đang được cập nhật'));
                                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                 return;
                                 }

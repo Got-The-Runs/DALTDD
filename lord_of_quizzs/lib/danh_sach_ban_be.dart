@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_declarations, use_build_context_synchronously
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -106,13 +108,17 @@ class DanhSachBanBeState  extends State<DanhSachBanBe>{
                                                   }
                                                 }           
                                                 final snackBar =
-                                                    SnackBar(content: Text('Xóa kết bạn thành công'));
+                                                   const SnackBar(
+                                                      duration: Duration(seconds: 1),
+                                                      content: Text('Xóa kết bạn thành công'));
                                                 ScaffoldMessenger.of(context)
                                                     .showSnackBar(snackBar);  
                                                     setState((){});                                                   
                                               } catch (e) {
                                                 final snackBar =
-                                                    SnackBar(content: Text('Có lỗi xảy ra !'));
+                                                  const  SnackBar(
+                                                      duration: Duration(seconds: 1),
+                                                      content: Text('Có lỗi xảy ra !'));
                                                 ScaffoldMessenger.of(context)
                                                     .showSnackBar(snackBar);
                                       }
