@@ -2,6 +2,7 @@
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:lord_of_quizzs/man_hinh_chinh.dart';
 import 'package:lord_of_quizzs/model/thong_tin_object.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -25,23 +26,36 @@ class ManHinhTaiKhoanState extends State<ManHinhTaiKhoan> {
   TextEditingController txtName = TextEditingController();
   TextEditingController txtEmail = TextEditingController();
   int temp1 = 0;
+  bool trungTenNguoiChoi = false;
   var docID;
   var querySnapshots;
   final _formKey = GlobalKey<FormState>();
   CollectionReference user = FirebaseFirestore.instance.collection("thong_tin");
-  Future<void> updateUser(var docID) {
+  late String name;
+  Future<void> updateUser(var docID, String name) {
     return user
         .doc(docID)
-        .update({'ten_nguoi_choi': txtName.text})
-        .then((value) => Navigator.pop(context, 'Cập nhật thành công'))
-        .catchError(
-            (error) => Navigator.pop(context, 'Cập nhật thất bại $error'));
+        .update({'ten_nguoi_choi': name})
+        .then((value) => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ManHinhChinh(),
+              ),
+            ));
+  }
+
+  List<ThongTinObject> thongTinAll = [];
+  void _LoadThongTinAll() async {
+    final data = await ThongTinProvider.getEmail();
+    setState(() {});
+    thongTinAll = data;
   }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    _LoadThongTinAll();
   }
 
   @override
@@ -54,15 +68,17 @@ class ManHinhTaiKhoanState extends State<ManHinhTaiKhoan> {
             List<ThongTinObject> thongTin = snapshot.data!;
             email = thongTin[0].email;
             return Scaffold(
-               appBar: AppBar(
-              centerTitle: true,
-              title: const Text( 'Tài Khoản',
-                        style: TextStyle( fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center
-                      ),
-              // elevation: 0,
-              // backgroundColor: Colors.transparent,
-               flexibleSpace:  Container(
+              appBar: AppBar(
+                centerTitle: true,
+                title: const Text('Tài Khoản',
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center),
+                // elevation: 0,
+                // backgroundColor: Colors.transparent,
+                flexibleSpace: Container(
                   decoration: const BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
@@ -74,26 +90,25 @@ class ManHinhTaiKhoanState extends State<ManHinhTaiKhoan> {
                     ),
                   ),
                 ),
-              leading: IconButton(
-              icon: const Icon(Icons.chevron_left),
-                onPressed: () => Navigator.pop(context),
-                iconSize: 25,  
-              ),
-            ),
-              body: Stack(
-              children:[
-               Container(
-                height: MediaQuery.of(context).size.height,
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Color(0xFF701ebd),
-                      Color.fromARGB(255, 57, 86, 250),
-                    ],
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomLeft,
-                  ),
+                leading: IconButton(
+                  icon: const Icon(Icons.chevron_left),
+                  onPressed: () => Navigator.pop(context),
+                  iconSize: 25,
                 ),
+              ),
+              body: Stack(children: [
+                Container(
+                  height: MediaQuery.of(context).size.height,
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Color(0xFF701ebd),
+                        Color.fromARGB(255, 57, 86, 250),
+                      ],
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                    ),
+                  ),
                 ),
                 SingleChildScrollView(
                   child: Column(
@@ -186,22 +201,45 @@ class ManHinhTaiKhoanState extends State<ManHinhTaiKhoan> {
                                   .showSnackBar(snackBar);
                               return;
                             }
-                            if (txtName.text.contains(' ')) {
+                            if ((txtName.text.substring(0, 1) == " ")) {
                               final snackBar = SnackBar(
                                   content: Text(
-                                      'Tên người chơi có khoảng trắng\nVui lòng nhập lại tên người chơi'));
+                                      'Tên người chơi có khoảng trắng ở đầu\nVui lòng nhập lại tên người chơi'));
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(snackBar);
                               return;
                             } else {
+                              for (int i = 0;i < (txtName.text.length - 1);i++) {
+                                if (txtName.text.substring(i, i + 2) == "  ") {
+                                  final snackBar = SnackBar(
+                                      content: Text(
+                                          'Tên người chơi ở giữa tối thiểu 1 khoảng trắng\nVui lòng nhập lại tên người chơi!'));
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
+                                  return;
+                                }
+                              }
+                              for (int i = 0; i < thongTinAll.length; i++) {
+                                if (txtName.text == thongTinAll[i].name) {
+                                  final snackBar = SnackBar(
+                                      content: Text(
+                                          'Tên người chơi đã được sử dụng\nVui lòng nhập lại tên người chơi!'));
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
+                                  return;
+                                } 
+                              }
                               try {
                                 querySnapshots = await user.get();
                                 for (var snapshot in querySnapshots.docs) {
                                   if (email == snapshot['email']) {
                                     docID = snapshot.id;
+                                    name = snapshot['ten_nguoi_choi'];
                                   }
                                 }
-                                updateUser(docID);
+                                name = txtName.text;
+                                updateUser(docID, name);
+                                setState(() {});
                               } catch (e) {
                                 final snackBar =
                                     SnackBar(content: Text('Có lỗi xảy ra !'));
@@ -209,6 +247,7 @@ class ManHinhTaiKhoanState extends State<ManHinhTaiKhoan> {
                                     .showSnackBar(snackBar);
                               }
                             }
+                            setState(() {});
                           },
                           child: const Text(
                             'Cập nhật',
@@ -222,8 +261,7 @@ class ManHinhTaiKhoanState extends State<ManHinhTaiKhoan> {
                     ],
                   ),
                 ),
-              ]
-              ),
+              ]),
             );
           }
           return Text('');

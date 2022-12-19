@@ -171,7 +171,7 @@ class DangNhapXNState extends State<DangNhapXN> {
                     onPressed: () async {
                       if (txtPass.text == "") {
                         final snackBar =
-                            SnackBar(content: Text('Chưa nhập mật khẩu'));
+                            SnackBar(content: Text('Chưa nhập mật khẩu\nVui lòng nhập lại mật khẩu!'));
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       } else {
                         try {
@@ -191,7 +191,7 @@ class DangNhapXNState extends State<DangNhapXN> {
                           });
                         } catch (e) {
                           final snackBar =
-                              SnackBar(content: Text('Sai mật khẩu'));
+                              SnackBar(content: Text('Sai mật khẩu\nVui lòng nhập lại mật khẩu!'));
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         }
                       }
