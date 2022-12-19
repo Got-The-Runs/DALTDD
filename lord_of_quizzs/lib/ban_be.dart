@@ -69,7 +69,7 @@ class BanBeState extends State<BanBe> with SingleTickerProviderStateMixin{
                   ],
         bottom: TabBar(
           controller: tabs,
-          tabs: [
+          tabs:const [
             Tab(text: 'Danh Sách Bạn Bè', icon: Icon(Icons.people)), 
             Tab(text: 'Lời mời kết bạn', icon: Icon(Icons.group_add),)       
           ],

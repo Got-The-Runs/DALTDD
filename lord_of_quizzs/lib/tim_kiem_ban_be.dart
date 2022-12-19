@@ -84,7 +84,9 @@ class TimKiemBanBeState extends State<TimKiemBanBe>{
                                     
                                   } catch (e) {
                                     final snackBar =
-                                        SnackBar(content: Text('Lỗi kết nối'));
+                                        SnackBar(
+                                          duration: Duration(seconds: 1),
+                                          content: Text('Lỗi kết nối'));
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(snackBar);
                                   }
@@ -202,21 +204,43 @@ class TimKiemBanBeState extends State<TimKiemBanBe>{
                                                 }
                                               }
                                           if(checkLaBanBe == true && checkLaBanBeAccept == false){
-                                              final snackBar = SnackBar(content: Text('Bạn và ${thongTin[index].name} đang là bạn bè'));
+                                              final snackBar = SnackBar(
+                                                duration: Duration(seconds: 2),
+                                                content: Text('Bạn và ${thongTin[index].name} đang là bạn bè'));
                                             ScaffoldMessenger.of(context).showSnackBar(snackBar);
                                             checkLaBanBeAccept = false;
                                             checkLaBanBe = false;
                                           }
                                           else if (checkLaBanBeAccept == true && checkLaBanBe == false){
-                                              final snackBar = SnackBar(content: Text('Đang chờ ${thongTin[index].name} chấp nhận kết bạn'));
-                                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                                            checkLaBanBeAccept = false;
-                                            checkLaBanBe = false;
+                                             for(int i=0; i<banBeAccept.length;i++){
+                                                if(thongTin[index].email == banBeAccept[i].emailBanBe && banBeAccept[i].trangThai == 2){
+                                                  final snackBar = SnackBar(
+                                                        duration: Duration(seconds: 2),
+                                                        content: Text('Đang chờ ${thongTin[index].name} chấp nhận kết bạn'));
+                                                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                                    checkLaBanBeAccept = false;
+                                                    checkLaBanBe = false;
+                                                  break;
+                                                  }
+                                                }
+                                                  for(int i=0; i<banBeAccept.length;i++){
+                                                if(thongTin[index].email == banBeAccept[i].emailBanBe && banBeAccept[i].trangThai == 0){
+                                                            final snackBar = SnackBar(
+                                                          duration: Duration(seconds: 2),
+                                                          content: Text('${thongTin[index].name} đang chờ bạn chấp nhận kết bạn'));
+                                                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                                      checkLaBanBeAccept = false;
+                                                      checkLaBanBe = false;
+                                                  break;
+                                                  }
+                                                }    
                                           }
                                           else {
                                             insertLoiMoi(thongTin[index].email);
                                             insertGuiLoiMoi(thongTin[index].email);
-                                            final snackBar = SnackBar(content: Text('Gửi lời mời kết bạn thành công'));
+                                            final snackBar = SnackBar(
+                                            duration: Duration(seconds: 2),
+                                            content: Text('Gửi lời mời kết bạn thành công'));
                                             ScaffoldMessenger.of(context).showSnackBar(snackBar); 
                                             setState((){
                                               checkLaBanBeAccept = false;

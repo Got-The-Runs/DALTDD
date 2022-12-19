@@ -116,13 +116,17 @@ class LoiMoiState extends State<LoiMoi>{
                                                   }
                                                 }           
                                                 final snackBar =
-                                                    SnackBar(content: Text('Xóa lời mời thành công'));
+                                                    SnackBar(
+                                                      duration: Duration(seconds: 1),
+                                                      content: Text('Xóa lời mời thành công'));
                                                 ScaffoldMessenger.of(context)
                                                     .showSnackBar(snackBar);  
                                                     setState((){});                                                   
                                               } catch (e) {
                                                 final snackBar =
-                                                    SnackBar(content: Text('Có lỗi xảy ra !'));
+                                                    SnackBar(
+                                                      duration: Duration(seconds: 1),
+                                                      content: Text('Có lỗi xảy ra !'));
                                                 ScaffoldMessenger.of(context)
                                                     .showSnackBar(snackBar);
                                               }
@@ -146,13 +150,17 @@ class LoiMoiState extends State<LoiMoi>{
                                                   }
                                                 }           
                                                 final snackBar =
-                                                    SnackBar(content: Text('Chấp nhận lời mời thành công'));
+                                                    SnackBar(
+                                                      duration: Duration(seconds: 1),
+                                                      content: Text('Chấp nhận lời mời thành công'));
                                                 ScaffoldMessenger.of(context)
                                                     .showSnackBar(snackBar);  
                                                     setState((){});                                                   
                                               } catch (e) {
                                                 final snackBar =
-                                                    SnackBar(content: Text('Có lỗi xảy ra !'));
+                                                    SnackBar(
+                                                      duration: Duration(seconds: 1),
+                                                      content: Text('Có lỗi xảy ra !'));
                                                 ScaffoldMessenger.of(context)
                                                     .showSnackBar(snackBar);
                                               }
