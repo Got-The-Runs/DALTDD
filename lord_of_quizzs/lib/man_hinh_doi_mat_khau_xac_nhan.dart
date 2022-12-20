@@ -172,7 +172,7 @@ class DangNhapXNState extends State<DangNhapXN> {
                       if (txtPass.text == "") {
                         final snackBar =
                             SnackBar(
-                              duration: Duration(seconds: 2),
+                              duration: Duration(seconds: 1),
                               content: Text('Chưa nhập mật khẩu\nVui lòng nhập lại mật khẩu!'));
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       } else {
@@ -194,7 +194,7 @@ class DangNhapXNState extends State<DangNhapXN> {
                         } catch (e) {
                           final snackBar =
                               SnackBar(
-                                duration: Duration(seconds: 2),
+                                duration: Duration(seconds: 1),
                                 content: Text('Sai mật khẩu\nVui lòng nhập lại mật khẩu!'));
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         }

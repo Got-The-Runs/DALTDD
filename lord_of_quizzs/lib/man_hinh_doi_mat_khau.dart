@@ -182,31 +182,31 @@ class DoiMatKhauState extends State<DoiMatKhau> {
                   onPressed: () {
                     if (txtMatKhauMoi.text == "" || txtMatKhauXT.text == "") {
                       final snackBar = SnackBar(
-                        duration: Duration(seconds: 2),
+                        duration: Duration(seconds: 1),
                           content: Text("Vui lòng nhập mật khẩu mới!"));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     } else if (txtMatKhauMoi.text.contains(' ')) {
                       final snackBar = SnackBar(
-                        duration: Duration(seconds: 2),
+                        duration: Duration(seconds: 1),
                           content: Text(
                               "Mật khẩu mới có khoảng trắng\nVui lòng nhập lại!"));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     } else if (txtMatKhauMoi.text.length < 6 ||
                         txtMatKhauMoi.text.length > 16) {
                       final snackBar = SnackBar(
-                        duration: Duration(seconds: 2),
+                        duration: Duration(seconds: 1),
                           content: Text(
                               "Mật khẩu mới tối thiểu 6 ký tự và tối đa 16 ký tự\nVui lòng nhập lại mật khẩu"));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     }
                     if (txtMatKhauXT.text == "") {
                       final snackBar = SnackBar(
-                        duration: Duration(seconds: 2),
+                        duration: Duration(seconds: 1),
                           content: Text("Vui lòng nhập mật khẩu xác thực!"));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     } else if (txtMatKhauMoi.text != txtMatKhauXT.text) {
                       final snackBar = SnackBar(
-                        duration: Duration(seconds: 2),
+                        duration: Duration(seconds: 1),
                           content: Text(
                               "Mật khẩu xác thực không trùng khớp với mật khẩu mới\nVui lòng nhập lại mật khẩu xác thực!"));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -214,7 +214,7 @@ class DoiMatKhauState extends State<DoiMatKhau> {
                       final user = _auth?.updatePassword(txtMatKhauMoi.text);
                       final snackBar =
                           SnackBar(
-                            duration: Duration(seconds: 2),
+                            duration: Duration(seconds: 1),
                             content: Text("Đổi mật khẩu thành công"));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       Navigator.push(

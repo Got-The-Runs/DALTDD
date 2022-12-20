@@ -131,14 +131,14 @@ class QuenMatKhauState extends State<QuenMatKhau> {
                       if (txtEmail.text == "") {
                         final snackBar =
                             SnackBar(
-                                duration: Duration(seconds: 2),
+                                duration: Duration(seconds: 1),
                               content: Text('Chưa nhập Email'));
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         return;
                       }
                       if (txtEmail.text.indexOf("@gmail.com") == -1) {
                         final snackBar = SnackBar(
-                            duration: Duration(seconds: 2),
+                            duration: Duration(seconds: 1),
                             content: Text(
                                 'Email chưa đúng định dạng, vui lòng nhập lại Email!'));
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -157,7 +157,7 @@ class QuenMatKhauState extends State<QuenMatKhau> {
                           }
                           if (documentID == null) {
                             final snackBar = SnackBar(
-                              duration: Duration(seconds: 2),
+                              duration: Duration(seconds: 1),
                                 content:
                                     Text('Email chưa được đăng ký tài khoản'));
                             ScaffoldMessenger.of(context)
@@ -167,7 +167,7 @@ class QuenMatKhauState extends State<QuenMatKhau> {
                         } catch (e) {
                           final snackBar =
                               SnackBar(
-                                duration: Duration(seconds: 2),
+                                duration: Duration(seconds: 1),
                                 content: Text('Có lỗi xảy ra!'));
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         }
