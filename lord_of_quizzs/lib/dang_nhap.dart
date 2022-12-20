@@ -134,14 +134,21 @@ class DangNhapState extends State<DangNhap> {
                               content: Text('Vui lòng nhập Email!'));
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         return;
-                      } else if (txtEmail.text.contains(' ')) {
-                        final snackBar = SnackBar(
-                          duration: Duration(seconds:1),
-                            content: Text(
-                                'Email có khoảng trắng\nVui lòng nhập lại Email!'));
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        return;
-                      } else if (txtPass.text == "") {
+                      } else if ((txtEmail.text.contains(' ') && (txtEmail.text.indexOf("@gmail.com") == 1) || txtEmail.text.contains(' ')) && (txtEmail.text.indexOf("@caothang.edu.vn") == 1) || txtEmail.text.contains(' ') ) {
+                      final snackBar = SnackBar(
+                        duration: Duration(seconds: 1),
+                          content: Text(
+                              'Email có khoảng trắng\nVui lòng nhập lại Email!'));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      return;
+                    } else if ((txtEmail.text.indexOf("@gmail.com") == -1) || (txtEmail.text.indexOf("@caothang.edu.vn") == -1) ) {
+                      final snackBar = SnackBar(
+                        duration: Duration(seconds: 1),
+                          content: Text(
+                              'Email chưa đúng định dạng, vui lòng nhập lại Email!'));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      return;
+                    } else if (txtPass.text == "") {
                         final snackBar =
                             SnackBar(
                               duration: Duration(seconds: 1),

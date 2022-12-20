@@ -132,11 +132,19 @@ class QuenMatKhauState extends State<QuenMatKhau> {
                         final snackBar =
                             SnackBar(
                                 duration: Duration(seconds: 1),
-                              content: Text('Chưa nhập Email'));
+                              content: Text('Vui lòng nhập Email!'));
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         return;
                       }
-                      if (txtEmail.text.indexOf("@gmail.com") == -1) {
+                      if ((txtEmail.text.contains(' ') && (txtEmail.text.indexOf("@gmail.com") == 1) || txtEmail.text.contains(' ')) && (txtEmail.text.indexOf("@caothang.edu.vn") == 1) || txtEmail.text.contains(' ') ) {
+                      final snackBar = SnackBar(
+                        duration: Duration(seconds: 1),
+                          content: Text(
+                              'Email có khoảng trắng\nVui lòng nhập lại Email!'));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      return;
+                    }
+                      if ((txtEmail.text.indexOf("@gmail.com") == -1) || (txtEmail.text.indexOf("@caothang.edu.vn") == 1)) {
                         final snackBar = SnackBar(
                             duration: Duration(seconds: 1),
                             content: Text(
