@@ -159,8 +159,14 @@ class QuenMatKhauState extends State<QuenMatKhau> {
                               documentID = snapshot.id;
                               final user = await _auth.sendPasswordResetEmail(
                                   email: txtEmail.text);
+                                   final snackBar = SnackBar(
+                              duration: Duration(seconds: 4),
+                                content:
+                                    Text( 'Đã gửi link đặt lại mật khẩu qua email\nVui lòng kiểm tra thư trong email'));
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
                               Navigator.pop(
-                                  context, 'Đã gửi link đặt lại mật khẩu qua email\nVui lòng kiểm tra thư trong email');
+                                  context,);
                             }
                           }
                           if (documentID == null) {
