@@ -187,7 +187,7 @@ class TimKiemBanBeState extends State<TimKiemBanBe>{
                                           child: Image.asset('images/Logo.png'),
                                         ),           
                                         title: Text( thongTin[index].name, style: TextStyle(fontSize: 20)),
-                                        trailing: IconButton(icon: Icon(laBanBe == true?Icons.people:laBanBeAccept==true?Icons.replay_outlined:Icons.person_add),
+                                        trailing: IconButton(icon: Icon(laBanBe == true?Icons.people:laBanBeAccept==true?FontAwesomeIcons.spinner:Icons.person_add),
                                           onPressed: (){
                                             setState((){
                                               for(int i=0;i<banBe.length;i++){

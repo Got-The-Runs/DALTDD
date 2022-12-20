@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lord_of_quizzs/model/ban_be_object.dart';
 import 'package:lord_of_quizzs/model/ban_be_provider.dart';
 import 'package:lord_of_quizzs/model/thong_tin_object.dart';
@@ -90,7 +91,7 @@ class DanhSachBanBeState  extends State<DanhSachBanBe>{
                                           ),           
                                           title: Text('${emailBanBe}'),
                                           // subtitle: Text('T', style: TextStyle(fontSize: 20),),
-                                          trailing: IconButton(icon: Icon(Icons.delete), onPressed: ()async{
+                                          trailing: IconButton(icon: Icon(FontAwesomeIcons.userSlash), onPressed: ()async{
                                              try {
                                                 querySnapshots = await thongTinBanBe.get();
                                                 for (var snapshot in querySnapshots.docs) {

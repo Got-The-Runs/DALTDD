@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
     DeviceOrientation.portraitDown
   ]);
     return  MaterialApp(
+      title: 'Lord Of Quizzs',
       debugShowCheckedModeBanner: false,    
       initialRoute:
           FirebaseAuth.instance.currentUser == null? 'welcome' : 'home',          
