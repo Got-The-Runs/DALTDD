@@ -376,6 +376,7 @@ class DangKiState extends State<DangKi> {
                                   password: txtMatKhau.text);
                           if (newUser != null) {
                             addUser();
+                            FirebaseAuth.instance.signOut();
                             txtTenNguoiChoi.clear();
                             txtEmail.clear();
                             txtMatKhau.clear();
