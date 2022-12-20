@@ -141,7 +141,7 @@ class DangNhapState extends State<DangNhap> {
                               'Email có khoảng trắng\nVui lòng nhập lại Email!'));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       return;
-                    } else if ((txtEmail.text.indexOf("@gmail.com") == -1) || (txtEmail.text.indexOf("@caothang.edu.vn") == -1) ) {
+                    } else if ((txtEmail.text.indexOf("@gmail.com") == 1) || (txtEmail.text.indexOf("@caothang.edu.vn") == 1) ) {
                       final snackBar = SnackBar(
                         duration: Duration(seconds: 1),
                           content: Text(

@@ -144,7 +144,7 @@ class QuenMatKhauState extends State<QuenMatKhau> {
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       return;
                     }
-                      if ((txtEmail.text.indexOf("@gmail.com") == -1) || (txtEmail.text.indexOf("@caothang.edu.vn") == 1)) {
+                      if ((txtEmail.text.indexOf("@gmail.com") == 1) || (txtEmail.text.indexOf("@caothang.edu.vn") == 1)) {
                         final snackBar = SnackBar(
                             duration: Duration(seconds: 1),
                             content: Text(
