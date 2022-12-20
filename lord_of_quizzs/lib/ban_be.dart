@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lord_of_quizzs/danh_sach_ban_be.dart';
 import 'package:lord_of_quizzs/loi_moi.dart';
 import 'package:lord_of_quizzs/tim_kiem_ban_be.dart';
-
+import'package:font_awesome_flutter/font_awesome_flutter.dart';
 class BanBe extends StatefulWidget{
   String email;
   BanBe({Key? key, required this.email}): super(key: key);
@@ -55,7 +55,7 @@ class BanBeState extends State<BanBe> with SingleTickerProviderStateMixin{
                 ),
               actions: <Widget>[
                     IconButton(
-                      icon: const Icon(Icons.person_add),
+                      icon: const Icon(FontAwesomeIcons.userPlus),
                       onPressed: (() {
                         Navigator.push(
                             context,
@@ -63,7 +63,7 @@ class BanBeState extends State<BanBe> with SingleTickerProviderStateMixin{
                               builder: (context) => TimKiemBanBe(email: email,),
                             ));
                       }),
-                      iconSize: 30,
+                      iconSize: 25,
                     ),
                     Padding(padding: EdgeInsets.only(right: 20))
                   ],

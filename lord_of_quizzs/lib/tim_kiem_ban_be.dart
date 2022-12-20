@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:lord_of_quizzs/model/ban_be_object.dart';
 import 'package:lord_of_quizzs/model/ban_be_provider.dart';
 import 'package:lord_of_quizzs/model/thong_tin_object.dart';
-import 'package:lord_of_quizzs/model/thong_tin_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class TimKiemBanBe extends StatefulWidget{
   String email;
   TimKiemBanBe({Key? key, required this.email}) : super(key: key);
@@ -65,7 +64,8 @@ class TimKiemBanBeState extends State<TimKiemBanBe>{
                 Container(
                 child: 
                 IconButton(
-                  icon: Icon(Icons.find_replace_outlined),
+                  icon: Icon(FontAwesomeIcons.magnifyingGlass),
+                  iconSize: 20,
                   onPressed: () async {
                     //  if(txtSreach.text != ""){
                         try {
@@ -74,8 +74,8 @@ class TimKiemBanBeState extends State<TimKiemBanBe>{
                                     for (var snapshot in querySnapshots.docs) {
                                       temp = snapshot['ten_nguoi_choi'];
                                       if ( temp.toUpperCase().contains(txtSreach.text.toUpperCase()) == true && snapshot['email'] != email) {
-                                        ThongTinObject Obj = ThongTinObject(snapshot['ten_nguoi_choi'], snapshot['email'], 0, 1);  
-                                        thongTin.add(Obj);
+                                        ThongTinObject obj = ThongTinObject(snapshot['ten_nguoi_choi'], snapshot['email'], 0, 1);  
+                                        thongTin.add(obj);
                                       }
                                     }
                                     setState(() {
@@ -131,7 +131,6 @@ class TimKiemBanBeState extends State<TimKiemBanBe>{
               children:[
               Container(
                 height: MediaQuery.of(context).size.height,
-                
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(colors: 
                   [
