@@ -130,12 +130,15 @@ class QuenMatKhauState extends State<QuenMatKhau> {
                     onPressed: () async {
                       if (txtEmail.text == "") {
                         final snackBar =
-                            SnackBar(content: Text('Chưa nhập Email'));
+                            SnackBar(
+                                duration: Duration(seconds: 2),
+                              content: Text('Chưa nhập Email'));
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         return;
                       }
                       if (txtEmail.text.indexOf("@gmail.com") == -1) {
                         final snackBar = SnackBar(
+                            duration: Duration(seconds: 2),
                             content: Text(
                                 'Email chưa đúng định dạng, vui lòng nhập lại Email!'));
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -149,11 +152,12 @@ class QuenMatKhauState extends State<QuenMatKhau> {
                               final user = await _auth.sendPasswordResetEmail(
                                   email: txtEmail.text);
                               Navigator.pop(
-                                  context, 'Gửi mã xác nhận thành công');
+                                  context, 'Đã gửi link đặt lại mật khẩu qua email\nVui lòng kiểm tra thư trong email');
                             }
                           }
                           if (documentID == null) {
                             final snackBar = SnackBar(
+                              duration: Duration(seconds: 2),
                                 content:
                                     Text('Email chưa được đăng ký tài khoản'));
                             ScaffoldMessenger.of(context)
@@ -162,7 +166,9 @@ class QuenMatKhauState extends State<QuenMatKhau> {
                           }
                         } catch (e) {
                           final snackBar =
-                              SnackBar(content: Text('Có lỗi xảy ra!'));
+                              SnackBar(
+                                duration: Duration(seconds: 2),
+                                content: Text('Có lỗi xảy ra!'));
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         }
                       }

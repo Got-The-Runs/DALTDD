@@ -122,27 +122,35 @@ class DangNhapState extends State<DangNhap> {
                     onPressed: () async {
                       if (txtEmail.text == "" && txtPass.text == "") {
                         final snackBar =
-                            SnackBar(content: Text('Nhập thông tin đăng nhập'));
+                            SnackBar(
+                              duration: Duration(seconds: 2),
+                              content: Text('Nhập thông tin đăng nhập'));
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         return;
                       } else if (txtEmail.text == "") {
                         final snackBar =
-                            SnackBar(content: Text('Vui lòng nhập Email!'));
+                            SnackBar(
+                              duration: Duration(seconds: 2),
+                              content: Text('Vui lòng nhập Email!'));
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         return;
                       } else if (txtEmail.text.contains(' ')) {
                         final snackBar = SnackBar(
+                          duration: Duration(seconds: 2),
                             content: Text(
                                 'Email có khoảng trắng\nVui lòng nhập lại Email!'));
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         return;
                       } else if (txtPass.text == "") {
                         final snackBar =
-                            SnackBar(content: Text('Vui lòng nhập mật khẩu'));
+                            SnackBar(
+                              duration: Duration(seconds: 2),
+                              content: Text('Vui lòng nhập mật khẩu'));
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         return;
                       } else if (txtPass.text.contains(' ')) {
                         final snackBar = SnackBar(
+                          duration: Duration(seconds: 2),
                             content: Text(
                                 'Mật khẩu có khoảng trắng\nVui lòng nhập lại mật khẩu!'));
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -157,12 +165,12 @@ class DangNhapState extends State<DangNhap> {
                                 Navigator.pushNamedAndRemoveUntil(
                                     context, 'home', (route) => true);
                                  return;
-                              }
-                          
+                              }                       
                             }
                           });
                         } catch (e) {
                           final snackBar = const SnackBar(
+                            duration: Duration(seconds: 2),
                               content: Text('Email hoặc mật khẩu không đúng'));
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                           return;

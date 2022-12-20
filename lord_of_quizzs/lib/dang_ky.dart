@@ -270,6 +270,7 @@ class DangKiState extends State<DangKi> {
                     if (txtTenNguoiChoi.text.length < 2 ||
                         txtTenNguoiChoi.text.length > 16) {
                       final snackBar = SnackBar(
+                        duration: Duration(seconds: 2),
                           content: Text(
                               'Tên người chơi tối thiểu 2 ký tự và tối đa 16 ký tự!\nVui lòng nhập lại tên người chơi!'));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -279,7 +280,9 @@ class DangKiState extends State<DangKi> {
                     //Kiểm tra Email
                     if (txtEmail.text == "") {
                       final snackBar =
-                          SnackBar(content: Text('Vui lòng nhập Email!'));
+                          SnackBar(
+                            duration: Duration(seconds: 2),
+                            content: Text('Vui lòng nhập Email!'));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       return;
                     }
@@ -287,6 +290,7 @@ class DangKiState extends State<DangKi> {
                             txtEmail.text.indexOf("@gmail.com") == 1) ||
                         txtEmail.text.contains(' ')) {
                       final snackBar = SnackBar(
+                        duration: Duration(seconds: 2),
                           content: Text(
                               'Email có khoảng trắng\nVui lòng nhập lại Email!'));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -294,6 +298,7 @@ class DangKiState extends State<DangKi> {
                     }
                     if (txtEmail.text.indexOf("@gmail.com") == -1) {
                       final snackBar = SnackBar(
+                        duration: Duration(seconds: 2),
                           content: Text(
                               'Email chưa đúng định dạng, vui lòng nhập lại Email!'));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -301,13 +306,17 @@ class DangKiState extends State<DangKi> {
                     }
                     //Kiểm tra mật khẩu
                     if (txtMatKhau.text == "") {
+                      
                       final snackBar =
-                          SnackBar(content: Text('Vui lòng nhập mật khẩu!'));
+                          SnackBar(
+                            duration: Duration(seconds: 2),
+                            content: Text('Vui lòng nhập mật khẩu!'));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       return;
                     }
                     if (txtMatKhau.text.contains(' ')) {
                       final snackBar = SnackBar(
+                        duration: Duration(seconds: 2),
                           content: Text(
                               'Mật khẩu có khoảng trắng\nVui lòng nhập mật khẩu!'));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -316,6 +325,7 @@ class DangKiState extends State<DangKi> {
                     if (txtMatKhau.text.length < 6 ||
                         txtMatKhau.text.length > 16) {
                       final snackBar = SnackBar(
+                        duration: Duration(seconds: 2),
                           content: Text(
                               'Mật khẩu tối thiểu 6 ký tự và tối đa 16 ký tự\nVui lòng nhập lại mật khẩu!'));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -325,12 +335,14 @@ class DangKiState extends State<DangKi> {
                     //Kiểm tra nhập lại mật khẩu
                     if (txtNhapLaiMatKhau.text == "") {
                       final snackBar = SnackBar(
+                        duration: Duration(seconds: 2),
                           content: Text('Vui lòng nhập nhập lại mật khẩu!'));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       return;
                     }
                     if (txtNhapLaiMatKhau.text != txtMatKhau.text) {
                       final snackBar = SnackBar(
+                        duration: Duration(seconds: 2),
                           content: Text(
                               'Nhập lại mật khẩu không trùng với mật khẩu'));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -341,6 +353,7 @@ class DangKiState extends State<DangKi> {
                           i++) {
                         if (txtTenNguoiChoi.text.substring(i, i + 2) == "  ") {
                           final snackBar = SnackBar(
+                            duration: Duration(seconds: 2),
                               content: Text(
                                   'Tên người chơi ở giữa tối thiểu 1 khoảng trắng\nVui lòng nhập lại tên người chơi!'));
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -358,12 +371,14 @@ class DangKiState extends State<DangKi> {
                       if (trungEmail == true || trungTenNguoiChoi == true) {
                         if (trungEmail == true) {
                           final snackBar = const SnackBar(
+                            duration: Duration(seconds: 2),
                               content: Text('Email đã được sử dụng'));
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                           trungEmail = false;
                         }
                         if (trungTenNguoiChoi == true) {
                           final snackBar = const SnackBar(
+                              duration: Duration(seconds: 2),
                               content: Text('Tên người chơi đã được sử dụng'));
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                           trungTenNguoiChoi = false;
@@ -385,7 +400,9 @@ class DangKiState extends State<DangKi> {
                           }
                         } catch (e) {
                           final snackBar =
-                              const SnackBar(content: Text('Đăng ký thất bại!'));
+                              const SnackBar(
+                                duration: Duration(seconds: 2),
+                                content: Text('Đăng ký thất bại!'));
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                           return;
                         }

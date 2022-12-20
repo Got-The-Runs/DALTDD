@@ -186,6 +186,7 @@ class ManHinhTaiKhoanState extends State<ManHinhTaiKhoan> {
                           onPressed: () async {
                             if (txtName.text == "") {
                               final snackBar = SnackBar(
+                                 duration: Duration(seconds: 2),
                                   content:
                                       Text('Vui lòng nhập tên người chơi'));
                               ScaffoldMessenger.of(context)
@@ -195,6 +196,7 @@ class ManHinhTaiKhoanState extends State<ManHinhTaiKhoan> {
                             if (txtName.text.length < 8 ||
                                 txtName.text.length > 16) {
                               final snackBar = SnackBar(
+                                 duration: Duration(seconds: 2),
                                   content: Text(
                                       'Tên người chơi tối thiểu 8 ký tự và tối đa 16 ký tự\nVui lòng nhập lại tên người chơi'));
                               ScaffoldMessenger.of(context)
@@ -203,6 +205,7 @@ class ManHinhTaiKhoanState extends State<ManHinhTaiKhoan> {
                             }
                             if ((txtName.text.substring(0, 1) == " ")) {
                               final snackBar = SnackBar(
+                                  duration: Duration(seconds: 2),
                                   content: Text(
                                       'Tên người chơi có khoảng trắng ở đầu\nVui lòng nhập lại tên người chơi'));
                               ScaffoldMessenger.of(context)
@@ -212,6 +215,7 @@ class ManHinhTaiKhoanState extends State<ManHinhTaiKhoan> {
                               for (int i = 0;i < (txtName.text.length - 1);i++) {
                                 if (txtName.text.substring(i, i + 2) == "  ") {
                                   final snackBar = SnackBar(
+                                      duration: Duration(seconds: 2),
                                       content: Text(
                                           'Tên người chơi ở giữa tối thiểu 1 khoảng trắng\nVui lòng nhập lại tên người chơi!'));
                                   ScaffoldMessenger.of(context)
@@ -222,6 +226,7 @@ class ManHinhTaiKhoanState extends State<ManHinhTaiKhoan> {
                               for (int i = 0; i < thongTinAll.length; i++) {
                                 if (txtName.text == thongTinAll[i].name) {
                                   final snackBar = SnackBar(
+                                      duration: Duration(seconds: 2),
                                       content: Text(
                                           'Tên người chơi đã được sử dụng\nVui lòng nhập lại tên người chơi!'));
                                   ScaffoldMessenger.of(context)
@@ -242,7 +247,9 @@ class ManHinhTaiKhoanState extends State<ManHinhTaiKhoan> {
                                 setState(() {});
                               } catch (e) {
                                 final snackBar =
-                                    SnackBar(content: Text('Có lỗi xảy ra !'));
+                                    SnackBar(
+                                        duration: Duration(seconds: 2),
+                                      content: Text('Có lỗi xảy ra !'));
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(snackBar);
                               }
