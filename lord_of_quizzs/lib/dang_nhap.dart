@@ -119,7 +119,7 @@ class DangNhapState extends State<DangNhap> {
                 width: 200,
                 height: 80,
                 child: OutlinedButton(
-                    onPressed: () async {
+                    onPressed: ()  {
                       if (txtEmail.text == "" && txtPass.text == "") {
                         final snackBar =
                             SnackBar(
@@ -134,14 +134,14 @@ class DangNhapState extends State<DangNhap> {
                               content: Text('Vui lòng nhập Email!'));
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         return;
-                      } else if ((txtEmail.text.contains(' ') && (txtEmail.text.indexOf("@gmail.com") == 1) || txtEmail.text.contains(' ')) && (txtEmail.text.indexOf("@caothang.edu.vn") == 1) || txtEmail.text.contains(' ') ) {
+                      } else if ((txtEmail.text.contains(' ') && (txtEmail.text.indexOf("@gmail.com") == -1) || txtEmail.text.contains(' ')) ) {
                       final snackBar = SnackBar(
                         duration: Duration(seconds: 1),
                           content: Text(
                               'Email có khoảng trắng\nVui lòng nhập lại Email!'));
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       return;
-                    } else if ((txtEmail.text.indexOf("@gmail.com") == 1) || (txtEmail.text.indexOf("@caothang.edu.vn") == 1) ) {
+                    } else if ((txtEmail.text.indexOf("@gmail.com") == -1) ) {
                       final snackBar = SnackBar(
                         duration: Duration(seconds: 1),
                           content: Text(
@@ -164,7 +164,7 @@ class DangNhapState extends State<DangNhap> {
                         return;
                       } else {
                         try {
-                          final _user = await _auth.signInWithEmailAndPassword(
+                          final _user =  _auth.signInWithEmailAndPassword(
                               email: txtEmail.text, password: txtPass.text);
                           _auth.authStateChanges().listen((event) {
                             if (event != null) {

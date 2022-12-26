@@ -183,7 +183,7 @@ class ManHinhTaiKhoanState extends State<ManHinhTaiKhoan> {
                         width: 200,
                         height: 80,
                         child: OutlinedButton(
-                          onPressed: () async {
+                          onPressed: ()  {
                             if (txtName.text == "") {
                               final snackBar = SnackBar(
                                  duration: Duration(seconds: 1),
@@ -235,7 +235,7 @@ class ManHinhTaiKhoanState extends State<ManHinhTaiKhoan> {
                                 } 
                               }
                               try {
-                                querySnapshots = await user.get();
+                                querySnapshots = user.get();
                                 for (var snapshot in querySnapshots.docs) {
                                   if (email == snapshot['email']) {
                                     docID = snapshot.id;

@@ -241,7 +241,7 @@ class DangKiState extends State<DangKi> {
                 width: 200,
                 height: 80,
                 child: OutlinedButton(
-                  onPressed: () async {
+                  onPressed: ()  {
                     //Kiểm tra chưa nhập tất cả
                     if (txtEmail.text == "" &&
                         txtTenNguoiChoi.text == "" &&
@@ -288,12 +288,7 @@ class DangKiState extends State<DangKi> {
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       return;
                     }
-                    if ((txtEmail.text.contains(' ') &&
-                                    (txtEmail.text.indexOf("@gmail.com") ==
-                                        1) ||
-                                txtEmail.text.contains(' ')) &&
-                            (txtEmail.text.indexOf("@caothang.edu.vn") == 1) ||
-                        txtEmail.text.contains(' ')) {
+                    if ((txtEmail.text.contains(' ') && (txtEmail.text.indexOf("@gmail.com") == - 1) || txtEmail.text.contains(' '))) {
                       final snackBar = SnackBar(
                           duration: Duration(seconds: 1),
                           content: Text(
@@ -301,8 +296,7 @@ class DangKiState extends State<DangKi> {
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       return;
                     }
-                    if ((txtEmail.text.indexOf("@gmail.com") == 1) ||
-                        (txtEmail.text.indexOf("@caothang.edu.vn") == 1)) {
+                    if ((txtEmail.text.indexOf("@gmail.com") == -1)) {
                       final snackBar = SnackBar(
                           duration: Duration(seconds: 1),
                           content: Text(
@@ -390,7 +384,7 @@ class DangKiState extends State<DangKi> {
                       } else {
                         try {
                           final newUser =
-                              await _auth.createUserWithEmailAndPassword(
+                               _auth.createUserWithEmailAndPassword(
                                   email: txtEmail.text,
                                   password: txtMatKhau.text);
                           if (newUser != null) {
